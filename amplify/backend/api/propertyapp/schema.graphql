@@ -1,0 +1,8 @@
+type Property @model {
+  propertyId: ID!
+  describe: String!
+  imageUrl: String
+  type: String
+  userId: String
+  year: String
+}
