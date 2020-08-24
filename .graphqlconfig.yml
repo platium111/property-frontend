@@ -1,6 +1,6 @@
 projects:
   propertyapp:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/propertyapp/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

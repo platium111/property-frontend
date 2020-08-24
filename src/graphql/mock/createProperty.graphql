@@ -1,0 +1,5 @@
+mutation CreateProperty {
+  createProperty(input: {describe: "hey hey", propertyId: 1,}) {
+    createdAt
+  }
+}

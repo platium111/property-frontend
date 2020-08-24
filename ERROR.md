@@ -3,10 +3,10 @@
 from ant instead -> inside select has options will throw errors because `Input` doesnt have children in ant -> import `Select`
 
 20/8/2020
--[env] cannot get process.env even though having some data in env file
+- [env] cannot get process.env even though having some data in env file
 -> go to documentation about react-script -> start with REACT_APP_
 
--[iam]
+- [iam]
 C:\Users\Clark\.aws\credentials
 I use serverless-admin. admin is lost
 -> aws console | go to app amplify in aws
@@ -21,4 +21,19 @@ it is AppSync in aws
 using `amplify api console` 
 
 22/8/2020
+- `amplify apu console` then choosing graphql or rest -> will see schema...
+- `amplify codegen` created code for graphql
+- [debug_test_graphql] `amplify mock api` -> see AppSync mock endpoint to configure graphql, so can write query with table of 3 cols
+- [mapping_issue] propertyId in graphql but it is `id` in mongoDB 
+-> go to resolvers/Mutation.createProperty.req.vtl to fix 
+`$util.dynamodb.toDynamoDBJson(...)` 
+https://docs.aws.amazon.com/appsync/latest/devguide/troubleshooting-and-common-mistakes.html
+- change in mapping will restart mock api
+
+mutation CreateProperty {
+  createProperty(input: {describe: "hey hey", propertyId: 1,}) {
+    createdAt
+  }
+}
+
 

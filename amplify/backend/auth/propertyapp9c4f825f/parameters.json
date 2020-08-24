@@ -1,6 +1,6 @@
 {
     "identityPoolName": "propertyapp9c4f825f_identitypool_9c4f825f",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "proper9c4f825f",
     "userPoolName": "propertyapp9c4f825f_userpool_9c4f825f",
     "autoVerifiedAttributes": [

@@ -1,5 +1,6 @@
-import React, {createContext, useReducer, useCallback} from 'react';
+import React, {createContext, useReducer, useCallback, useContext} from 'react';
 
+// info when using context with import store: const context = useContext(store); -> return {store: {...}, dispatch: {...}}
 export const initialState = {
   title: 'Auth0 Online Meetup',
   date: Date(),
@@ -23,4 +24,12 @@ const AuthenProvider = ( { children } ) => {
   return <Provider value={{ state, dispatch }}>{children}</Provider>; 
 }
 
-export { store, AuthenProvider }
+function useAuthenContext() {
+  const context = useContext(store);
+  if(!context) {
+    throw new Error("Authentication Context errors")
+  }
+  return context;
+}
+
+export { useAuthenContext, AuthenProvider, store }
