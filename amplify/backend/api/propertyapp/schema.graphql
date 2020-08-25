@@ -1,8 +1,12 @@
 type Property @model {
   propertyId: ID!
-  describe: String!
-  imageUrl: String
+  description: String
+  imageUrls: [String]
   type: String
   userId: String
   year: String
+  customerName: String
+  itemName: String
+  modal: String
+  price: String
 }

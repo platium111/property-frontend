@@ -19,7 +19,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.2",
+    "react-images": "^1.1.7",
+    "react-photo-gallery": "^8.0.0",
     "react-scripts": "3.4.1",
+    "uuid": "^8.3.0",
     "yup": "^0.29.1"
   },
   "scripts": {

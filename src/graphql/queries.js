@@ -5,11 +5,15 @@ export const getProperty = /* GraphQL */ `
   query GetProperty($id: ID!) {
     getProperty(id: $id) {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
@@ -24,11 +28,15 @@ export const listPropertys = /* GraphQL */ `
     listPropertys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         propertyId
-        describe
-        imageUrl
+        description
+        imageUrls
         type
         userId
         year
+        customerName
+        itemName
+        modal
+        price
         createdAt
         updatedAt
       }

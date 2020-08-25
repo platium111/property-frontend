@@ -5,11 +5,15 @@ export const onCreateProperty = /* GraphQL */ `
   subscription OnCreateProperty {
     onCreateProperty {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
@@ -19,11 +23,15 @@ export const onUpdateProperty = /* GraphQL */ `
   subscription OnUpdateProperty {
     onUpdateProperty {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
@@ -33,11 +41,15 @@ export const onDeleteProperty = /* GraphQL */ `
   subscription OnDeleteProperty {
     onDeleteProperty {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }

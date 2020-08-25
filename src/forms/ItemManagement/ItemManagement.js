@@ -3,92 +3,43 @@ import React, { useContext, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Input, Select, FormItem, SubmitButton } from "formik-antd";
 import { Typography, Space, Image } from "antd";
-import { API, graphqlOperation } from "aws-amplify";
-import { store } from "../context/index";
-import { createProperty } from "../graphql/mutations";
-import useUpload from "../_hooks/useUpload/index";
+import { store } from "../../context/index";
+import useUpload from "../../_hooks/useUpload/index";
+import { DebugValues, GalleryView } from "../../components/index";
+import { create } from "../../services/generic/index";
+import { v4 as uuidv4 } from "uuid";
+import { buildGalleryPhotos } from "../../_utils/index";
+import {layout, tailLayout} from "./index.style";
 
 const { Title } = Typography;
 
-const layout = {
-  labelCol: {
-    span: 12,
-  },
-  wrapperCol: {
-    span: 24,
-  },
-};
+export default (props) => {
+  const { onFileChange, onFileUpload, imageUrls } = props
 
-const tailLayout = {
-  wrapperCol: {
-    offset: 12,
-    span: 24,
-  },
-};
-
-export const DisplayFormikState = props =>
-  <div style={{ margin: '1rem 0' }}>
-    <h3 style={{ fontFamily: 'monospace' }} />
-    <pre
-      style={{
-        background: '#f6f8fa',
-        fontSize: '.65rem',
-        padding: '.5rem',
-      }}
-    >
-      <strong>props</strong> ={' '}
-      {JSON.stringify(props, null, 2)}
-    </pre>
-  </div>;
-
-export default () => {
-  const globalState = useContext(store);
-  const { onFileChange, onFileUpload, fetchImages, filesUploaded } = useUpload();
-
-  const [imageUrls, setImageUrls] = useState();
-  React.useEffect(() => {
-    // createNewProperty();
-    // fetch images based on urls
-    async function getImageFn(){
-      const urls = await fetchImages(filesUploaded);
-      setImageUrls(urls);
-    }
-    getImageFn();
-  }, [filesUploaded]);
-
-  
-
-  async function createNewProperty() {
-    const todo = {
-      describe: "hey hey 1",
-      propertyId: "3412312",
-      type: "xe may",
-      imageUrl: "hhe.jpg",
-      userId: "43274747237842378fgsdfsf",
-      year: "2020",
-    };
-    await API.graphql(graphqlOperation(createProperty, { input: todo }));
-  }
-
-  /* const todo = {describe: "hey hey 1", propertyId: "\"23ggd\"", type: "xe may", imageUrl: "hhe.jpg", userId: "43274747237842378fgsdfsf", year: "2020"};
-  await API.graphql(graphqlOperation(createProperty, {input: todo}));
- */
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{}}
       /* validate={(values) => {
-      const errors = {};
-      if (!values.email) {
-        errors.email = "Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-      return errors;
-    }} */
+        const errors = {};
+        if (!values.email) {
+          errors.email = "Yêu cầu bạn phải nhập email";
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        ) {
+          errors.email = "Email không đúng định dạng. Gợi ý: tranquangkhai@gmail.com";
+        }
+        return errors;
+      }} */
       onSubmit={async (values, { setSubmitting }) => {
-        await onFileUpload();
+        console.log("--onSubmit-->", values);
+        // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
+        const filesUploaded = await onFileUpload();
+        await create({
+          ...values,
+          propertyId: uuidv4(),
+          imageUrls: filesUploaded || [],
+        });
+        setSubmitting(false);
       }}
     >
       {(props) => (
@@ -149,16 +100,13 @@ export default () => {
 
             {/* UPLOAD ZONE */}
             <FormItem label="Tải ảnh lên" name="itemImages">
-              <input type="file" multiple  onChange={(e) => onFileChange(e)} />
+              <input type="file" multiple onChange={(e) => onFileChange(e)} />
             </FormItem>
 
-            {
-              imageUrls && imageUrls.map(url => {
-                return (
-                  <Image width={200} height={200} key={url} src={url} />
-                )
-              })
-            }
+            {imageUrls && (
+              <GalleryView photos={buildGalleryPhotos(imageUrls)} />
+            )}
+
             <FormItem {...tailLayout} name="submitBtn">
               <SubmitButton
                 type="primary"
@@ -168,9 +116,9 @@ export default () => {
                 Tạo mới
               </SubmitButton>
             </FormItem>
-            <DisplayFormikState {...props} />
+            <DebugValues {...props} />
           </Form>
-          
+
           {/* // </Space> */}
         </>
       )}

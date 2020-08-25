@@ -36,4 +36,19 @@ mutation CreateProperty {
   }
 }
 
+23/8/2020
++ Not using antd upload -> using normal upload by fixing errors of files upload in input
+
+24/8/2020
++ Upload multiple files
++ display multiple files
++ display debug values in formik
+
+25/8/2020
++ Refactoring upload file
++ create grapql query mutation for property
++ react form can get data and put in graphql 
++ update graphql schema to have few fields
++ Build gallery view component to display list of images
+
 

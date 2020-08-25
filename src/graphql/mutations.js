@@ -8,11 +8,15 @@ export const createProperty = /* GraphQL */ `
   ) {
     createProperty(input: $input, condition: $condition) {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
@@ -25,11 +29,15 @@ export const updateProperty = /* GraphQL */ `
   ) {
     updateProperty(input: $input, condition: $condition) {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
@@ -42,11 +50,15 @@ export const deleteProperty = /* GraphQL */ `
   ) {
     deleteProperty(input: $input, condition: $condition) {
       propertyId
-      describe
-      imageUrl
+      description
+      imageUrls
       type
       userId
       year
+      customerName
+      itemName
+      modal
+      price
       createdAt
       updatedAt
     }
