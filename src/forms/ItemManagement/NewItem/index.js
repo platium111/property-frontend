@@ -1,7 +1,7 @@
 // Render Prop
 import React, { useContext } from "react";
-import { store } from "../../context/index";
-import useUpload from "../../_hooks/useUpload/index";
+import { store } from "../../../context/index";
+import useUpload from "../../../_hooks/useUpload/index";
 import ItemManagement from "./ItemManagement";
 
 export default () => {

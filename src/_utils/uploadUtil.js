@@ -1,9 +1,9 @@
 export function buildGalleryPhotos(imagesSrc) {
   return imagesSrc.map((src) => ({
     src: src,
-    width: 4,
-    height: 3,
-    sizes: ["(min-width: 480px) 50vw,(min-width: 1024px) 33.3vw,100vw"],
+    width: 1,
+    height: 1,
+    /* sizes: ["(min-width: 480px) 50vw,(min-width: 1024px) 33.3vw,100vw"], */
   }));
 }
 

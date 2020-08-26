@@ -1,20 +1,18 @@
 // Render Prop
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Input, Select, FormItem, SubmitButton } from "formik-antd";
-import { Typography, Space, Image } from "antd";
-import { store } from "../../context/index";
-import useUpload from "../../_hooks/useUpload/index";
-import { DebugValues, GalleryView } from "../../components/index";
-import { create } from "../../services/generic/index";
+import { Typography } from "antd";
+import { DebugValues, GalleryView } from "../../../components/index";
+import { create } from "../../../services/generic/index";
 import { v4 as uuidv4 } from "uuid";
-import { buildGalleryPhotos } from "../../_utils/index";
+import { buildGalleryPhotos } from "../../../_utils/index";
 import {layout, tailLayout} from "./index.style";
 
 const { Title } = Typography;
 
 export default (props) => {
-  const { onFileChange, onFileUpload, imageUrls } = props
+  const { onFileChange, onFileUpload, imageUrls } = props;
 
   return (
     <Formik
