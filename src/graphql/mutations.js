@@ -7,7 +7,7 @@ export const createProperty = /* GraphQL */ `
     $condition: ModelPropertyConditionInput
   ) {
     createProperty(input: $input, condition: $condition) {
-      propertyId
+      id
       description
       imageUrls
       type
@@ -28,7 +28,7 @@ export const updateProperty = /* GraphQL */ `
     $condition: ModelPropertyConditionInput
   ) {
     updateProperty(input: $input, condition: $condition) {
-      propertyId
+      id
       description
       imageUrls
       type
@@ -49,7 +49,7 @@ export const deleteProperty = /* GraphQL */ `
     $condition: ModelPropertyConditionInput
   ) {
     deleteProperty(input: $input, condition: $condition) {
-      propertyId
+      id
       description
       imageUrls
       type

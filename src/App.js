@@ -10,6 +10,7 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Example from "./forms/ItemManagement/ListItem/index";
+import { SITE } from "./_constants/index";
 
 axios.interceptors.request.use((config) => {
   config.timeout = 50000;
@@ -24,40 +25,42 @@ function App() {
       <AmplifySignOut />
       <Router>
         <Layout className="layout">
+          {/* ---HEADER--- */}
           <Header>
             <div className="logo" />
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
-                <Link to="/">Tạo mới</Link>
+                <Link to="/">{SITE.NAV_CREATE_NEW}</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/list">Liệt kê</Link>
+                <Link to="/list">{SITE.NAV_FIND}</Link>
               </Menu.Item>
             </Menu>
           </Header>
 
-          <Content style={{ marginTop: "20px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>Tạo mới</Breadcrumb.Item>
-              <Breadcrumb.Item>Liệt kê</Breadcrumb.Item>
-            </Breadcrumb>
-
-            <div className="site-layout-content">
-              <Row justify="center">
-                <Col span={12} style={{ border: "2px solid red" }}>
-                  <Switch>
-                    <Route exact path="/">
-                      <ItemManagement />
-                    </Route>
-                    <Route path="/list">
-                      <Example />
-                    </Route>
-                  </Switch>
-                </Col>
-              </Row>
-            </div>
+          {/* ---CONTENT--- */}
+          <Content
+            style={{
+              marginTop: "20px",
+              padding: "0 50px",
+              border: "2px solid yellow",
+            }}
+          >
+            <Row justify="center">
+              <Col span={12} style={{ border: "2px solid red" }}>
+                <Switch>
+                  <Route exact path="/">
+                    <ItemManagement />
+                  </Route>
+                  <Route path="/list">
+                    <Example />
+                  </Route>
+                </Switch>
+              </Col>
+            </Row>
           </Content>
 
+          {/* ---FOOTER--- */}
           <Footer style={{ textAlign: "center" }}>Made by a man</Footer>
         </Layout>
       </Router>

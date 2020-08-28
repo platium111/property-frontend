@@ -4,7 +4,7 @@
 export const onCreateProperty = /* GraphQL */ `
   subscription OnCreateProperty {
     onCreateProperty {
-      propertyId
+      id
       description
       imageUrls
       type
@@ -22,7 +22,7 @@ export const onCreateProperty = /* GraphQL */ `
 export const onUpdateProperty = /* GraphQL */ `
   subscription OnUpdateProperty {
     onUpdateProperty {
-      propertyId
+      id
       description
       imageUrls
       type
@@ -40,7 +40,7 @@ export const onUpdateProperty = /* GraphQL */ `
 export const onDeleteProperty = /* GraphQL */ `
   subscription OnDeleteProperty {
     onDeleteProperty {
-      propertyId
+      id
       description
       imageUrls
       type

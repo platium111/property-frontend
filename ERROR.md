@@ -21,7 +21,7 @@ it is AppSync in aws
 using `amplify api console` 
 
 22/8/2020
-- `amplify apu console` then choosing graphql or rest -> will see schema...
+- `amplify api console` then choosing graphql or rest -> will see schema...
 - `amplify codegen` created code for graphql
 - [debug_test_graphql] `amplify mock api` -> see AppSync mock endpoint to configure graphql, so can write query with table of 3 cols
 - [mapping_issue] propertyId in graphql but it is `id` in mongoDB 
@@ -50,5 +50,13 @@ mutation CreateProperty {
 + react form can get data and put in graphql 
 + update graphql schema to have few fields
 + Build gallery view component to display list of images
+
+26/8/2020
++ Create layout
++ Have navigation bar with react router
+
+28/8/2020
+- if running `amplify mock api`, when we add data to graphql, it will not add to mongodb in aws
+- Change from `propertyId` to `id`
 
 

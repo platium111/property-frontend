@@ -4,7 +4,7 @@
 export const getProperty = /* GraphQL */ `
   query GetProperty($id: ID!) {
     getProperty(id: $id) {
-      propertyId
+      id
       description
       imageUrls
       type
@@ -27,7 +27,7 @@ export const listPropertys = /* GraphQL */ `
   ) {
     listPropertys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        propertyId
+        id
         description
         imageUrls
         type

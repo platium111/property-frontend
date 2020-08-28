@@ -1,5 +1,5 @@
 type Property @model {
-  propertyId: ID!
+  id: ID!
   description: String
   imageUrls: [String]
   type: String

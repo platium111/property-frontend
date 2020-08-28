@@ -34,7 +34,7 @@ export default (props) => {
         const filesUploaded = await onFileUpload();
         await create({
           ...values,
-          propertyId: uuidv4(),
+          id: uuidv4(),
           imageUrls: filesUploaded || [],
         });
         setSubmitting(false);
