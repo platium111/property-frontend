@@ -11,6 +11,8 @@ import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Example from "./forms/ItemManagement/ListItem/index";
 import { SITE } from "./_constants/index";
+import { graphql, compose } from "react-apollo";
+import {searchListProperty, listPropertys} from "./graphql/_custom/index";
 
 axios.interceptors.request.use((config) => {
   config.timeout = 50000;
@@ -19,7 +21,9 @@ axios.interceptors.request.use((config) => {
 const { Header, Footer, Content } = Layout;
 Amplify.configure(awsconfig);
 
-function App() {
+
+const App = (props) => {
+  console.log("--Go into App--", props);
   return (
     <AuthenProvider>
       <AmplifySignOut />
@@ -66,6 +70,32 @@ function App() {
       </Router>
     </AuthenProvider>
   );
-}
+};
 
-export default withAuthenticator(App);
+export default withAuthenticator(
+  compose(
+    graphql(listPropertys, {
+      options: (_) => ({
+        fetchPolicy: "cache-and-network",
+      }),
+      props: (props) => ({
+        onSearch: (searchQuery) => {
+          return props.data.fetchMore({
+            query: searchQuery === "" ? listPropertys : searchListProperty, // 10
+            variables: {
+              searchQuery,
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => ({
+              ...previousResult,
+              listPropertys: {
+                ...previousResult.listPropertys,
+                items: fetchMoreResult.listPropertys.items,
+              },
+            }),
+          });
+        },
+        data: props.data,
+      }),
+    })
+  )(App)
+);
