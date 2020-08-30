@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import ItemManagement from "./forms/ItemManagement/NewItem/index";
 import "antd/dist/antd.css";
-import { Layout, Row, Col, Menu, Breadcrumb } from "antd";
+import { Layout, Row, Col, Menu } from "antd";
 import { AuthenProvider, store } from "./context/index";
-import Amplify from "aws-amplify";
+import Amplify, {API, graphqlOperation} from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Example from "./forms/ItemManagement/ListItem/index";
 import { SITE } from "./_constants/index";
-import { graphql, compose } from "react-apollo";
-import {searchListProperty, listPropertys} from "./graphql/_custom/index";
+// import {searchListProperty, listPropertys} from "./graphql/_custom/index";
+import { listPropertys } from "./graphql/queries";
+// import {searchListProperty} from "./graphql/customQuery";
+// import {searchListProperty} from "./graphql/_custom/index";
+import gql from "graphql-tag";
+import AWSAppSyncClient from "aws-appsync";
 
 axios.interceptors.request.use((config) => {
   config.timeout = 50000;
@@ -21,9 +25,35 @@ axios.interceptors.request.use((config) => {
 const { Header, Footer, Content } = Layout;
 Amplify.configure(awsconfig);
 
+const client = new AWSAppSyncClient({
+  url: awsconfig.aws_appsync_graphqlEndpoint,
+  region: awsconfig.aws_project_region,
+  auth: {
+    type: awsconfig.aws_appsync_authenticationType,
+    apiKey: awsconfig.aws_appsync_apiKey,
+    // jwtToken: async () => token, // Required when you use Cognito UserPools OR OpenID Connect. token object is obtained previously
+  },
+});
 
 const App = (props) => {
-  console.log("--Go into App--", props);
+   client
+    .query({
+      query: gql(listPropertys),
+    })
+    .then(({ data: { listPropertys } }) => {
+      console.log(listPropertys.items);
+    }); 
+
+ /*  useEffect(() => {
+    const runEffect = async () => {
+      const newTodo = await API.graphql(
+        graphqlOperation(listPropertys, {})
+      );
+      console.log("newTodo", newTodo);
+    };
+
+    runEffect();
+  }); */
   return (
     <AuthenProvider>
       <AmplifySignOut />
@@ -72,30 +102,4 @@ const App = (props) => {
   );
 };
 
-export default withAuthenticator(
-  compose(
-    graphql(listPropertys, {
-      options: (_) => ({
-        fetchPolicy: "cache-and-network",
-      }),
-      props: (props) => ({
-        onSearch: (searchQuery) => {
-          return props.data.fetchMore({
-            query: searchQuery === "" ? listPropertys : searchListProperty, // 10
-            variables: {
-              searchQuery,
-            },
-            updateQuery: (previousResult, { fetchMoreResult }) => ({
-              ...previousResult,
-              listPropertys: {
-                ...previousResult.listPropertys,
-                items: fetchMoreResult.listPropertys.items,
-              },
-            }),
-          });
-        },
-        data: props.data,
-      }),
-    })
-  )(App)
-);
+export default withAuthenticator(App);

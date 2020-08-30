@@ -1,8 +1,7 @@
-import gql from 'graphql-tag'
 
-export const searchListProperty = gql`
-  query($searchQuery: String) {
-    listPropertys(filter: { itemName: { contains: $searchQuery } }) {
+export const searchListProperty = `
+  query searchListProperty($searchQuery: String) {
+    searchListProperty(filter: { itemName: { contains: $searchQuery } }) {
       items {
         itemName
         description
@@ -11,13 +10,28 @@ export const searchListProperty = gql`
   }
 `;
 
-export const listPropertys = gql`
-  query {
-    listPropertys {
-      items {
-        itemName
-        description
-      }
-    }
-  }
-`;
+// export const listPropertys = /* GraphQL */ `
+//   query ListPropertys(
+//     $filter: ModelPropertyFilterInput
+//     $limit: Int
+//     $nextToken: String
+//   ) {
+//     listPropertys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+//       items {
+//         id
+//         description
+//         imageUrls
+//         type
+//         userId
+//         year
+//         customerName
+//         itemName
+//         modal
+//         price
+//         createdAt
+//         updatedAt
+//       }
+//       nextToken
+//     }
+//   }
+// `;

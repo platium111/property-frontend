@@ -58,5 +58,16 @@ mutation CreateProperty {
 28/8/2020
 - if running `amplify mock api`, when we add data to graphql, it will not add to mongodb in aws
 - Change from `propertyId` to `id`
+[decide-library] first time, I put in App.js, but makes errors
+-> need to wrap in index.js which is in renderDOM.render() method. The best adivce is folowing documentation
+-> actually no need for `react-apollo` because aws-appsync already setup
+Whenever using library, it is dependent on that about config...
 
+29/8/2020
+- Only using aws amplify to do graphql
+- Trying to fetch data from `queries`
+
+30/8/2020
+- Drawing architecture for aws api
+- [enable_datastore_for_entire_api] disable it, if not return error _version
 

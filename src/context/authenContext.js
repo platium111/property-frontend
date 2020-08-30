@@ -1,4 +1,4 @@
-import React, {createContext, useReducer, useCallback, useContext} from 'react';
+import React, {createContext, useReducer, useContext} from 'react';
 
 // info when using context with import store: const context = useContext(store); -> return {store: {...}, dispatch: {...}}
 export const initialState = {
