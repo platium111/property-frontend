@@ -71,3 +71,19 @@ Whenever using library, it is dependent on that about config...
 - Drawing architecture for aws api
 - [enable_datastore_for_entire_api] disable it, if not return error _version
 
+1/9/2020
++ aws appsync also use apollo client
+so we can read documentation and see how queries work
++ getting better with advanced queries with `filter` as a parameter and the way to pass argument in query
+- [cannot_filter] use filter in aws appsync not by pass parameter, need to follow what appsync expected
+
+query MyQuery {
+  listPropertys(filter: {itemName: {eq:"dsaa"}}) {
+    items {
+      itemName
+    }
+  }
+}
+
+- [client_in_appsync_context] Provider from Apollo Provider has `client` -> so the way to get it in another component is through ApolloContext
+

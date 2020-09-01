@@ -1,22 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import ItemManagement from "./forms/ItemManagement/NewItem/index";
 import "antd/dist/antd.css";
 import { Layout, Row, Col, Menu } from "antd";
 import { AuthenProvider, store } from "./context/index";
-import Amplify, {API, graphqlOperation} from "aws-amplify";
+import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Example from "./forms/ItemManagement/ListItem/index";
 import { SITE } from "./_constants/index";
-// import {searchListProperty, listPropertys} from "./graphql/_custom/index";
-import { listPropertys } from "./graphql/queries";
-// import {searchListProperty} from "./graphql/customQuery";
-// import {searchListProperty} from "./graphql/_custom/index";
-import gql from "graphql-tag";
+
 import AWSAppSyncClient from "aws-appsync";
+import { ApolloProvider, ApolloContext } from "react-apollo";
+import { Rehydrated } from "aws-appsync-react";
 
 axios.interceptors.request.use((config) => {
   config.timeout = 50000;
@@ -36,24 +34,7 @@ const client = new AWSAppSyncClient({
 });
 
 const App = (props) => {
-   client
-    .query({
-      query: gql(listPropertys),
-    })
-    .then(({ data: { listPropertys } }) => {
-      console.log(listPropertys.items);
-    }); 
 
- /*  useEffect(() => {
-    const runEffect = async () => {
-      const newTodo = await API.graphql(
-        graphqlOperation(listPropertys, {})
-      );
-      console.log("newTodo", newTodo);
-    };
-
-    runEffect();
-  }); */
   return (
     <AuthenProvider>
       <AmplifySignOut />
@@ -102,4 +83,12 @@ const App = (props) => {
   );
 };
 
-export default withAuthenticator(App);
+const AppWithAuth = withAuthenticator(App);
+
+export default () => (
+  <ApolloProvider client={client}>
+    <Rehydrated>
+      <AppWithAuth />
+    </Rehydrated>
+  </ApolloProvider>
+);
