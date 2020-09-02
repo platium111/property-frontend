@@ -1,10 +1,17 @@
-
 export const searchListProperty = `
 query searchListProperty($searchQuery: String) {
-  listPropertys(filter: { itemName: { eq: $searchQuery } }) {
+  listPropertys(filter: { itemName: { contains: $searchQuery } }) {
     items {
-      itemName
+      id
       description
+      imageUrls
+      type
+      userId
+      year
+      customerName
+      itemName
+      modal
+      price
     }
   }
 }

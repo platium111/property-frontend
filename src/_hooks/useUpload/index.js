@@ -46,13 +46,18 @@ export default function () {
     return keysReturned;
   };
 
-  // it can get folder in path
+  /**
+   * 
+   * @param {*} name such as abc.jpg
+   * @param {*} path such as property/
+   */
   const fetchImage = async (name, path) => {
     const fullPath = path ? `${path}/${name}` : name;
     const getFile = await Storage.get(fullPath);
     return getFile;
   };
 
+  // images ~ name only
   const fetchImages = async (images) => {
     const imageUrls = await Promise.all(
       images.map(

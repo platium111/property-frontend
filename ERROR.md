@@ -75,6 +75,7 @@ Whenever using library, it is dependent on that about config...
 + aws appsync also use apollo client
 so we can read documentation and see how queries work
 + getting better with advanced queries with `filter` as a parameter and the way to pass argument in query
++ good way is using `Queries` in Amazon, can get value immediately and good UI
 - [cannot_filter] use filter in aws appsync not by pass parameter, need to follow what appsync expected
 
 query MyQuery {
@@ -84,6 +85,12 @@ query MyQuery {
     }
   }
 }
+-> using `variable` in client.query {query. variables: {...}}, see apollo doc
 
 - [client_in_appsync_context] Provider from Apollo Provider has `client` -> so the way to get it in another component is through ApolloContext
 
+2/9/2020
++ need to explicit declare properties in graphql
++ cannot use async await in render, easy to get errors when use map to render component
+
+- [fetch_image_useEffect] has one another function with asyn await -> can do await ro fetch image and setUrl by set value for it
