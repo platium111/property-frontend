@@ -42,7 +42,7 @@ export default function () {
       })
     );
     console.log("keyReturned", keysReturned);
-    setFilesUploaded([...filesUploaded, ...keysReturned]);
+    setFilesUploaded(keysReturned);
     return keysReturned;
   };
 
@@ -74,5 +74,6 @@ export default function () {
     fetchImages,
     fetchImage,
     imageUrls,
+    setImageUrls
   };
 }

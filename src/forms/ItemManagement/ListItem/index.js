@@ -34,9 +34,7 @@ export default function (props) {
         size="large"
         onSearch={async (value) => {
           const items = await findProperty(client, value);
-
           items && setFoundProperties(items);
-          console.log("ListItem -> onSearch", items);
         }}
       />
 

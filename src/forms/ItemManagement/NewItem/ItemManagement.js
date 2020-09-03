@@ -7,7 +7,7 @@ import { DebugValues, GalleryView } from "../../../components/index";
 import { create } from "../../../services/generic/index";
 import { v4 as uuidv4 } from "uuid";
 import { buildGalleryPhotos } from "../../../_utils/index";
-import {layout, tailLayout} from "./index.style";
+import { layout, tailLayout } from "./index.style";
 
 const { Title } = Typography;
 
@@ -28,7 +28,7 @@ export default (props) => {
         }
         return errors;
       }} */
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log("--onSubmit-->", values);
         // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
         const filesUploaded = await onFileUpload();
@@ -38,6 +38,7 @@ export default (props) => {
           imageUrls: filesUploaded || [],
         });
         setSubmitting(false);
+        resetForm({ values: "" });
       }}
     >
       {(props) => (
@@ -86,8 +87,10 @@ export default (props) => {
               <ErrorMessage name="customerName" component="div" />
             </FormItem>
 
+            {/* TODO can't fix because of not reset value for textarea */}
             <FormItem label="Mô tả" name="description">
-              <Input.TextArea name="description" placeholder="Mô tả" />
+              {/* <Input.TextArea name="description" placeholder="Mô tả" value={props.values.description} /> */}
+              <Input name="description" placeholder="Mô tả" />
               <ErrorMessage name="description" component="div" />
             </FormItem>
 

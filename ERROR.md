@@ -94,3 +94,8 @@ query MyQuery {
 + cannot use async await in render, easy to get errors when use map to render component
 
 - [fetch_image_useEffect] has one another function with asyn await -> can do await ro fetch image and setUrl by set value for it
+
+3/9/2020
++ after submit, images can be displayed and the next time, it will be new images
+
++ [TODO_textarea] cannot reset value using formik, even using <Field>
