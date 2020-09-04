@@ -4,18 +4,20 @@ import Storage from "@aws-amplify/storage";
 import { v4 as uuidv4 } from "uuid";
 import { AWS_CONFIG } from "../../config";
 
-export default function () {
+export default function (property = {}) {
+  const { imageUrls: initialImageUrls } = property;
+
   const [fileList, setFileList] = useState([]);
-  const [filesUploaded, setFilesUploaded] = useState([]); // it is name 312354312312312.png by uuid
+  const [filesUploaded, setFilesUploaded] = useState(initialImageUrls); // it is name 312354312312312.png by uuid
   const [imageUrls, setImageUrls] = useState();
 
   React.useEffect(() => {
     async function getImageFn() {
-      const urls = await fetchImages(filesUploaded);
+      const urls = await fetchImages(initialImageUrls);
       setImageUrls(urls);
     }
-    getImageFn();
-  }, [filesUploaded]);
+    initialImageUrls && getImageFn();
+  }, []);
 
   const onFileChange = (event) => {
     console.log("onFileChange - first file in event", event.target.files[0]);
@@ -43,11 +45,13 @@ export default function () {
     );
     console.log("keyReturned", keysReturned);
     setFilesUploaded(keysReturned);
+    const urls = await fetchImages(keysReturned);
+    setImageUrls(urls);
     return keysReturned;
   };
 
   /**
-   * 
+   *
    * @param {*} name such as abc.jpg
    * @param {*} path such as property/
    */
@@ -74,6 +78,6 @@ export default function () {
     fetchImages,
     fetchImage,
     imageUrls,
-    setImageUrls
+    setImageUrls,
   };
 }

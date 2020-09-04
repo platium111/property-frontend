@@ -4,8 +4,8 @@ import useUpload from "../../_hooks/useUpload/index";
 import { AWS_CONFIG } from "../../config";
 const { Meta } = Card;
 
-export const PropertyCard = ({ property }) => {
-  const { description, itemName, price } = property;
+export const PropertyCard = ({ property, setClickedPropertyId, setDisplayDetailItem }) => {
+  const { description, itemName, price, id } = property;
 
   const { fetchImage } = useUpload();
   const [firstImageUrl, setFirstImageUrl] = useState();
@@ -25,10 +25,15 @@ export const PropertyCard = ({ property }) => {
     };
 
     fetchImageFn();
-  }, [property]);
+  }, []);
+
+  const handleClick = () => {
+    setDisplayDetailItem(true);
+    setClickedPropertyId(id)
+  }
 
   return (
-    <div>
+    <div onClick={handleClick}>
       <Card
         key={`${property.id}-card`}
         hoverable
@@ -45,14 +50,14 @@ export const PropertyCard = ({ property }) => {
   );
 };
 
-export default function PropertyCards({ properties }) {
+export default function PropertyCards({ properties, setClickedPropertyId, setDisplayDetailItem }) {
   const colArray =
     properties &&
     properties.length > 0 &&
     properties.map((property) => {
       return (
-        <Col span={8}>
-          <PropertyCard key={property.id} property={property} />
+        <Col span={8} key={property.id}>
+          <PropertyCard  property={property} setClickedPropertyId={setClickedPropertyId} setDisplayDetailItem={setDisplayDetailItem} />
         </Col>
       );
     });

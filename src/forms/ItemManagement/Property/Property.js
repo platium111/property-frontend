@@ -11,12 +11,37 @@ import { layout, tailLayout } from "./index.style";
 
 const { Title } = Typography;
 
+export const PROPERTY_STATUS = {
+  edit: 'edit',
+  new: 'new'
+}
+
 export default (props) => {
-  const { onFileChange, onFileUpload, imageUrls } = props;
+  const {
+    type,
+    itemName,
+    modal,
+    year,
+    customerName,
+    description,
+    price,
+    status,
+    onFileChange,
+    onFileUpload,
+    imageUrls,
+  } = props;
 
   return (
     <Formik
-      initialValues={{}}
+      initialValues={{
+        type,
+        itemName,
+        modal,
+        year,
+        customerName,
+        description,
+        price,
+      }}
       /* validate={(values) => {
         const errors = {};
         if (!values.email) {
@@ -51,7 +76,7 @@ export default (props) => {
               marginBottom: "20px",
             }}
           >
-            Thêm Đồ Mới
+            {status === PROPERTY_STATUS.add ? 'Thêm Đồ Mới' : "Sửa thông tin đồ"}
           </Title>
           <Form {...layout}>
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
@@ -114,7 +139,7 @@ export default (props) => {
                 disabled={props.isSubmitting}
                 htmlType="submit"
               >
-                Tạo mới
+                {status === PROPERTY_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
               </SubmitButton>
             </FormItem>
             <DebugValues {...props} />

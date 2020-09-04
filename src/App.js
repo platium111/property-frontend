@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./App.css";
-import ItemManagement from "./forms/ItemManagement/NewItem/index";
+import ItemManagement from "./forms/ItemManagement/Property/index";
 import "antd/dist/antd.css";
 import { Layout, Row, Col, Menu } from "antd";
 import { AuthenProvider, store } from "./context/index";

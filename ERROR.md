@@ -104,4 +104,5 @@ query MyQuery {
 + `span` to define length of COl
 + need to have `Row` contains `Col` to have columns style which applies span
 - [beginsWith_contains] cannot get correct data with `contains` -> so use `beginsWith` 
-
+- [unmount_react] believe in debug console log error -> see useEffect with [property] -> do we need property? -> result is not because it always render one time.
+Errors because it is one item in map
