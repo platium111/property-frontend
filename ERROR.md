@@ -99,3 +99,9 @@ query MyQuery {
 + after submit, images can be displayed and the next time, it will be new images
 
 + [TODO_textarea] cannot reset value using formik, even using <Field>
+
+4/9/2020
++ `span` to define length of COl
++ need to have `Row` contains `Col` to have columns style which applies span
+- [beginsWith_contains] cannot get correct data with `contains` -> so use `beginsWith` 
+

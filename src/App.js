@@ -62,7 +62,7 @@ const App = (props) => {
             }}
           >
             <Row justify="center">
-              <Col span={12} style={{ border: "2px solid red" }}>
+              <Col span={16} style={{ border: "2px solid red" }}>
                 <Switch>
                   <Route exact path="/">
                     <ItemManagement />

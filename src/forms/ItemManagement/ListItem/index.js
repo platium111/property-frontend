@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Input } from "antd";
 import { searchListProperty } from "../../../graphql/customQuery";
+import {listPropertys} from "../../../graphql/queries"
 import gql from "graphql-tag";
 import { ApolloContext } from "react-apollo";
 import PropertyCards from "../../../components/propertyCards/index";
@@ -19,6 +20,8 @@ async function findProperty(client, text) {
   const {
     data: { listPropertys },
   } = queryResult;
+
+  console.log('found items:', queryResult)
   return listPropertys?.items;
 }
 

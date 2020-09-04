@@ -1,6 +1,6 @@
 export const searchListProperty = `
 query searchListProperty($searchQuery: String) {
-  listPropertys(filter: { itemName: { contains: $searchQuery } }) {
+  listPropertys(filter: { itemName: { beginsWith: $searchQuery } }) {
     items {
       id
       description
