@@ -9,7 +9,8 @@ import awsconfig from "./aws-exports";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Example from "./forms/ItemManagement/ListItem/index";
+import ListItem from "./forms/ItemManagement/ListItem/index";
+import MonthReport from "./forms/MonthReport";
 import { SITE } from "./_constants/index";
 
 import AWSAppSyncClient from "aws-appsync";
@@ -34,7 +35,6 @@ const client = new AWSAppSyncClient({
 });
 
 const App = (props) => {
-
   return (
     <AuthenProvider>
       <AmplifySignOut />
@@ -50,6 +50,9 @@ const App = (props) => {
               <Menu.Item key="2">
                 <Link to="/list">{SITE.NAV_FIND}</Link>
               </Menu.Item>
+              <Menu.Item key="3">
+                <Link to="/month-report">{SITE.NAV_MONTH_REPORT}</Link>
+              </Menu.Item>
             </Menu>
           </Header>
 
@@ -62,16 +65,23 @@ const App = (props) => {
             }}
           >
             <Row justify="center">
-              <Col span={16} style={{ border: "2px solid red" }}>
-                <Switch>
-                  <Route exact path="/">
+              <Switch>
+                <Route exact path="/">
+                  <Col span={16} style={{ border: "2px solid red" }}>
                     <ItemManagement />
-                  </Route>
-                  <Route path="/list">
-                    <Example />
-                  </Route>
-                </Switch>
-              </Col>
+                  </Col>
+                </Route>
+                <Route path="/list">
+                  <Col span={16} style={{ border: "2px solid red" }}>
+                    <ListItem />
+                  </Col>
+                </Route>
+                <Route path="/month-report">
+                  <Col span={24} style={{ border: "2px solid red" }}>
+                    <MonthReport />
+                  </Col>
+                </Route>
+              </Switch>
             </Row>
           </Content>
 

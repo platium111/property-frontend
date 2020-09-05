@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Input } from "antd";
 import { searchListProperty } from "../../../graphql/customQuery";
-import { listPropertys } from "../../../graphql/queries";
 import gql from "graphql-tag";
 import { ApolloContext } from "react-apollo";
 import PropertyCards from "../../../components/propertyCards/index";

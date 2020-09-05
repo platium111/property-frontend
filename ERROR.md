@@ -109,3 +109,4 @@ Errors because it is one item in map
 
 5/9/2020
 - fixing add and update property
+- configure in aws which only allows to have admin register
