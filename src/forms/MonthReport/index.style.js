@@ -27,5 +27,14 @@ export default styled.div`
         border-right: 0;
       }
     }
+
+    tfoot {
+      tr:first-child {
+        td {
+          border-top: 2px solid black;
+        }
+      }
+      font-weight: bolder;
+    }
   }
 `;

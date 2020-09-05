@@ -10,6 +10,8 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ListItem from "./forms/ItemManagement/ListItem/index";
+import CreateCustomer from './forms/CustomerManagement/Customer/index';
+import ListCustomer from './forms/CustomerManagement/ListCustomer/index'
 import MonthReport from "./forms/MonthReport";
 import { SITE } from "./_constants/index";
 
@@ -45,12 +47,18 @@ const App = (props) => {
             <div className="logo" />
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
-                <Link to="/">{SITE.NAV_CREATE_NEW}</Link>
+                <Link to="/create-property">{SITE.NAV_CREATE_NEW_PROPERTY}</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/list">{SITE.NAV_FIND}</Link>
+                <Link to="/list-property">{SITE.NAV_FIND_PROPERTY}</Link>
               </Menu.Item>
               <Menu.Item key="3">
+                <Link to="/create-customer">{SITE.NAV_CREATE_NEW_CUSTOMER}</Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to="/list-customer">{SITE.NAV_FIND_CUSTOMER}</Link>
+              </Menu.Item>
+              <Menu.Item key="5">
                 <Link to="/month-report">{SITE.NAV_MONTH_REPORT}</Link>
               </Menu.Item>
             </Menu>
@@ -66,14 +74,24 @@ const App = (props) => {
           >
             <Row justify="center">
               <Switch>
-                <Route exact path="/">
+                <Route exact path="/create-property">
                   <Col span={16} style={{ border: "2px solid red" }}>
                     <ItemManagement />
                   </Col>
                 </Route>
-                <Route path="/list">
+                <Route path="/list-property">
                   <Col span={16} style={{ border: "2px solid red" }}>
                     <ListItem />
+                  </Col>
+                </Route>
+                <Route path="/create-customer">
+                  <Col span={16} style={{ border: "2px solid red" }}>
+                    <CreateCustomer />
+                  </Col>
+                </Route>
+                <Route path="/list-customer">
+                  <Col span={16} style={{ border: "2px solid red" }}>
+                    <ListCustomer />
                   </Col>
                 </Route>
                 <Route path="/month-report">
