@@ -4,7 +4,7 @@ import { Formik, ErrorMessage } from "formik";
 import { Form, Input, Select, FormItem, SubmitButton } from "formik-antd";
 import { Typography } from "antd";
 import { DebugValues, GalleryView } from "../../../components/index";
-import { create } from "../../../services/generic/index";
+import { create, update } from "../../../services/generic/index";
 import { v4 as uuidv4 } from "uuid";
 import { buildGalleryPhotos } from "../../../_utils/index";
 import { layout, tailLayout } from "./index.style";
@@ -18,6 +18,7 @@ export const PROPERTY_STATUS = {
 
 export default (props) => {
   const {
+    id,
     type,
     itemName,
     modal,
@@ -29,6 +30,7 @@ export default (props) => {
     onFileChange,
     onFileUpload,
     imageUrls,
+    imagesUrlProps
   } = props;
 
   return (
@@ -56,14 +58,29 @@ export default (props) => {
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log("--onSubmit-->", values);
         // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
-        const filesUploaded = await onFileUpload();
-        await create({
-          ...values,
-          id: uuidv4(),
-          imageUrls: filesUploaded || [],
-        });
+        let filesUploaded = await onFileUpload() || imagesUrlProps;
+        switch (status) {
+          case PROPERTY_STATUS.add:
+            await create({
+              ...values,
+              id: uuidv4(),
+              imageUrls: filesUploaded || [],
+            });
+            resetForm({ values: "" });
+            break;
+          case PROPERTY_STATUS.edit:
+            // filesUploaded = 
+            await update({
+              ...values,
+              id: id,
+              imageUrls: filesUploaded,
+            });
+            break;
+          default:
+            break;
+        }
+
         setSubmitting(false);
-        resetForm({ values: "" });
       }}
     >
       {(props) => (

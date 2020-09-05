@@ -6,10 +6,11 @@ import NewItem from "./Property";
 
 export default ({property}) => {
   // const globalState = useContext(store);
-  const { onFileChange, onFileUpload, imageUrls } = useUpload(property);
+  const {imageUrls: imagesUrlProps, ...restProps} = property || {};
+  const { onFileChange, onFileUpload, imageUrls } = useUpload(property) || {};
 
   console.log('property index', property)
 
   return (
-    <NewItem {...property} onFileChange={onFileChange} onFileUpload={onFileUpload} imageUrls={imageUrls}/>);
+    <NewItem {...restProps} imagesUrlProps={imagesUrlProps} onFileChange={onFileChange} onFileUpload={onFileUpload} imageUrls={imageUrls}/>);
 };

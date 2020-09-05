@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Input } from "antd";
 import { searchListProperty } from "../../../graphql/customQuery";
 import { listPropertys } from "../../../graphql/queries";
@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import { ApolloContext } from "react-apollo";
 import PropertyCards from "../../../components/propertyCards/index";
 import EditItem from "../Property";
-import {PROPERTY_STATUS} from "../Property/Property";
+import { PROPERTY_STATUS } from "../Property/Property";
 
 const { Search } = Input;
 
@@ -29,27 +29,42 @@ async function findProperty(client, text) {
 
 export default function (props) {
   const { client } = useContext(ApolloContext);
+  const [searchText, setSearchText] = useState();
   const [foundProperties, setFoundProperties] = useState([]);
   const [displayDetailItem, setDisplayDetailItem] = useState(false);
   const [clickedPropertyId, setClickedPropertyId] = useState();
 
-  const clickedProperty = foundProperties.find(property => property.id === clickedPropertyId);
+  const clickedProperty = foundProperties.find(
+    (property) => property.id === clickedPropertyId
+  );
 
+  // TODO after update, if not change search query, data looks the same but actually updated in aws
+  useEffect(() => {
+    const searchTextFn = async () => {
+      const items = await findProperty(client, searchText);
+      items && setFoundProperties(items);
+    };
+
+    if (searchText) {
+      searchTextFn();
+    }
+  });
   return (
     <div>
       <Search
-            placeholder={FIND_PROPERTY}
-            enterButton={FIND_BUTTON}
-            size="large"
-            onSearch={async (value) => {
-              const items = await findProperty(client, value);
-              items && setFoundProperties(items);
-              setDisplayDetailItem(false)
-            }}
-          />
+        placeholder={FIND_PROPERTY}
+        enterButton={FIND_BUTTON}
+        size="large"
+        onSearch={(value) => {
+          setSearchText(value);
+          setDisplayDetailItem(false);
+        }}
+      />
       {/* Display list or detail cards */}
       {displayDetailItem ? (
-        <EditItem property={{...clickedProperty, status: PROPERTY_STATUS.edit}} />
+        <EditItem
+          property={{ ...clickedProperty, status: PROPERTY_STATUS.edit }}
+        />
       ) : (
         <>
           <PropertyCards

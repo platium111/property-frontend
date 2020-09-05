@@ -3,13 +3,14 @@ import { useState } from "react";
 import Storage from "@aws-amplify/storage";
 import { v4 as uuidv4 } from "uuid";
 import { AWS_CONFIG } from "../../config";
+import {isEmpty} from 'lodash';
 
 export default function (property = {}) {
   const { imageUrls: initialImageUrls } = property;
 
   const [fileList, setFileList] = useState([]);
   const [filesUploaded, setFilesUploaded] = useState(initialImageUrls); // it is name 312354312312312.png by uuid
-  const [imageUrls, setImageUrls] = useState();
+  const [imageUrls, setImageUrls] = useState(); // real image url to amazon
 
   React.useEffect(() => {
     async function getImageFn() {
@@ -27,27 +28,30 @@ export default function (property = {}) {
   const onFileUpload = async () => {
     console.log("onFileUpload running");
     // TODO upload multiple file in one request
-    const keysReturned = await Promise.all(
-      Object.keys(fileList.selectedFile).map(async (index) => {
-        const eachFile = fileList.selectedFile[index];
-        const fileName = `${uuidv4()}.${eachFile.type.split("/")[1]}`;
+    let keysReturned;
+    if (!isEmpty(fileList)) {
+      keysReturned = await Promise.all(
+        Object.keys(fileList.selectedFile).map(async (index) => {
+          const eachFile = fileList.selectedFile[index];
+          const fileName = `${uuidv4()}.${eachFile.type.split("/")[1]}`;
 
-        const { key } = await Storage.put(
-          `${AWS_CONFIG.PROPERTY_IMAGE_PATH}/${fileName}`,
-          eachFile,
-          {
-            contentType: eachFile.type,
-          }
-        );
-        console.log("Done upload key: ", key?.split("/")[1]);
-        return key?.split("/")[1];
-      })
-    );
-    console.log("keyReturned", keysReturned);
-    setFilesUploaded(keysReturned);
-    const urls = await fetchImages(keysReturned);
+          const { key } = await Storage.put(
+            `${AWS_CONFIG.PROPERTY_IMAGE_PATH}/${fileName}`,
+            eachFile,
+            {
+              contentType: eachFile.type,
+            }
+          );
+          console.log("Done upload key: ", key?.split("/")[1]);
+          return key?.split("/")[1];
+        })
+      );
+      setFilesUploaded(keysReturned);
+      console.log("keyReturned", keysReturned);
+    }
+    const urls = await fetchImages(keysReturned || filesUploaded);
     setImageUrls(urls);
-    return keysReturned;
+    return keysReturned || filesUploaded;
   };
 
   /**

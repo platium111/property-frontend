@@ -106,3 +106,6 @@ query MyQuery {
 - [beginsWith_contains] cannot get correct data with `contains` -> so use `beginsWith` 
 - [unmount_react] believe in debug console log error -> see useEffect with [property] -> do we need property? -> result is not because it always render one time.
 Errors because it is one item in map
+
+5/9/2020
+- fixing add and update property
