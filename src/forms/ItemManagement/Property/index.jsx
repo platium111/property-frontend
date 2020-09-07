@@ -8,9 +8,6 @@ export default ({property}) => {
   // const globalState = useContext(store);
   const {imageUrls: imagesUrlProps, ...restProps} = property || {};
   const { onFileChange, onFileUpload, imageUrls } = useUpload(property) || {};
-
-  console.log('property index', property)
-
   return (
     <NewItem {...restProps} imagesUrlProps={imagesUrlProps} onFileChange={onFileChange} onFileUpload={onFileUpload} imageUrls={imageUrls}/>);
 };

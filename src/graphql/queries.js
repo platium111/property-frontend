@@ -12,8 +12,12 @@ export const getProperty = /* GraphQL */ `
       year
       customerName
       itemName
-      modal
       price
+      color
+      frameNumber
+      machineNumber
+      plateNumber
+      dateBorrow
       createdAt
       updatedAt
     }
@@ -35,8 +39,12 @@ export const listPropertys = /* GraphQL */ `
         year
         customerName
         itemName
-        modal
         price
+        color
+        frameNumber
+        machineNumber
+        plateNumber
+        dateBorrow
         createdAt
         updatedAt
       }

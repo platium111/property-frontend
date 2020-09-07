@@ -7,6 +7,10 @@ type Property @model {
   year: String
   customerName: String
   itemName: String
-  modal: String
   price: String
+  color: String
+  frameNumber: String
+  machineNumber: String
+  plateNumber: String
+  dateBorrow: String
 }

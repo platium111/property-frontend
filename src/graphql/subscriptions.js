@@ -12,8 +12,12 @@ export const onCreateProperty = /* GraphQL */ `
       year
       customerName
       itemName
-      modal
       price
+      color
+      frameNumber
+      machineNumber
+      plateNumber
+      dateBorrow
       createdAt
       updatedAt
     }
@@ -30,8 +34,12 @@ export const onUpdateProperty = /* GraphQL */ `
       year
       customerName
       itemName
-      modal
       price
+      color
+      frameNumber
+      machineNumber
+      plateNumber
+      dateBorrow
       createdAt
       updatedAt
     }
@@ -48,8 +56,12 @@ export const onDeleteProperty = /* GraphQL */ `
       year
       customerName
       itemName
-      modal
       price
+      color
+      frameNumber
+      machineNumber
+      plateNumber
+      dateBorrow
       createdAt
       updatedAt
     }

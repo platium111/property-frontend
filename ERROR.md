@@ -110,3 +110,8 @@ Errors because it is one item in map
 5/9/2020
 - fixing add and update property
 - configure in aws which only allows to have admin register
+
+7/9/2020
+- Update few more fields in schema -> need to `amplify push` and change schema
+- Input, Select, TextArea components which includes Label
+- useField hooks which is a bit tricky, need to use middle components, after normal input

@@ -14,10 +14,9 @@
             "output": {
                 "authConfig": {
                     "defaultAuthentication": {
-                        "authenticationType": "API_KEY",
-                        "apiKeyConfig": {
-                            "apiKeyExpirationDays": 7,
-                            "description": "graphql for property app"
+                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "userPoolConfig": {
+                            "userPoolId": "authpropertyapp9c4f825f"
                         }
                     },
                     "additionalAuthenticationProviders": []

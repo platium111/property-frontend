@@ -1,5 +1,11 @@
 {
     "AppSyncApiName": "propertyapp",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authpropertyapp9c4f825f",
+            "Outputs.UserPoolId"
+        ]
+    }
 }
