@@ -1,7 +1,7 @@
 // Render Prop
 import React from 'react'
-import { Formik, ErrorMessage, useField } from 'formik'
-import { Form, Input, Select, FormItem, SubmitButton } from 'formik-antd'
+import { Formik} from 'formik'
+import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
 import { Typography } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
 import { create, update } from '../../../services/generic/index'
@@ -11,7 +11,7 @@ import { layout, tailLayout } from './index.style'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
 import FieldArea from "../../../components/TextArea"
-import * as Yup from 'yup'
+import validation from "./validate"
 
 const { Title } = Typography
 
@@ -29,7 +29,7 @@ export default (props) => {
     customerName,
     description,
     price,
-    status = "add",
+    status = PROPERTY_STATUS.add,
     color,
     frameNumber,
     machineNumber,
@@ -56,9 +56,7 @@ export default (props) => {
         description,
         price,
       }}
-      validationSchema={Yup.object({
-        itemName: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
-      })}
+      validationSchema={validation}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log('--onSubmit-->', values)
         // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
