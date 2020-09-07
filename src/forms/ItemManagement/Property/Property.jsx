@@ -12,25 +12,29 @@ import { layout, tailLayout } from "./index.style";
 const { Title } = Typography;
 
 export const PROPERTY_STATUS = {
-  edit: 'edit',
-  new: 'new'
-}
+  edit: "edit",
+  new: "new",
+};
 
 export default (props) => {
   const {
     id,
     type,
     itemName,
-    modal,
     year,
     customerName,
     description,
     price,
     status,
+    color,
+    frameNumber,
+    machineNumber,
+    plateNumber,
+    dateBorrow,
     onFileChange,
     onFileUpload,
     imageUrls,
-    imagesUrlProps
+    imagesUrlProps,
   } = props;
 
   return (
@@ -38,8 +42,12 @@ export default (props) => {
       initialValues={{
         type,
         itemName,
-        modal,
         year,
+        color,
+        frameNumber,
+        machineNumber,
+        plateNumber,
+        dateBorrow,
         customerName,
         description,
         price,
@@ -58,7 +66,7 @@ export default (props) => {
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log("--onSubmit-->", values);
         // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
-        let filesUploaded = await onFileUpload() || imagesUrlProps;
+        let filesUploaded = (await onFileUpload()) || imagesUrlProps;
         switch (status) {
           case PROPERTY_STATUS.add:
             await create({
@@ -69,7 +77,7 @@ export default (props) => {
             resetForm({ values: "" });
             break;
           case PROPERTY_STATUS.edit:
-            // filesUploaded = 
+            // filesUploaded =
             await update({
               ...values,
               id: id,
@@ -93,7 +101,9 @@ export default (props) => {
               marginBottom: "20px",
             }}
           >
-            {status === PROPERTY_STATUS.add ? 'Thêm Đồ Mới' : "Sửa thông tin đồ"}
+            {status === PROPERTY_STATUS.add
+              ? "Thêm Đồ Mới"
+              : "Sửa thông tin đồ"}
           </Title>
           <Form {...layout}>
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
@@ -110,14 +120,55 @@ export default (props) => {
               <ErrorMessage name="itemName" component="div" />
             </FormItem>
 
-            <FormItem label="Model đồ" name="modal">
-              <Input type="textfield" name="modal" placeholder="Model đồ" />
-              <ErrorMessage name="modal" component="div" />
+            <FormItem label="Màu sắc" name="color">
+              <Input type="textfield" name="color" placeholder="Màu sắc" />
+              <ErrorMessage name="color" component="div" />
             </FormItem>
 
             <FormItem label="Năm sản xuất" name="year">
               <Input type="textfield" name="year" placeholder="Năm sản xuất" />
               <ErrorMessage name="year" component="div" />
+            </FormItem>
+
+            <FormItem label="Số khung" name="frameNumber">
+              <Input
+                type="textfield"
+                name="frameNumber"
+                placeholder="Số khung"
+              />
+              <ErrorMessage name="frameNumber" component="div" />
+            </FormItem>
+
+            <FormItem label="Số máy" name="machineNumber">
+              <Input
+                type="textfield"
+                name="machineNumber"
+                placeholder="Số máy"
+              />
+              <ErrorMessage name="machineNumber" component="div" />
+            </FormItem>
+
+            <FormItem label="Biển kiểm soát" name="plateNumber">
+              <Input
+                type="textfield"
+                name="plateNumber"
+                placeholder="Biển kiểm soát"
+              />
+              <ErrorMessage name="plateNumber" component="div" />
+            </FormItem>
+
+            <FormItem label="Ngày vay" name="dateBorrow">
+              <Input
+                type="textfield"
+                name="dateBorrow"
+                placeholder="Ngày vay"
+              />
+              <ErrorMessage name="dateBorrow" component="div" />
+            </FormItem>
+
+            <FormItem label="Giá" name="price">
+              <Input type="textarea" name="price" placeholder="Giá" />
+              <ErrorMessage name="price" component="div" />
             </FormItem>
 
             <FormItem label="Tên khách hàng" name="customerName">
@@ -136,11 +187,6 @@ export default (props) => {
               <ErrorMessage name="description" component="div" />
             </FormItem>
 
-            <FormItem label="Giá" name="price">
-              <Input type="textarea" name="price" placeholder="Giá" />
-              <ErrorMessage name="price" component="div" />
-            </FormItem>
-
             {/* UPLOAD ZONE */}
             <FormItem label="Tải ảnh lên" name="itemImages">
               <input type="file" multiple onChange={(e) => onFileChange(e)} />
@@ -156,7 +202,7 @@ export default (props) => {
                 disabled={props.isSubmitting}
                 htmlType="submit"
               >
-                {status === PROPERTY_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
+                {status === PROPERTY_STATUS.add ? "Tạo mới" : "Cập nhập"}
               </SubmitButton>
             </FormItem>
             <DebugValues {...props} />
