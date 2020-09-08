@@ -25,7 +25,7 @@ export const PropertyCard = ({ property, setClickedPropertyId, setDisplayDetailI
     };
 
     fetchImageFn();
-  }, []);
+  }, [property]);
 
   const handleClick = () => {
     setDisplayDetailItem(true);

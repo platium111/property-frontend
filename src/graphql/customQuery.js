@@ -11,6 +11,11 @@ query searchListProperty($searchQuery: String) {
       customerName
       itemName
       price
+      color
+      dateBorrow
+      frameNumber
+      machineNumber
+      plateNumber
     }
   }
 }

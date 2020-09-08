@@ -4,18 +4,18 @@ import { Input, FormItem } from 'formik-antd'
 import useConditional from '../../_hooks/useConditional'
 import { useEffect } from 'react'
 
-export default ({ label, condition, ...props }) => {
+export default ({ label, condition, compareType, placeholder = label, ...props }) => {
   // field has name, value, event
   const { name } = props
   const [field] = useField(props)
   const { values } = useFormikContext()
-  const { result: isShow } = useConditional({ values, condition, isShow: true })
+  const { result: isShow } = useConditional({ values, condition, isShow: true, compareType })
 
   return (
     isShow && (
       <>
         <FormItem label={label} name={name}>
-          <Input {...field} {...props} />
+          <Input  {...field} {...props} placeholder={placeholder} />
         </FormItem>
       </>
     )

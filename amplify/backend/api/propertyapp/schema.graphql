@@ -14,3 +14,46 @@ type Property @model {
   plateNumber: String
   dateBorrow: String
 }
+
+type Customer @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  middleName: String
+  fatherName: String
+  motherName: String
+  phoneNumber: String
+  dateOfBirth: String
+  motherPhone: String
+  fatherPhone: String
+  address: Address
+  loanType: String
+  propertyInfo: [Property]
+  studentInfo: StudentCard
+  dateBorrow: String
+  borrowPurpose: String
+  datePay: String
+  identityCardNo: String
+  issueDate: String
+  note: String
+  customerImages: [String]
+}
+
+type StudentCard @model {
+  id: ID!
+  cardNumber: String!
+  universityName: String
+  gpa: Float
+  graduationYear: String
+}
+
+type Address @model {
+  homeNumber: String
+  street: String
+  hamlet: String
+  village: String
+  district: String
+  province: String
+  lane: String
+  alley: String
+}

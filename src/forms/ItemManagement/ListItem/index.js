@@ -41,7 +41,7 @@ export default function (props) {
   useEffect(() => {
     const searchTextFn = async () => {
       const items = await findProperty(client, searchText);
-      items && setFoundProperties(items);
+      setFoundProperties(items);
     };
 
     if (searchText) {
@@ -54,7 +54,7 @@ export default function (props) {
         placeholder={FIND_PROPERTY}
         enterButton={FIND_BUTTON}
         size="large"
-        onSearch={(value) => {
+        onSearch={async(value) => {
           setSearchText(value);
           setDisplayDetailItem(false);
         }}

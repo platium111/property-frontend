@@ -7,12 +7,11 @@ import { DebugValues, GalleryView } from '../../../components/index'
 import { create, update } from '../../../services/generic/index'
 import { v4 as uuidv4 } from 'uuid'
 import { buildGalleryPhotos } from '../../../_utils/index'
-import { layout, tailLayout } from './index.style'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
 import FieldArea from '../../../components/TextArea'
 import validation from './validate'
-import { header } from './index.style'
+import { header, layout, tailLayout } from '../../_style'
 
 const { Title } = Typography
 

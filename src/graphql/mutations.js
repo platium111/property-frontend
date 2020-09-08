@@ -76,3 +76,312 @@ export const deleteProperty = /* GraphQL */ `
     }
   }
 `;
+export const createCustomer = /* GraphQL */ `
+  mutation CreateCustomer(
+    $input: CreateCustomerInput!
+    $condition: ModelCustomerConditionInput
+  ) {
+    createCustomer(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      middleName
+      fatherName
+      motherName
+      phoneNumber
+      dateOfBirth
+      motherPhone
+      fatherPhone
+      address {
+        homeNumber
+        street
+        hamlet
+        village
+        district
+        province
+        lane
+        alley
+        createdAt
+        updatedAt
+      }
+      loanType
+      propertyInfo {
+        id
+        description
+        imageUrls
+        type
+        userId
+        year
+        customerName
+        itemName
+        price
+        color
+        frameNumber
+        machineNumber
+        plateNumber
+        dateBorrow
+        createdAt
+        updatedAt
+      }
+      studentInfo {
+        id
+        cardNumber
+        universityName
+        gpa
+        graduationYear
+        createdAt
+        updatedAt
+      }
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCustomer = /* GraphQL */ `
+  mutation UpdateCustomer(
+    $input: UpdateCustomerInput!
+    $condition: ModelCustomerConditionInput
+  ) {
+    updateCustomer(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      middleName
+      fatherName
+      motherName
+      phoneNumber
+      dateOfBirth
+      motherPhone
+      fatherPhone
+      address {
+        homeNumber
+        street
+        hamlet
+        village
+        district
+        province
+        lane
+        alley
+        createdAt
+        updatedAt
+      }
+      loanType
+      propertyInfo {
+        id
+        description
+        imageUrls
+        type
+        userId
+        year
+        customerName
+        itemName
+        price
+        color
+        frameNumber
+        machineNumber
+        plateNumber
+        dateBorrow
+        createdAt
+        updatedAt
+      }
+      studentInfo {
+        id
+        cardNumber
+        universityName
+        gpa
+        graduationYear
+        createdAt
+        updatedAt
+      }
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCustomer = /* GraphQL */ `
+  mutation DeleteCustomer(
+    $input: DeleteCustomerInput!
+    $condition: ModelCustomerConditionInput
+  ) {
+    deleteCustomer(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      middleName
+      fatherName
+      motherName
+      phoneNumber
+      dateOfBirth
+      motherPhone
+      fatherPhone
+      address {
+        homeNumber
+        street
+        hamlet
+        village
+        district
+        province
+        lane
+        alley
+        createdAt
+        updatedAt
+      }
+      loanType
+      propertyInfo {
+        id
+        description
+        imageUrls
+        type
+        userId
+        year
+        customerName
+        itemName
+        price
+        color
+        frameNumber
+        machineNumber
+        plateNumber
+        dateBorrow
+        createdAt
+        updatedAt
+      }
+      studentInfo {
+        id
+        cardNumber
+        universityName
+        gpa
+        graduationYear
+        createdAt
+        updatedAt
+      }
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createStudentCard = /* GraphQL */ `
+  mutation CreateStudentCard(
+    $input: CreateStudentCardInput!
+    $condition: ModelStudentCardConditionInput
+  ) {
+    createStudentCard(input: $input, condition: $condition) {
+      id
+      cardNumber
+      universityName
+      gpa
+      graduationYear
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateStudentCard = /* GraphQL */ `
+  mutation UpdateStudentCard(
+    $input: UpdateStudentCardInput!
+    $condition: ModelStudentCardConditionInput
+  ) {
+    updateStudentCard(input: $input, condition: $condition) {
+      id
+      cardNumber
+      universityName
+      gpa
+      graduationYear
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteStudentCard = /* GraphQL */ `
+  mutation DeleteStudentCard(
+    $input: DeleteStudentCardInput!
+    $condition: ModelStudentCardConditionInput
+  ) {
+    deleteStudentCard(input: $input, condition: $condition) {
+      id
+      cardNumber
+      universityName
+      gpa
+      graduationYear
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createAddress = /* GraphQL */ `
+  mutation CreateAddress(
+    $input: CreateAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    createAddress(input: $input, condition: $condition) {
+      homeNumber
+      street
+      hamlet
+      village
+      district
+      province
+      lane
+      alley
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAddress = /* GraphQL */ `
+  mutation UpdateAddress(
+    $input: UpdateAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    updateAddress(input: $input, condition: $condition) {
+      homeNumber
+      street
+      hamlet
+      village
+      district
+      province
+      lane
+      alley
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAddress = /* GraphQL */ `
+  mutation DeleteAddress(
+    $input: DeleteAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    deleteAddress(input: $input, condition: $condition) {
+      homeNumber
+      street
+      hamlet
+      village
+      district
+      province
+      lane
+      alley
+      createdAt
+      updatedAt
+    }
+  }
+`;
