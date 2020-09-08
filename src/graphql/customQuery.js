@@ -10,7 +10,6 @@ query searchListProperty($searchQuery: String) {
       year
       customerName
       itemName
-      modal
       price
     }
   }

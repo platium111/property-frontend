@@ -13,3 +13,9 @@ export const tailLayout = {
     span: 24,
   },
 };
+
+export const header = {
+  margin: '2px auto',
+  textAlign: 'center',
+  marginBottom: '20px',
+}

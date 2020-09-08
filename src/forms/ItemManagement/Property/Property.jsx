@@ -1,6 +1,6 @@
 // Render Prop
 import React from 'react'
-import { Formik} from 'formik'
+import { Formik } from 'formik'
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
 import { Typography } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
@@ -10,8 +10,9 @@ import { buildGalleryPhotos } from '../../../_utils/index'
 import { layout, tailLayout } from './index.style'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
-import FieldArea from "../../../components/TextArea"
-import validation from "./validate"
+import FieldArea from '../../../components/TextArea'
+import validation from './validate'
+import { header } from './index.style'
 
 const { Title } = Typography
 
@@ -41,6 +42,34 @@ export default (props) => {
     imagesUrlProps,
   } = props
 
+  async function handleSubmit(values, { setSubmitting, resetForm }) {
+    console.log('--onSubmit-->', values)
+    // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
+    let filesUploaded = (await onFileUpload()) || imagesUrlProps
+    console.log('fileUploaded', filesUploaded)
+    switch (status) {
+      case PROPERTY_STATUS.add:
+        await create({
+          ...values,
+          id: uuidv4(),
+          imageUrls: filesUploaded || [],
+        })
+        resetForm({ values: {} })
+        break
+      case PROPERTY_STATUS.edit:
+        await update({
+          ...values,
+          id: id,
+          imageUrls: filesUploaded,
+        })
+        break
+      default:
+        break
+    }
+
+    setSubmitting(false);
+  }
+
   return (
     <Formik
       initialValues={{
@@ -57,54 +86,14 @@ export default (props) => {
         price,
       }}
       validationSchema={validation}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {
-        console.log('--onSubmit-->', values)
-        // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
-        let filesUploaded = (await onFileUpload()) || imagesUrlProps
-        switch (status) {
-          case PROPERTY_STATUS.add:
-            await create({
-              ...values,
-              id: uuidv4(),
-              imageUrls: filesUploaded || [],
-            })
-            resetForm({ values: {} })
-            break
-          case PROPERTY_STATUS.edit:
-            // filesUploaded =
-            await update({
-              ...values,
-              id: id,
-              imageUrls: filesUploaded,
-            })
-            break
-          default:
-            await create({
-              ...values,
-              id: uuidv4(),
-              imageUrls: filesUploaded || [],
-            })
-            resetForm({ values: {} })
-            break;
-        }
-
-        setSubmitting(false)
-      }}
+      onSubmit={handleSubmit}
     >
       {(props) => (
         <>
           {/* // <Space direction="vertical" align="center" size="middle" style={{width: "100%"}}> */}
-          <Title
-            style={{
-              margin: '2px auto',
-              textAlign: 'center',
-              marginBottom: '20px',
-            }}
-          >
-            {status === PROPERTY_STATUS.add ? 'Thêm Đồ Mới' : 'Sửa thông tin đồ'}
-          </Title>
+          <Title style={header}>{status === PROPERTY_STATUS.add ? 'Thêm Đồ Mới' : 'Sửa thông tin đồ'}</Title>
           <Form {...layout}>
-            {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */} 
+            {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
             <FieldSelect label="Loại vay" name="type" placeholder="Loại vay">
               <Select.Option value="">--Lựa chọn--</Select.Option>
               <Select.Option value="xe">Xe</Select.Option>
@@ -119,14 +108,13 @@ export default (props) => {
             <FieldInput label="Ngày vay" type="textfield" name="dateBorrow" placeholder="Ngày vay" />
             <FieldInput label="Giá" type="textarea" name="price" placeholder="Giá" />
             <FieldInput label="Tên khách hàng" type="textfield" name="customerName" placeholder="Tên khách hàng" />
-            {/* <FieldInput type="textfield" label="Mô tả" name="description" placeholder="Mô tả" /> */}
-            <FieldArea type="textfield" label="Mô tả" name="description" placeholder="Mô tả"  />
-            
+            <FieldArea type="textfield" label="Mô tả" name="description" placeholder="Mô tả" />
+
             {/* UPLOAD ZONE */}
             <FormItem label="Tải ảnh lên" name="itemImages">
               <input type="file" multiple onChange={(e) => onFileChange(e)} />
             </FormItem>
-
+            {/* Gallery images */}
             {imageUrls && <GalleryView photos={buildGalleryPhotos(imageUrls)} />}
 
             <FormItem {...tailLayout} name="submitBtn">
@@ -136,7 +124,6 @@ export default (props) => {
             </FormItem>
             <DebugValues {...props} />
           </Form>
-
           {/* // </Space> */}
         </>
       )}

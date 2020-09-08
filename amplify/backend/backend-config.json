@@ -19,7 +19,15 @@
                             "userPoolId": "authpropertyapp9c4f825f"
                         }
                     },
-                    "additionalAuthenticationProviders": []
+                    "additionalAuthenticationProviders": [
+                        {
+                            "authenticationType": "API_KEY",
+                            "apiKeyConfig": {
+                                "apiKeyExpirationDays": 7,
+                                "description": "new api key"
+                            }
+                        }
+                    ]
                 }
             }
         }

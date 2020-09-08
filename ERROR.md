@@ -115,3 +115,9 @@ Errors because it is one item in map
 - Update few more fields in schema -> need to `amplify push` and change schema
 - Input, Select, TextArea components which includes Label
 - useField hooks which is a bit tricky, need to use middle components, after normal input
+- introduce useCondition with mathjs, dot library
+
+8/9/2020
+- [authorization_in_aws] also need to login cognito in aws appsync
+- [authorization_apollo_search] in front end, 7 days it will out of session, so using jwtToken in AWSAppSyncClient
+- [modal_not_defined] after delete modal, need to update query
