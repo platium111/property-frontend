@@ -20,13 +20,13 @@ export default function (props) {
           result = evaluate(expressionWithValues);
           break;
         case "string":
-          const {isEqual = false} = condition;
+          const {noEqual: notEqual = false} = condition;
           const transformX = HandleBars.compile(condition.x);
           const transformY = HandleBars.compile(condition.y);
           const compareReturned = compareNatural(transformX(values), transformY(values));
           const isEqually = compareReturned === 0 ? true : false;
 
-          result = isEqual === false ? isEqually : !isEqually
+          result = notEqual === false ? isEqually : !isEqually
         default:
           break;
       }

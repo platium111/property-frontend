@@ -2,7 +2,6 @@ import React from 'react'
 import { useField, useFormikContext } from 'formik'
 import { Input, FormItem } from 'formik-antd'
 import useConditional from '../../_hooks/useConditional'
-import { useEffect } from 'react'
 
 export default ({ label, condition, compareType, placeholder = label, ...props }) => {
   // field has name, value, event
