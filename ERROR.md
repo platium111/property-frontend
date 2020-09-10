@@ -121,3 +121,14 @@ Errors because it is one item in map
 - [authorization_in_aws] also need to login cognito in aws appsync
 - [authorization_apollo_search] in front end, 7 days it will out of session, so using jwtToken in AWSAppSyncClient
 - [modal_not_defined] after delete modal, need to update query
+
+9/9/2020
+- Update schema for Customer include many other models
+
+10/9/2020
+- [auto_generate_id] using util.autoId() in vtl file
+- [fixing-nested_object_graphql] it generated code by modal which can see nested object but actually follow Modal which defines input. We can see that modal in aws. See CreateCustomerInput
+If Customer has Address, so Address needs to add first then get Id and use for Customer
+* I work with one-t0-many by just using @connnection with name
+* when we add nested object just add [id~from aws] which is in `schema` -> but when we get result it will have full nested object
+

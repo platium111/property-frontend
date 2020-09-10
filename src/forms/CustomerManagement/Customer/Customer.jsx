@@ -5,7 +5,6 @@ import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
 import { Typography, Row, Col } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
 import { create, update } from '../../../services/generic/index'
-import { v4 as uuidv4 } from 'uuid'
 import { buildGalleryPhotos } from '../../../_utils/index'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
@@ -14,6 +13,7 @@ import validation from './validate'
 import { header, layout, tailLayout } from '../../_style'
 import Panel from '../../../components/Wrapper'
 import Description from '../../../components/Description'
+import { createCustomer, updateCustomer, createAddress, createProperty, createStudentCard } from '../../../graphql/mutations'
 
 const { Title } = Typography
 
@@ -53,25 +53,101 @@ export default (props) => {
   } = props
 
   async function handleSubmit(values, { setSubmitting, resetForm }) {
+    const {
+      homeNumber,
+      street,
+      hamlet,
+      village,
+      district,
+      province,
+      lane,
+      alley,
+      description,
+      imageUrls,
+      type,
+      userId,
+      year,
+      customerName,
+      itemName,
+      price,
+      color,
+      frameNumber,
+      machineNumber,
+      plateNumber,
+      dateBorrow,
+      cardNumber,
+      universityName,
+      gpa,
+      graduationYear,
+      ...restValues
+    } = values
+    const address = { homeNumber, street, hamlet, village, district, province, lane, alley }
+    const propertyInfo = {
+      imageUrls,
+      type,
+      userId,
+      year,
+      customerName,
+      itemName,
+      price,
+      color,
+      frameNumber,
+      machineNumber,
+      plateNumber,
+      dateBorrow,
+    }
+    const studentInfo = { cardNumber, universityName, gpa, graduationYear }
     console.log('--onSubmit-->', values)
     // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
     // let filesUploaded = (await onFileUpload()) || imagesUrlProps
     // console.log('fileUploaded', filesUploaded)
     switch (status) {
       case CUSTOMER_STATUS.add:
-        await create({
-          ...values,
-          id: uuidv4(),
-          // imageUrls: filesUploaded || [],
-        })
+        // address 
+        const {
+          data: {
+            createAddress: { id: customerAddressId },
+          },
+        } = await create(address, createAddress)
+
+        // property and student card
+        let customerPropertyId;
+        let customerStudentInfoId;
+        switch (values.loanType) {
+          case 'xe':
+            const propertyRespond = await create(propertyInfo, createProperty);
+            customerPropertyId = propertyRespond?.data?.createProperty?.id
+            break
+          case 'giayTo':
+            const studentCardRespond = await create(studentInfo, createStudentCard);
+            customerStudentInfoId = studentCardRespond?.data?.createStudentCard?.id
+            break;
+          default:
+            break
+        }
+        // customer
+        await create(
+          {
+            ...restValues,
+            customerStudentInfoId,
+            customerPropertyId,
+            customerAddressId,
+            // imageUrls: filesUploaded || [],
+          },
+          createCustomer
+        )
+
         resetForm({ values: {} })
         break
       case CUSTOMER_STATUS.edit:
-        await update({
-          ...values,
-          id: id,
-          // imageUrls: filesUploaded,
-        })
+        await update(
+          {
+            ...values,
+            id: id,
+            // imageUrls: filesUploaded,
+          },
+          updateCustomer
+        )
         break
       default:
         break
@@ -143,7 +219,7 @@ export default (props) => {
                   <Select.Option value="giayTo">Giấy tờ</Select.Option>
                 </FieldSelect>
                 <Panel condition={{ x: '{{loanType}}', y: 'xe' }} compareType="string">
-                  {/* <Description {...layout}> */}
+                  {/* <Description> */}
                   <FieldInput label="Tên đồ" name="itemName" />
                   <FieldInput label="Màu sắc" name="color" />
                   <FieldInput label="Năm sản xuất" name="year" />

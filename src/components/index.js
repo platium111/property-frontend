@@ -1,2 +1,2 @@
 export * from "./debug/index";
-export * from "./galleryView/index";
+export * from "./GalleryView/index";

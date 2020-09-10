@@ -18,7 +18,7 @@ export default function (property = {}) {
       setImageUrls(urls);
     }
     initialImageUrls && getImageFn();
-  }, []);
+  }, [initialImageUrls]);
 
   const onFileChange = (event) => {
     console.log("onFileChange - first file in event", event.target.files[0]);

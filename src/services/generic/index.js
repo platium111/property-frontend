@@ -1,14 +1,14 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { createProperty, updateProperty } from "../../graphql/mutations";
 
-export async function create(item) {
+export async function create(item, query) {
   console.log('--function create-> ', item);
-  const result = await API.graphql(graphqlOperation(createProperty, { input: item }));
+  const result = await API.graphql(graphqlOperation(query, { input: item }));
   console.log('return value from "create" -> ', result);
+  return result;
 }
 
-export async function update(item) {
+export async function update(item, query) {
   console.log('function update in service', item);
-  const result = await API.graphql(graphqlOperation(updateProperty, {input: item}));
+  const result = await API.graphql(graphqlOperation(query, {input: item}));
   console.log('return value from "update" -> ', result);
 }

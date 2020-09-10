@@ -11,7 +11,8 @@ import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
 import FieldArea from '../../../components/TextArea'
 import validation from './validate'
-import { header, layout, tailLayout } from '../../_style'
+import { header, layout, tailLayout } from '../../_style';
+import {createProperty, updateProperty} from "../../../graphql/mutations"
 
 const { Title } = Typography
 
@@ -50,9 +51,8 @@ export default (props) => {
       case PROPERTY_STATUS.add:
         await create({
           ...values,
-          id: uuidv4(),
           imageUrls: filesUploaded || [],
-        })
+        }, createProperty)
         resetForm({ values: {} })
         break
       case PROPERTY_STATUS.edit:
@@ -60,7 +60,7 @@ export default (props) => {
           ...values,
           id: id,
           imageUrls: filesUploaded,
-        })
+        }, updateProperty)
         break
       default:
         break

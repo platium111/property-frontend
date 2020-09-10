@@ -30,7 +30,7 @@ $util.qr($context.args.input.put("__typename", "Property"))
   "version": "2018-05-29",
   "operation": "PutItem",
   "key": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {
-  "id":   $util.dynamodb.toDynamoDBJson($ctx.args.input.id)
+  "id":   $util.dynamodb.toDynamoDBJson($util.autoId())
 } #end,
   "attributeValues": $util.dynamodb.toMapValuesJson($context.args.input),
   "condition": $util.toJson($condition)

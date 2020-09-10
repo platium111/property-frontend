@@ -21,6 +21,53 @@ export const createProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -46,6 +93,53 @@ export const updateProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -71,6 +165,53 @@ export const deleteProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -93,6 +234,7 @@ export const createCustomer = /* GraphQL */ `
       motherPhone
       fatherPhone
       address {
+        id
         homeNumber
         street
         hamlet
@@ -101,27 +243,52 @@ export const createCustomer = /* GraphQL */ `
         province
         lane
         alley
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
       loanType
       propertyInfo {
-        id
-        description
-        imageUrls
-        type
-        userId
-        year
-        customerName
-        itemName
-        price
-        color
-        frameNumber
-        machineNumber
-        plateNumber
-        dateBorrow
-        createdAt
-        updatedAt
+        items {
+          id
+          description
+          imageUrls
+          type
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       studentInfo {
         id
@@ -129,6 +296,28 @@ export const createCustomer = /* GraphQL */ `
         universityName
         gpa
         graduationYear
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -161,6 +350,7 @@ export const updateCustomer = /* GraphQL */ `
       motherPhone
       fatherPhone
       address {
+        id
         homeNumber
         street
         hamlet
@@ -169,27 +359,52 @@ export const updateCustomer = /* GraphQL */ `
         province
         lane
         alley
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
       loanType
       propertyInfo {
-        id
-        description
-        imageUrls
-        type
-        userId
-        year
-        customerName
-        itemName
-        price
-        color
-        frameNumber
-        machineNumber
-        plateNumber
-        dateBorrow
-        createdAt
-        updatedAt
+        items {
+          id
+          description
+          imageUrls
+          type
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       studentInfo {
         id
@@ -197,6 +412,28 @@ export const updateCustomer = /* GraphQL */ `
         universityName
         gpa
         graduationYear
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -229,6 +466,7 @@ export const deleteCustomer = /* GraphQL */ `
       motherPhone
       fatherPhone
       address {
+        id
         homeNumber
         street
         hamlet
@@ -237,27 +475,52 @@ export const deleteCustomer = /* GraphQL */ `
         province
         lane
         alley
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
       loanType
       propertyInfo {
-        id
-        description
-        imageUrls
-        type
-        userId
-        year
-        customerName
-        itemName
-        price
-        color
-        frameNumber
-        machineNumber
-        plateNumber
-        dateBorrow
-        createdAt
-        updatedAt
+        items {
+          id
+          description
+          imageUrls
+          type
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       studentInfo {
         id
@@ -265,6 +528,28 @@ export const deleteCustomer = /* GraphQL */ `
         universityName
         gpa
         graduationYear
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          fatherName
+          motherName
+          phoneNumber
+          dateOfBirth
+          motherPhone
+          fatherPhone
+          loanType
+          dateBorrow
+          borrowPurpose
+          datePay
+          identityCardNo
+          issueDate
+          note
+          customerImages
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -291,6 +576,53 @@ export const createStudentCard = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -307,6 +639,53 @@ export const updateStudentCard = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -323,6 +702,53 @@ export const deleteStudentCard = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -334,6 +760,7 @@ export const createAddress = /* GraphQL */ `
     $condition: ModelAddressConditionInput
   ) {
     createAddress(input: $input, condition: $condition) {
+      id
       homeNumber
       street
       hamlet
@@ -342,6 +769,53 @@ export const createAddress = /* GraphQL */ `
       province
       lane
       alley
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -353,6 +827,7 @@ export const updateAddress = /* GraphQL */ `
     $condition: ModelAddressConditionInput
   ) {
     updateAddress(input: $input, condition: $condition) {
+      id
       homeNumber
       street
       hamlet
@@ -361,6 +836,53 @@ export const updateAddress = /* GraphQL */ `
       province
       lane
       alley
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -372,6 +894,7 @@ export const deleteAddress = /* GraphQL */ `
     $condition: ModelAddressConditionInput
   ) {
     deleteAddress(input: $input, condition: $condition) {
+      id
       homeNumber
       street
       hamlet
@@ -380,6 +903,53 @@ export const deleteAddress = /* GraphQL */ `
       province
       lane
       alley
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          district
+          province
+          lane
+          alley
+          createdAt
+          updatedAt
+        }
+        loanType
+        propertyInfo {
+          nextToken
+        }
+        studentInfo {
+          id
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          createdAt
+          updatedAt
+        }
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        customerImages
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

@@ -3,7 +3,7 @@ import { Input } from "antd";
 import { searchListProperty } from "../../../graphql/customQuery";
 import gql from "graphql-tag";
 import { ApolloContext } from "react-apollo";
-import PropertyCards from "../../../components/propertyCards/index";
+import PropertyCards from "../../../components/PropertyCards/index";
 import EditItem from "../Property";
 import { PROPERTY_STATUS } from "../Property/Property";
 
@@ -47,7 +47,7 @@ export default function (props) {
     if (searchText) {
       searchTextFn();
     }
-  });
+  }, [searchText]);
   return (
     <div>
       <Search
