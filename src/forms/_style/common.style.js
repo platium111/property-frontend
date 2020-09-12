@@ -14,6 +14,12 @@ export const tailLayout = {
   },
 };
 
+export const wrapperHalfLayout = {
+  wrapperCol: {
+    span: 8
+  }
+}
+
 export const header = {
   margin: '2px auto',
   textAlign: 'center',

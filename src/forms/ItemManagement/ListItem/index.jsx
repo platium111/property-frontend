@@ -44,7 +44,7 @@ export default function (props) {
       setFoundProperties(items);
     };
 
-    if (searchText) {
+    if (searchText && searchText.length >= 3) {
       searchTextFn();
     }
   }, [searchText]);

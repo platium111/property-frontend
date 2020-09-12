@@ -138,5 +138,28 @@ If Customer has Address, so Address needs to add first then get Id and use for C
 - [one_to_many] with Blog and Post, one to many
 Post just need to have postBlogId in mutation
 When we query Blog, it will return `posts` items
+[reference] (https://docs.amplify.aws/cli/graphql-transformer/overview#test-the-api)
 
+- [subSelectionRequired] errors in list query which has nested object but haven't set it
+
+- [children_parent] if in parent we have
+```
+<RepeatingGroup>
+  {(item, index) => {
+    ...something
+  }}
+</RepeatingGroup>
+
+inside RepeatingGroup component 
+items.map ...<div>
+  {children(item, index)}
+</div>
+
+* if parent has arary of children
+React.cloneElement only work if parent has 1 children, otherwise using this
+`React.Children.toArray(children)` 
+```
+- [too_many_effect] should not update too many state value in one effect. Sometimes has error looping state -> separate and have dependency
+
+- [useCondition_showHide] should not pass another props from parent to children, if we use `values` and `condition` to know `showHide` status, we should pass the `condition`. That's it. Don't make the mess code
 
