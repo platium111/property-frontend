@@ -131,4 +131,12 @@ Errors because it is one item in map
 If Customer has Address, so Address needs to add first then get Id and use for Customer
 * I work with one-t0-many by just using @connnection with name
 * when we add nested object just add [id~from aws] which is in `schema` -> but when we get result it will have full nested object
+[reference](https://github.com/mikeparisstuff/amplify-cli-nested-api-sample/blob/master/amplify/backend/api/amplifynestedsample/schema.graphql)
+
+
+12/9/2020
+- [one_to_many] with Blog and Post, one to many
+Post just need to have postBlogId in mutation
+When we query Blog, it will return `posts` items
+
 

@@ -22,6 +22,11 @@ export const CUSTOMER_STATUS = {
   new: 'new',
 }
 
+export const LOAN_TYPE = {
+  xe: "xe",
+  giayTo: 'giayTo'
+}
+
 export default (props) => {
   const {
     id,
@@ -82,20 +87,7 @@ export default (props) => {
       ...restValues
     } = values
     const address = { homeNumber, street, hamlet, village, district, province, lane, alley }
-    const propertyInfo = {
-      imageUrls,
-      type,
-      userId,
-      year,
-      customerName,
-      itemName,
-      price,
-      color,
-      frameNumber,
-      machineNumber,
-      plateNumber,
-      dateBorrow,
-    }
+
     const studentInfo = { cardNumber, universityName, gpa, graduationYear }
     console.log('--onSubmit-->', values)
     // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
@@ -103,39 +95,51 @@ export default (props) => {
     // console.log('fileUploaded', filesUploaded)
     switch (status) {
       case CUSTOMER_STATUS.add:
-        // address 
+        // address
         const {
           data: {
             createAddress: { id: customerAddressId },
           },
         } = await create(address, createAddress)
 
-        // property and student card
-        let customerPropertyId;
-        let customerStudentInfoId;
-        switch (values.loanType) {
-          case 'xe':
-            const propertyRespond = await create(propertyInfo, createProperty);
-            customerPropertyId = propertyRespond?.data?.createProperty?.id
-            break
-          case 'giayTo':
-            const studentCardRespond = await create(studentInfo, createStudentCard);
-            customerStudentInfoId = studentCardRespond?.data?.createStudentCard?.id
-            break;
-          default:
-            break
+        // student card
+        let customerPropertyId
+        let customerStudentInfoId
+        if (values.loanType === LOAN_TYPE.giayTo) {
+          const studentCardRespond = await create(studentInfo, createStudentCard)
+          customerStudentInfoId = studentCardRespond?.data?.createStudentCard?.id
         }
         // customer
-        await create(
+        const customerRespond = await create(
           {
             ...restValues,
             customerStudentInfoId,
-            customerPropertyId,
             customerAddressId,
             // imageUrls: filesUploaded || [],
           },
           createCustomer
         )
+
+        // property
+        const propertyInfo = {
+          imageUrls,
+          type,
+          userId,
+          year,
+          customerName,
+          itemName,
+          price,
+          color,
+          frameNumber,
+          machineNumber,
+          plateNumber,
+          dateBorrow,
+          propertyCustomerId: customerRespond?.data?.createCustomer.id,
+        }
+        if (values.loanType === LOAN_TYPE.xe) {
+          const propertyRespond = await create(propertyInfo, createProperty)
+          customerPropertyId = propertyRespond?.data?.createProperty?.id
+        }
 
         resetForm({ values: {} })
         break
@@ -152,7 +156,6 @@ export default (props) => {
       default:
         break
     }
-
     setSubmitting(false)
   }
 
@@ -215,10 +218,10 @@ export default (props) => {
                 <FieldInput label="Ghi chú" name="note" />
                 <FieldSelect label="Loại vay" name="loanType">
                   <Select.Option value="">--Lựa chọn--</Select.Option>
-                  <Select.Option value="xe">Xe</Select.Option>
-                  <Select.Option value="giayTo">Giấy tờ</Select.Option>
+                  <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
+                  <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
                 </FieldSelect>
-                <Panel condition={{ x: '{{loanType}}', y: 'xe' }} compareType="string">
+                <Panel condition={{ x: '{{loanType}}', y: LOAN_TYPE.xe }} compareType="string">
                   {/* <Description> */}
                   <FieldInput label="Tên đồ" name="itemName" />
                   <FieldInput label="Màu sắc" name="color" />
@@ -233,7 +236,7 @@ export default (props) => {
                   {/* </Description> */}
                 </Panel>
 
-                <Panel condition={{ x: '{{loanType}}', y: 'giayTo' }} compareType="string">
+                <Panel condition={{ x: '{{loanType}}', y: LOAN_TYPE.giayTo }} compareType="string">
                   <FieldInput label="Mã thẻ SV" name="cardNumber" />
                   <FieldInput label="Tên trường" name="universityName" />
                   <FieldInput label="Điểm trung bình" name="gpa" />
