@@ -9,7 +9,6 @@ export default function (props) {
   const [result, setResult] = useState(true);
   const {setFieldValue} = useFormikContext();
 
-  console.log(name)
   useEffect(() => {
     if (condition) {
       // example "{{=it.fieldC}} == ({{=it.fieldA}} + {{=it.fieldB}})"

@@ -196,7 +196,7 @@ export default (props) => {
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
             <Row>
               <Col span="12">
-                {/* <FieldInput label="Tên" name="firstName" />
+                <FieldInput label="Tên" name="firstName" />
                 <FieldInput label="Họ" name="lastName" />
                 <FieldInput label="Tên đệm" name="middleName" />
                 <FieldInput name="phoneNumber" label="Số điện thoại" />
@@ -208,17 +208,17 @@ export default (props) => {
                 <FieldInput label="Huyện" name="district" />
                 <FieldInput label="Tỉnh" name="province" />
                 <FieldInput label="Ngõ" name="lane" />
-                <FieldInput label="Ngách" name="alley" /> */}
+                <FieldInput label="Ngách" name="alley" />
               </Col>
               <Col span="12">
-                {/* <FieldInput label="Chứng minh thư" name="identityCardNo" />
+                <FieldInput label="Chứng minh thư" name="identityCardNo" />
                 <FieldInput
                   label="Ngày phát hành"
                   name="issueDate"
                   condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
                   compareType="string"
                 />
-                <FieldInput label="Ghi chú" name="note" /> */}
+                <FieldInput label="Ghi chú" name="note" />
                 <FieldArray
                   name="customerItems"
                   render={(arrayHelpers) => (

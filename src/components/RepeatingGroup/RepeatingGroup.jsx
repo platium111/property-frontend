@@ -1,7 +1,7 @@
-import React, {Children} from 'react'
+import React, { Children } from 'react'
 import styled from 'styled-components'
-import { Col, Row, Button, Divider, Form } from 'antd'
-import { wrapperHalfLayout } from '../../forms/_style/index'
+import { Col, Row, Button, Divider, Collapse } from 'antd'
+import { useState } from 'react'
 const StyleGroupContainer = styled.div`
   // border: 1px solid red;
   padding-left: 16px;
@@ -46,36 +46,49 @@ export const REPEATING_GROUP_CONSTANT = {
 
 export default function (props) {
   const { children, headingTitle = 'Thêm Đồ', arrayHelpers, items } = props
+  const [activeRows, setActiveRows] = useState(['0'])
 
+  function handleAdd() {
+    arrayHelpers.push({})
+    setActiveRows([...activeRows, items.length.toString()])
+  }
+
+  function handleCollapse(activeKey) {
+    setActiveRows([...activeRows, activeKey])
+  }
   return (
     <StyleGroupContainer>
       <StyleInsideContainer>
         <StyleGroupHeader>
           <Row style={{ alignItems: 'center', paddingLeft: '10px' }}>
-            <Col span="12"> {headingTitle}</Col>
-            <Col span="12" style={{ textAlign: 'right' }}>
-              <Button danger>{REPEATING_GROUP_CONSTANT.cancel}</Button>
-            </Col>
+            <Col span="12">{headingTitle}</Col>
           </Row>
         </StyleGroupHeader>
         <StyleGroupBody>
-          {items && items.map((item, index) => {
-            return (
-              <div key={index}>
-                {index >= 1 ? <Divider /> : null}
-                {children && children({item,index})}
-                <StyleBodyFooter>
-                    <Button type="primary" danger onClick={() => arrayHelpers.remove(index)}>
-                      {REPEATING_GROUP_CONSTANT.remove}
-                    </Button>
-                    <Button type="primary">{REPEATING_GROUP_CONSTANT.confirm}</Button>
-                </StyleBodyFooter>
-              </div>
-            )
-          })}
+          {items &&
+            items.map((item, index) => {
+              return (
+                <Collapse defaultActiveKey={['0']} key={index} onChange={handleCollapse}>
+                  <Collapse.Panel header={`${headingTitle} ${index + 1}`} key={index}>
+                    <div>
+                      {index >= 1 ? <Divider /> : null}
+                      {children && children({ item, index })}
+                      <StyleBodyFooter>
+                        <Button type="primary" danger onClick={() => arrayHelpers.remove(index)}>
+                          {REPEATING_GROUP_CONSTANT.remove}
+                        </Button>
+                        {/* <Button type="primary" onClick={() => setActiveRows(activeRows.filter((row) => row !== index.toString()))}>
+                          {REPEATING_GROUP_CONSTANT.confirm}
+                        </Button> */}
+                      </StyleBodyFooter>
+                    </div>
+                  </Collapse.Panel>
+                </Collapse>
+              )
+            })}
         </StyleGroupBody>
         <StyleGroupFooter>
-          <Button type="dashed" danger block onClick={() => arrayHelpers.push({})}>
+          <Button type="dashed" danger block onClick={handleAdd}>
             {REPEATING_GROUP_CONSTANT.add}
           </Button>
         </StyleGroupFooter>

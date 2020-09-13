@@ -163,3 +163,4 @@ React.cloneElement only work if parent has 1 children, otherwise using this
 
 - [useCondition_showHide] should not pass another props from parent to children, if we use `values` and `condition` to know `showHide` status, we should pass the `condition`. That's it. Don't make the mess code
 
+- [Component_null] it is not tenary operator -> it is just logic in somewhere of hook component

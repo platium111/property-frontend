@@ -11,14 +11,13 @@ export default ({ label, condition, compareType, ...restProps }) => {
   const { values } = useFormikContext()
   const { result: isShow } = useConditional({ values, name, condition, compareType })
 
-  console.log('select')
   return (
-    isShow ? (
+    isShow && (
       <>
         <FormItem label={label} name={name}>
           <Select {...field} {...restProps} />
         </FormItem>
       </>
-    ) : <></>
+    ) 
   )
 }
