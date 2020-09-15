@@ -2,20 +2,19 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
-import { Typography } from 'antd'
+import { Typography, DatePicker } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
 import { create, update } from '../../../services/generic/index'
-import { v4 as uuidv4 } from 'uuid'
 import { buildGalleryPhotos } from '../../../_utils/index'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
 import FieldArea from '../../../components/TextArea'
+import FieldDatePicker from '../../../components/Datepicker'
 import validation from './validate'
-import { header, layout, tailLayout } from '../../_style';
-import {createProperty, updateProperty} from "../../../graphql/mutations"
+import { header, layout, tailLayout } from '../../_style'
+import { createProperty, updateProperty } from '../../../graphql/mutations'
 
 const { Title } = Typography
-
 export const PROPERTY_STATUS = {
   edit: 'edit',
   new: 'new',
@@ -49,24 +48,30 @@ export default (props) => {
     console.log('fileUploaded', filesUploaded)
     switch (status) {
       case PROPERTY_STATUS.add:
-        await create({
-          ...values,
-          imageUrls: filesUploaded || [],
-        }, createProperty)
+        await create(
+          {
+            ...values,
+            imageUrls: filesUploaded || [],
+          },
+          createProperty
+        )
         resetForm({ values: {} })
         break
       case PROPERTY_STATUS.edit:
-        await update({
-          ...values,
-          id: id,
-          imageUrls: filesUploaded,
-        }, updateProperty)
+        await update(
+          {
+            ...values,
+            id: id,
+            imageUrls: filesUploaded,
+          },
+          updateProperty
+        )
         break
       default:
         break
     }
 
-    setSubmitting(false);
+    setSubmitting(false)
   }
 
   return (
@@ -104,7 +109,7 @@ export default (props) => {
             <FieldInput type="textfield" name="frameNumber" placeholder="Số khung" label="Số khung" />
             <FieldInput label="Số máy" type="textfield" name="machineNumber" placeholder="Số máy" />
             <FieldInput label="Biển kiểm soát" type="textfield" name="plateNumber" placeholder="Biển kiểm soát" />
-            <FieldInput label="Ngày vay" type="textfield" name="dateBorrow" placeholder="Ngày vay" />
+            <FieldDatePicker label="Ngày vay" name="dateBorrow" placeholder="Ngày vay" />
             <FieldInput label="Giá" type="textarea" name="price" placeholder="Giá" />
             <FieldInput label="Tên khách hàng" type="textfield" name="customerName" placeholder="Tên khách hàng" />
             <FieldArea type="textfield" label="Mô tả" name="description" placeholder="Mô tả" />

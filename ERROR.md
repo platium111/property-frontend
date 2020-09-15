@@ -164,3 +164,7 @@ React.cloneElement only work if parent has 1 children, otherwise using this
 - [useCondition_showHide] should not pass another props from parent to children, if we use `values` and `condition` to know `showHide` status, we should pass the `condition`. That's it. Don't make the mess code
 
 - [Component_null] it is not tenary operator -> it is just logic in somewhere of hook component
+
+15/9/2020
+- [error_datepicker] using ant datepicker is a bit tricky when select value because
+* `defaultValue` onChange -> using `setFieldValue` to update formik but don't pass `value` as props to `DatePicker`, because that value will have wrong format somehow? -> don't pass value in]

@@ -66,7 +66,9 @@ export default function (props) {
         </StyleGroupHeader>
         <StyleGroupBody>
           {items &&
-            items.map((item, index) => {
+            items.map(
+              
+              (item, index) => {
               return (
                 <Collapse defaultActiveKey={['0']} key={index} onChange={handleCollapse}>
                   <Collapse.Panel header={`${headingTitle} ${index + 1}`} key={index}>
