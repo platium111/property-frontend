@@ -168,3 +168,8 @@ React.cloneElement only work if parent has 1 children, otherwise using this
 15/9/2020
 - [error_datepicker] using ant datepicker is a bit tricky when select value because
 * `defaultValue` onChange -> using `setFieldValue` to update formik but don't pass `value` as props to `DatePicker`, because that value will have wrong format somehow? -> don't pass value in]
+
+18/9/2020
+- using `let inputRef = useRef()` -> pass `<Input ref={inputRef}>
+
+- using `react-input-mask` having mask functionality
