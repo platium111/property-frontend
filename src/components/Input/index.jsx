@@ -9,7 +9,7 @@ export default ({ label, condition, compareType, placeholder = label, ...props }
   const [field] = useField(props)
   const { values } = useFormikContext()
   const { result: isShow } = useConditional({ values, name, condition, compareType })
-
+  // const inputComponent = <Input {...field} {...props} placeholder={placeholder} />
   return (
     isShow && (
       <FormItem label={label} name={name}>
