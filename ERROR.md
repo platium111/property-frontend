@@ -173,3 +173,7 @@ React.cloneElement only work if parent has 1 children, otherwise using this
 - using `let inputRef = useRef()` -> pass `<Input ref={inputRef}>
 
 - using `react-input-mask` having mask functionality
+[link]https://stackoverflow.com/questions/57191028/using-react-input-mask-with-formik-and-formik-antd
+
+19/9/2020
+- done react mask and currency 

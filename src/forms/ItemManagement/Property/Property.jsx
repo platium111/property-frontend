@@ -110,7 +110,7 @@ export default (props) => {
             <FieldInput label="Số máy" type="textfield" name="machineNumber" placeholder="Số máy" />
             <FieldInput label="Biển kiểm soát" type="textfield" name="plateNumber" placeholder="Biển kiểm soát" />
             <FieldDatePicker label="Ngày vay" name="dateBorrow" placeholder="Ngày vay" />
-            <FieldInput label="Giá" type="textarea" name="price" placeholder="Giá" />
+            <FieldInput label="Giá" type="textarea" name="price" placeholder="Giá" isCurrency={true} />
             <FieldInput label="Tên khách hàng" type="textfield" name="customerName" placeholder="Tên khách hàng" />
             <FieldArea type="textfield" label="Mô tả" name="description" placeholder="Mô tả" />
 
