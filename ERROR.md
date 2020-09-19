@@ -177,3 +177,12 @@ React.cloneElement only work if parent has 1 children, otherwise using this
 
 19/9/2020
 - done react mask and currency 
+- [add_domain]
+buy domain -> create hosted App in `Amazon route 54` -> add 4 name server to domain management 
+-> Go to `domain management` then add domain and point to different cloud env such as `dev` or `prod`
+- [add_subdomain] also in `domain management` -> add subdomain 
+- [new_prod_env] step new env
+amplify env add -> No current env -> amplify push -> amplify publish
+- merging new feature env to dev
+amplify env checkout dev (current is feature)
+[reference](https://read.acloud.guru/multiple-serverless-environments-with-aws-amplify-344759e1be08#:~:text=Create%20a%20new%20Amplify%20project,service%20in%20our%20AWS%20account)
