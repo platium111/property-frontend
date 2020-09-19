@@ -47,7 +47,7 @@ const App = (props) => {
             <div className="logo" />
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
               <Menu.Item key="1">
-                <Link to="/create-property">{SITE.NAV_CREATE_NEW_PROPERTY}</Link>
+                <Link to="/">{SITE.NAV_CREATE_NEW_PROPERTY}</Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to="/list-property">{SITE.NAV_FIND_PROPERTY}</Link>
@@ -69,33 +69,32 @@ const App = (props) => {
             style={{
               marginTop: '20px',
               padding: '0 50px',
-              border: '2px solid yellow',
             }}
           >
             <Row justify="center">
               <Switch>
-                <Route exact path="/create-property">
-                  <Col span={16} style={{ border: '2px solid red' }}>
+                <Route exact path="/">
+                  <Col span={16} >
                     <ItemManagement />
                   </Col>
                 </Route>
                 <Route path="/list-property">
-                  <Col span={16} style={{ border: '2px solid red' }}>
+                  <Col span={16}>
                     <ListItem />
                   </Col>
                 </Route>
                 <Route path="/create-customer">
-                  <Col span={16} style={{ border: '2px solid red' }}>
+                  <Col span={16} >
                     <CreateCustomer />
                   </Col>
                 </Route>
                 <Route path="/list-customer">
-                  <Col span={16} style={{ border: '2px solid red' }}>
+                  <Col span={16} >
                     <ListCustomer />
                   </Col>
                 </Route>
                 <Route path="/month-report">
-                  <Col span={24} style={{ border: '2px solid red' }}>
+                  <Col span={24}>
                     <MonthReport />
                   </Col>
                 </Route>

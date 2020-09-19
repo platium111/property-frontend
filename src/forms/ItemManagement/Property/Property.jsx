@@ -111,7 +111,7 @@ export default (props) => {
             <FieldInput label="Biển kiểm soát" type="textfield" name="plateNumber" placeholder="Biển kiểm soát" />
             <FieldDatePicker label="Ngày vay" name="dateBorrow" placeholder="Ngày vay" />
             <FieldInput label="Giá" type="textarea" name="price" placeholder="Giá" isCurrency={true} />
-            <FieldInput label="Tên khách hàng" type="textfield" name="customerName" placeholder="Tên khách hàng" />
+            {/* <FieldInput label="Tên khách hàng" type="textfield" name="customerName" placeholder="Tên khách hàng" /> */}
             <FieldArea type="textfield" label="Mô tả" name="description" placeholder="Mô tả" />
 
             {/* UPLOAD ZONE */}
@@ -126,7 +126,7 @@ export default (props) => {
                 {status === PROPERTY_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
               </SubmitButton>
             </FormItem>
-            <DebugValues {...props} />
+            {/* <DebugValues {...props} /> */}
           </Form>
           {/* // </Space> */}
         </>
