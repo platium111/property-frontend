@@ -5,6 +5,7 @@ export const getProperty = /* GraphQL */ `
   query GetProperty($id: ID!) {
     getProperty(id: $id) {
       id
+      loanType
       description
       imageUrls
       type
@@ -43,18 +44,6 @@ export const getProperty = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -62,9 +51,16 @@ export const getProperty = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
+      cardNumber
+      universityName
+      gpa
+      graduationYear
       createdAt
       updatedAt
     }
@@ -79,6 +75,7 @@ export const listPropertys = /* GraphQL */ `
     listPropertys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        loanType
         description
         imageUrls
         type
@@ -114,6 +111,10 @@ export const listPropertys = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        cardNumber
+        universityName
+        gpa
+        graduationYear
         createdAt
         updatedAt
       }
@@ -170,9 +171,17 @@ export const getCustomer = /* GraphQL */ `
         updatedAt
       }
       loanType
-      propertyInfo {
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      properties {
         items {
           id
+          loanType
           description
           imageUrls
           type
@@ -186,49 +195,15 @@ export const getCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          cardNumber
+          universityName
+          gpa
+          graduationYear
           createdAt
           updatedAt
         }
         nextToken
       }
-      studentInfo {
-        id
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          customerImages
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      dateBorrow
-      borrowPurpose
-      datePay
-      identityCardNo
-      issueDate
-      note
-      customerImages
       createdAt
       updatedAt
     }
@@ -266,18 +241,6 @@ export const listCustomers = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -285,107 +248,8 @@ export const listCustomers = /* GraphQL */ `
         issueDate
         note
         customerImages
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getStudentCard = /* GraphQL */ `
-  query GetStudentCard($id: ID!) {
-    getStudentCard(id: $id) {
-      id
-      cardNumber
-      universityName
-      gpa
-      graduationYear
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          district
-          province
-          lane
-          alley
-          createdAt
-          updatedAt
-        }
-        loanType
-        propertyInfo {
+        properties {
           nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        customerImages
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listStudentCards = /* GraphQL */ `
-  query ListStudentCards(
-    $filter: ModelStudentCardFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listStudentCards(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          customerImages
-          createdAt
-          updatedAt
         }
         createdAt
         updatedAt
@@ -431,18 +295,6 @@ export const getAddress = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -450,6 +302,9 @@ export const getAddress = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }

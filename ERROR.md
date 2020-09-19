@@ -186,3 +186,8 @@ amplify env add -> No current env -> amplify push -> amplify publish
 - merging new feature env to dev
 amplify env checkout dev (current is feature)
 [reference](https://read.acloud.guru/multiple-serverless-environments-with-aws-amplify-344759e1be08#:~:text=Create%20a%20new%20Amplify%20project,service%20in%20our%20AWS%20account)
+
+- [moving_env_with_frontend] when changing env -> will restart react front end and get correct config for it to run for login
+
+- [fixing_SUBMIT] if see something relate to define schema error for example, `gpa, input type is null`, meaning that we defined mandatory in schema but not have in create() in graphql
+

@@ -4,7 +4,7 @@ import { Formik, FieldArray, Field } from 'formik'
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
 import { Typography, Row, Col } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
-import { create, update } from '../../../services/generic/index'
+import { create, update, get } from '../../../services/generic/index'
 import { buildGalleryPhotos } from '../../../_utils/index'
 import FieldInput from '../../../components/Input'
 import FieldSelect from '../../../components/Select'
@@ -13,7 +13,8 @@ import validation from './validate'
 import { header, layout, tailLayout } from '../../_style'
 import Panel from '../../../components/Wrapper'
 import Description from '../../../components/Description'
-import { createCustomer, updateCustomer, createAddress, createProperty, createStudentCard } from '../../../graphql/mutations'
+import { createCustomer, updateCustomer, createAddress, createProperty } from '../../../graphql/mutations'
+import { getCustomer } from '../../../graphql/queries'
 import { RepeatingGroup } from '../../../components/RepeatingGroup'
 
 const { Title } = Typography
@@ -82,14 +83,11 @@ export default (props) => {
       plateNumber,
       dateBorrow,
       cardNumber,
-      universityName,
-      gpa,
-      graduationYear,
+      customerItems,
       ...restValues
     } = values
     const address = { homeNumber, street, hamlet, village, district, province, lane, alley }
 
-    const studentInfo = { cardNumber, universityName, gpa, graduationYear }
     console.log('--onSubmit-->', values)
     // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
     // let filesUploaded = (await onFileUpload()) || imagesUrlProps
@@ -101,48 +99,73 @@ export default (props) => {
           data: {
             createAddress: { id: customerAddressId },
           },
-        } = await create(address, createAddress)
+        } = await create(address, createAddress);
 
-        // student card
-        let customerPropertyId
-        let customerStudentInfoId
-        if (values.loanType === LOAN_TYPE.giayTo) {
-          const studentCardRespond = await create(studentInfo, createStudentCard)
-          customerStudentInfoId = studentCardRespond?.data?.createStudentCard?.id
-        }
         // customer
         const customerRespond = await create(
           {
             ...restValues,
             dateBorrow,
-            customerStudentInfoId,
             customerAddressId,
             // imageUrls: filesUploaded || [],
           },
           createCustomer
+        );
+        // student card & property
+        let customerStudentInfoId;
+        let customerPropertyId;
+        await Promise.all(
+          customerItems.map(async (item) => {
+            const {
+              cardNumber,
+              universityName,
+              gpa,
+              graduationYear,
+              loanType,
+              imageUrls,
+              type,
+              userId,
+              year,
+              customerName,
+              itemName,
+              price,
+              color,
+              frameNumber,
+              machineNumber,
+              plateNumber,
+              dateBorrow,
+            } = item
+            if (loanType === LOAN_TYPE.giayTo) {
+              const studentCardRespond = await create(
+                { cardNumber, universityName, gpa, graduationYear, loanType, propertyCustomerId: customerRespond.data.createCustomer.id },
+                createProperty
+              )
+              customerStudentInfoId = studentCardRespond?.data?.createProperty?.id
+            } else if (loanType === LOAN_TYPE.xe) {
+              const propertyRespond = await create(
+                {
+                  loanType,
+                  imageUrls,
+                  type,
+                  userId,
+                  year,
+                  customerName,
+                  itemName,
+                  price,
+                  color,
+                  frameNumber,
+                  machineNumber,
+                  plateNumber,
+                  dateBorrow,
+                  propertyCustomerId: customerRespond.data.createCustomer.id,
+                },
+                createProperty
+              )
+              customerPropertyId = propertyRespond?.data?.createProperty?.id
+            }
+          })
         )
-
-        // property
-        const propertyInfo = {
-          imageUrls,
-          type,
-          userId,
-          year,
-          customerName,
-          itemName,
-          price,
-          color,
-          frameNumber,
-          machineNumber,
-          plateNumber,
-          dateBorrow,
-          propertyCustomerId: customerRespond?.data?.createCustomer.id,
-        }
-        if (values.loanType === LOAN_TYPE.xe) {
-          const propertyRespond = await create(propertyInfo, createProperty)
-          customerPropertyId = propertyRespond?.data?.createProperty?.id
-        }
-
+        await get(customerRespond.data.createCustomer.id, getCustomer)
         resetForm({ values: {} })
         break
       case CUSTOMER_STATUS.edit:
@@ -223,40 +246,42 @@ export default (props) => {
                   name="customerItems"
                   render={(arrayHelpers) => (
                     <RepeatingGroup arrayHelpers={arrayHelpers} items={props.values.customerItems}>
-                      {({ item: customerItem, index }) => {return (
-                        <div>
-                          <FieldSelect label="Loại vay" name={`customerItems[${index}].loanType`}>
-                            <Select.Option value="">--Lựa chọn--</Select.Option>
-                            <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
-                            <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
-                          </FieldSelect>
-                          <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
-                            {/* <Description> */}
-                            <FieldInput label="Tên đồ" name={`customerItems[${index}].itemName`} />
-                            <FieldInput label="Màu sắc" name={`customerItems[${index}].color`} />
-                            <FieldInput label="Năm sản xuất" name={`customerItems[${index}].year`} />
-                            <FieldInput label="Số khung" name={`customerItems[${index}].frameNumber`} />
-                            <FieldInput label="Số máy" name={`customerItems[${index}].machineNumber`} />
-                            <FieldInput label="Biển kiểm soát" name={`customerItems[${index}].plateNumber`} />
-                            <FieldInput label="Ngày vay" name={`customerItems[${index}].dateBorrow`} />
-                            <FieldInput label="Giá" name={`customerItems[${index}].price`} />
-                            <FieldInput label="Tên khách hàng" name={`customerItems[${index}].customerName`} />
-                            <FieldArea label="Mô tả" name={`customerItems[${index}].description`} />
-                            {/* </Description> */}
-                          </Panel>
+                      {({ item: customerItem, index }) => {
+                        return (
+                          <div>
+                            <FieldSelect label="Loại vay" name={`customerItems[${index}].loanType`}>
+                              <Select.Option value="">--Lựa chọn--</Select.Option>
+                              <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
+                              <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
+                            </FieldSelect>
+                            <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
+                              {/* <Description> */}
+                              <FieldInput label="Tên đồ" name={`customerItems[${index}].itemName`} />
+                              <FieldInput label="Màu sắc" name={`customerItems[${index}].color`} />
+                              <FieldInput label="Năm sản xuất" name={`customerItems[${index}].year`} />
+                              <FieldInput label="Số khung" name={`customerItems[${index}].frameNumber`} />
+                              <FieldInput label="Số máy" name={`customerItems[${index}].machineNumber`} />
+                              <FieldInput label="Biển kiểm soát" name={`customerItems[${index}].plateNumber`} />
+                              <FieldInput label="Ngày vay" name={`customerItems[${index}].dateBorrow`} />
+                              <FieldInput label="Giá" name={`customerItems[${index}].price`} />
+                              <FieldInput label="Tên khách hàng" name={`customerItems[${index}].customerName`} />
+                              <FieldArea label="Mô tả" name={`customerItems[${index}].description`} />
+                              {/* </Description> */}
+                            </Panel>
 
-                          <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
-                            <FieldInput label="Mã thẻ SV" name={`customerItems[${index}].cardNumber`} />
-                            <FieldInput label="Tên trường" name={`customerItems[${index}].universityName`} />
-                            <FieldInput label="Điểm trung bình" name={`customerItems[${index}].gpa`} />
-                            <FieldInput label="Năm tốt nghiệp" name={`customerItems[${index}].graduationYear`} />
-                            <FieldInput label="Tên bố" name={`customerItems[${index}].fatherName`} />
-                            <FieldInput label="SĐT bố" name={`customerItems[${index}].fatherPhone`} />
-                            <FieldInput label="Tên mẹ" name={`customerItems[${index}].motherName`} />
-                            <FieldInput label="SĐT mẹ" name={`customerItems[${index}].motherPhone`} />
-                          </Panel>
-                        </div>
-                      )}}
+                            <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
+                              <FieldInput label="Mã thẻ SV" name={`customerItems[${index}].cardNumber`} />
+                              <FieldInput label="Tên trường" name={`customerItems[${index}].universityName`} />
+                              <FieldInput label="Điểm trung bình" name={`customerItems[${index}].gpa`} />
+                              <FieldInput label="Năm tốt nghiệp" name={`customerItems[${index}].graduationYear`} />
+                              <FieldInput label="Tên bố" name={`customerItems[${index}].fatherName`} />
+                              <FieldInput label="SĐT bố" name={`customerItems[${index}].fatherPhone`} />
+                              <FieldInput label="Tên mẹ" name={`customerItems[${index}].motherName`} />
+                              <FieldInput label="SĐT mẹ" name={`customerItems[${index}].motherPhone`} />
+                            </Panel>
+                          </div>
+                        )
+                      }}
                     </RepeatingGroup>
                   )}
                 />

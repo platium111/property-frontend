@@ -1,5 +1,6 @@
 type Property @model {
   id: ID!
+  loanType: String
   description: String
   imageUrls: [String]
   type: String
@@ -14,6 +15,10 @@ type Property @model {
   plateNumber: String
   dateBorrow: String
   customer: Customer @connection(name: "CustomerProperties")
+  cardNumber: String
+  universityName: String
+  gpa: Float
+  graduationYear: String
 }
 
 type Customer @model {
@@ -29,8 +34,6 @@ type Customer @model {
   fatherPhone: String
   address: Address @connection(name: "CustomerAddress")
   loanType: String
-  propertyInfo: [Property] @connection(name: "CustomerProperties")
-  studentInfo: StudentCard @connection(name: "CustomerStudentCard")
   dateBorrow: String
   borrowPurpose: String
   datePay: String
@@ -38,15 +41,7 @@ type Customer @model {
   issueDate: String
   note: String
   customerImages: [String]
-}
-
-type StudentCard @model {
-  id: ID!
-  cardNumber: String!
-  universityName: String
-  gpa: Float
-  graduationYear: String
-  customer: Customer @connection(name: "CustomerStudentCard")
+  properties: [Property] @connection(name: "CustomerProperties")
 }
 
 type Address @model {

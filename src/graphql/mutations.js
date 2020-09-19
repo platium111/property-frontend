@@ -8,6 +8,7 @@ export const createProperty = /* GraphQL */ `
   ) {
     createProperty(input: $input, condition: $condition) {
       id
+      loanType
       description
       imageUrls
       type
@@ -46,18 +47,6 @@ export const createProperty = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -65,9 +54,16 @@ export const createProperty = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
+      cardNumber
+      universityName
+      gpa
+      graduationYear
       createdAt
       updatedAt
     }
@@ -80,6 +76,7 @@ export const updateProperty = /* GraphQL */ `
   ) {
     updateProperty(input: $input, condition: $condition) {
       id
+      loanType
       description
       imageUrls
       type
@@ -118,18 +115,6 @@ export const updateProperty = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -137,9 +122,16 @@ export const updateProperty = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
+      cardNumber
+      universityName
+      gpa
+      graduationYear
       createdAt
       updatedAt
     }
@@ -152,6 +144,7 @@ export const deleteProperty = /* GraphQL */ `
   ) {
     deleteProperty(input: $input, condition: $condition) {
       id
+      loanType
       description
       imageUrls
       type
@@ -190,18 +183,6 @@ export const deleteProperty = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -209,9 +190,16 @@ export const deleteProperty = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
+      cardNumber
+      universityName
+      gpa
+      graduationYear
       createdAt
       updatedAt
     }
@@ -269,9 +257,17 @@ export const createCustomer = /* GraphQL */ `
         updatedAt
       }
       loanType
-      propertyInfo {
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      properties {
         items {
           id
+          loanType
           description
           imageUrls
           type
@@ -285,49 +281,15 @@ export const createCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          cardNumber
+          universityName
+          gpa
+          graduationYear
           createdAt
           updatedAt
         }
         nextToken
       }
-      studentInfo {
-        id
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          customerImages
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      dateBorrow
-      borrowPurpose
-      datePay
-      identityCardNo
-      issueDate
-      note
-      customerImages
       createdAt
       updatedAt
     }
@@ -385,9 +347,17 @@ export const updateCustomer = /* GraphQL */ `
         updatedAt
       }
       loanType
-      propertyInfo {
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      properties {
         items {
           id
+          loanType
           description
           imageUrls
           type
@@ -401,49 +371,15 @@ export const updateCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          cardNumber
+          universityName
+          gpa
+          graduationYear
           createdAt
           updatedAt
         }
         nextToken
       }
-      studentInfo {
-        id
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          customerImages
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      dateBorrow
-      borrowPurpose
-      datePay
-      identityCardNo
-      issueDate
-      note
-      customerImages
       createdAt
       updatedAt
     }
@@ -501,9 +437,17 @@ export const deleteCustomer = /* GraphQL */ `
         updatedAt
       }
       loanType
-      propertyInfo {
+      dateBorrow
+      borrowPurpose
+      datePay
+      identityCardNo
+      issueDate
+      note
+      customerImages
+      properties {
         items {
           id
+          loanType
           description
           imageUrls
           type
@@ -517,237 +461,14 @@ export const deleteCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          cardNumber
+          universityName
+          gpa
+          graduationYear
           createdAt
           updatedAt
         }
         nextToken
-      }
-      studentInfo {
-        id
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          customerImages
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      dateBorrow
-      borrowPurpose
-      datePay
-      identityCardNo
-      issueDate
-      note
-      customerImages
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createStudentCard = /* GraphQL */ `
-  mutation CreateStudentCard(
-    $input: CreateStudentCardInput!
-    $condition: ModelStudentCardConditionInput
-  ) {
-    createStudentCard(input: $input, condition: $condition) {
-      id
-      cardNumber
-      universityName
-      gpa
-      graduationYear
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          district
-          province
-          lane
-          alley
-          createdAt
-          updatedAt
-        }
-        loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        customerImages
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateStudentCard = /* GraphQL */ `
-  mutation UpdateStudentCard(
-    $input: UpdateStudentCardInput!
-    $condition: ModelStudentCardConditionInput
-  ) {
-    updateStudentCard(input: $input, condition: $condition) {
-      id
-      cardNumber
-      universityName
-      gpa
-      graduationYear
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          district
-          province
-          lane
-          alley
-          createdAt
-          updatedAt
-        }
-        loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        customerImages
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteStudentCard = /* GraphQL */ `
-  mutation DeleteStudentCard(
-    $input: DeleteStudentCardInput!
-    $condition: ModelStudentCardConditionInput
-  ) {
-    deleteStudentCard(input: $input, condition: $condition) {
-      id
-      cardNumber
-      universityName
-      gpa
-      graduationYear
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          district
-          province
-          lane
-          alley
-          createdAt
-          updatedAt
-        }
-        loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        customerImages
-        createdAt
-        updatedAt
       }
       createdAt
       updatedAt
@@ -794,18 +515,6 @@ export const createAddress = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -813,6 +522,9 @@ export const createAddress = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -861,18 +573,6 @@ export const updateAddress = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -880,6 +580,9 @@ export const updateAddress = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -928,18 +631,6 @@ export const deleteAddress = /* GraphQL */ `
           updatedAt
         }
         loanType
-        propertyInfo {
-          nextToken
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          createdAt
-          updatedAt
-        }
         dateBorrow
         borrowPurpose
         datePay
@@ -947,6 +638,9 @@ export const deleteAddress = /* GraphQL */ `
         issueDate
         note
         customerImages
+        properties {
+          nextToken
+        }
         createdAt
         updatedAt
       }

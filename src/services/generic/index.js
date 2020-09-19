@@ -12,3 +12,9 @@ export async function update(item, query) {
   const result = await API.graphql(graphqlOperation(query, {input: item}));
   console.log('return value from "update" -> ', result);
 }
+
+export async function get(id, query) {
+  console.log('get query');
+  const result = await API.graphql(graphqlOperation(query, {id}));
+  console.log('return value from get function -> ', result);
+}

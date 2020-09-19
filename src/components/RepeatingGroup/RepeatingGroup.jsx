@@ -45,7 +45,7 @@ export const REPEATING_GROUP_CONSTANT = {
 }
 
 export default function (props) {
-  const { children, headingTitle = 'Thêm Đồ', arrayHelpers, items } = props
+  const { children, headingTitle = 'Thêm Đồ', arrayHelpers, items = [] } = props
   const [activeRows, setActiveRows] = useState(['0'])
 
   function handleAdd() {

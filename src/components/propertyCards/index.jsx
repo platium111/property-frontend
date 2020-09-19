@@ -56,7 +56,7 @@ export default function PropertyCards({ properties, setClickedPropertyId, setDis
     properties.length > 0 &&
     properties.map((property) => {
       return (
-        <Col span={8} key={property.id}>
+        <Col sm={24} md={12} key={property.id}>
           <PropertyCard  property={property} setClickedPropertyId={setClickedPropertyId} setDisplayDetailItem={setDisplayDetailItem} />
         </Col>
       );
