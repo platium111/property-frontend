@@ -191,3 +191,7 @@ amplify env checkout dev (current is feature)
 
 - [fixing_SUBMIT] if see something relate to define schema error for example, `gpa, input type is null`, meaning that we defined mandatory in schema but not have in create() in graphql
 
+20/9/2020
+- [list_graphql] getting errors if don't declare nested object inside nested object
+
+listCustomer has `items` -> inside items has `properties` -> inside it has `customer` -> need declar `customer {id}`

@@ -6,3 +6,8 @@ export const SITE = {
   NAV_MONTH_REPORT: "Kê khai tháng",
   NAV_DAY_REPORT: 'Kê khai ngày'
 }
+
+export const LOAN_TYPE = {
+  xe: 'xe',
+  giayTo: 'giayTo',
+}

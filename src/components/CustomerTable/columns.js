@@ -17,7 +17,7 @@ export default [
   },
   {
     Header: "Kiểu vay",
-    accessor: 'loanType'
+    accessor: 'loanTypeSummary'
   },
   {
     Header: "Ngày vay",

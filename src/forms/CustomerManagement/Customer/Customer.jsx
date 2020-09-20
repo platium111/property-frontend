@@ -1,33 +1,29 @@
 // Render Prop
-import React from 'react'
-import { Formik, FieldArray, Field } from 'formik'
-import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
-import { Typography, Row, Col } from 'antd'
-import { DebugValues, GalleryView } from '../../../components/index'
-import { create, update, get } from '../../../services/generic/index'
-import { buildGalleryPhotos } from '../../../_utils/index'
-import FieldInput from '../../../components/Input'
-import FieldSelect from '../../../components/Select'
-import FieldArea from '../../../components/TextArea'
-import validation from './validate'
-import { header, layout, tailLayout } from '../../_style'
-import Panel from '../../../components/Wrapper'
-import Description from '../../../components/Description'
-import { createCustomer, updateCustomer, createAddress, createProperty } from '../../../graphql/mutations'
-import { getCustomer } from '../../../graphql/queries'
-import { RepeatingGroup } from '../../../components/RepeatingGroup'
+import React from 'react';
+import { Formik, FieldArray } from 'formik';
+import { Form, Select, FormItem, SubmitButton } from 'formik-antd';
+import { Typography, Row, Col } from 'antd';
+import { DebugValues, GalleryView } from '../../../components/index';
+import { create, update, get } from '../../../services/generic/index';
+import { buildGalleryPhotos } from '../../../_utils/index';
+import FieldInput from '../../../components/Input';
+import FieldSelect from '../../../components/Select';
+import FieldArea from '../../../components/TextArea';
+import FieldDatePicker from '../../../components/Datepicker';
+import validation from './validate';
+import { header, layout, tailLayout } from '../../_style';
+import Panel from '../../../components/Wrapper';
+import { createCustomer, updateCustomer, createAddress, createProperty } from '../../../graphql/mutations';
+import { getCustomer } from '../../../graphql/queries';
+import { RepeatingGroup } from '../../../components/RepeatingGroup';
+import { provinceData, cityData, LOAN_TYPE } from '../../../_constants';
 
-const { Title } = Typography
+const { Title } = Typography;
 
 export const CUSTOMER_STATUS = {
   edit: 'edit',
   new: 'new',
-}
-
-export const LOAN_TYPE = {
-  xe: 'xe',
-  giayTo: 'giayTo',
-}
+};
 
 export default (props) => {
   const {
@@ -57,7 +53,7 @@ export default (props) => {
     //onFileUpload,
     // imageUrls,
     // imagesUrlProps,
-  } = props
+  } = props;
 
   async function handleSubmit(values, { setSubmitting, resetForm }) {
     const {
@@ -69,6 +65,7 @@ export default (props) => {
       province,
       lane,
       alley,
+      city,
       description,
       imageUrls,
       type,
@@ -82,13 +79,14 @@ export default (props) => {
       machineNumber,
       plateNumber,
       dateBorrow,
+      datePay,
       cardNumber,
       customerItems,
       ...restValues
-    } = values
-    const address = { homeNumber, street, hamlet, village, district, province, lane, alley }
+    } = values;
+    const address = { homeNumber, street, hamlet, village, lane, alley, district, province, city };
 
-    console.log('--onSubmit-->', values)
+    console.log('--onSubmit-->', values);
     // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
     // let filesUploaded = (await onFileUpload()) || imagesUrlProps
     // console.log('fileUploaded', filesUploaded)
@@ -106,14 +104,13 @@ export default (props) => {
           {
             ...restValues,
             dateBorrow,
+            datePay,
             customerAddressId,
             // imageUrls: filesUploaded || [],
           },
           createCustomer
         );
         // student card & property
-        let customerStudentInfoId;
-        let customerPropertyId;
         await Promise.all(
           customerItems.map(async (item) => {
             const {
@@ -133,16 +130,24 @@ export default (props) => {
               frameNumber,
               machineNumber,
               plateNumber,
-              dateBorrow,
-            } = item
+              interest,
+            } = item;
             if (loanType === LOAN_TYPE.giayTo) {
-              const studentCardRespond = await create(
-                { cardNumber, universityName, gpa, graduationYear, loanType, propertyCustomerId: customerRespond.data.createCustomer.id },
+              // get result | studentCardRespond?.data?.createProperty?.id
+              await create(
+                {
+                  cardNumber,
+                  universityName,
+                  gpa,
+                  graduationYear,
+                  interest,
+                  loanType,
+                  propertyCustomerId: customerRespond.data.createCustomer.id,
+                },
                 createProperty
-              )
-              customerStudentInfoId = studentCardRespond?.data?.createProperty?.id
+              );
             } else if (loanType === LOAN_TYPE.xe) {
-              const propertyRespond = await create(
+              await create(
                 {
                   loanType,
                   imageUrls,
@@ -157,17 +162,17 @@ export default (props) => {
                   machineNumber,
                   plateNumber,
                   dateBorrow,
+                  interest,
                   propertyCustomerId: customerRespond.data.createCustomer.id,
                 },
                 createProperty
-              )
-              customerPropertyId = propertyRespond?.data?.createProperty?.id
+              );
             }
           })
-        )
-        await get(customerRespond.data.createCustomer.id, getCustomer)
-        resetForm({ values: {} })
-        break
+        );
+        await get(customerRespond.data.createCustomer.id, getCustomer);
+        resetForm({ values: {} });
+        break;
       case CUSTOMER_STATUS.edit:
         await update(
           {
@@ -176,12 +181,12 @@ export default (props) => {
             // imageUrls: filesUploaded,
           },
           updateCustomer
-        )
-        break
+        );
+        break;
       default:
-        break
+        break;
     }
-    setSubmitting(false)
+    setSubmitting(false);
   }
 
   return (
@@ -218,22 +223,29 @@ export default (props) => {
           <Form {...layout}>
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
             <Row>
-              <Col span="12">
+              <Col sm={24} md={12}>
                 <FieldInput label="Tên" name="firstName" />
                 <FieldInput label="Họ" name="lastName" />
                 <FieldInput label="Tên đệm" name="middleName" />
                 <FieldInput name="phoneNumber" label="Số điện thoại" />
-                <FieldInput label="Ngày sinh" name="dateOfBirth" />
+                <FieldDatePicker label="Ngày sinh" name="dateOfBirth" />
                 <FieldInput label="Số nhà" name="homeNumber" />
                 <FieldInput label="Đường" name="street" />
                 <FieldInput label="Thôn" name="hamlet" />
                 <FieldInput label="Xã" name="village" />
-                <FieldInput label="Huyện" name="district" />
-                <FieldInput label="Tỉnh" name="province" />
                 <FieldInput label="Ngõ" name="lane" />
                 <FieldInput label="Ngách" name="alley" />
+                <FieldInput label="Huyện" name="district" />
+                <FieldSelect label="Tỉnh" name="province" defaultValue="" showSearch>
+                  <Select.Option value="">--Lựa chọn--</Select.Option>
+                  {provinceData && provinceData.map((province) => <Select.Option value={province}>{province}</Select.Option>)}
+                </FieldSelect>
+                <FieldSelect label="Thành phố" name="city" defaultValue="" showSearch>
+                  <Select.Option value="">--Lựa chọn--</Select.Option>
+                  {cityData && cityData.map((city) => <Select.Option value={city}>{city}</Select.Option>)}
+                </FieldSelect>
               </Col>
-              <Col span="12">
+              <Col sm={24} md={12}>
                 <FieldInput label="Chứng minh thư" name="identityCardNo" />
                 <FieldInput
                   label="Ngày phát hành"
@@ -255,20 +267,14 @@ export default (props) => {
                               <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
                             </FieldSelect>
                             <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
-                              {/* <Description> */}
                               <FieldInput label="Tên đồ" name={`customerItems[${index}].itemName`} />
                               <FieldInput label="Màu sắc" name={`customerItems[${index}].color`} />
                               <FieldInput label="Năm sản xuất" name={`customerItems[${index}].year`} />
                               <FieldInput label="Số khung" name={`customerItems[${index}].frameNumber`} />
                               <FieldInput label="Số máy" name={`customerItems[${index}].machineNumber`} />
                               <FieldInput label="Biển kiểm soát" name={`customerItems[${index}].plateNumber`} />
-                              <FieldInput label="Ngày vay" name={`customerItems[${index}].dateBorrow`} />
-                              <FieldInput label="Giá" name={`customerItems[${index}].price`} />
-                              <FieldInput label="Tên khách hàng" name={`customerItems[${index}].customerName`} />
-                              <FieldArea label="Mô tả" name={`customerItems[${index}].description`} />
-                              {/* </Description> */}
+                              {/* <FieldInput label="Tên khách hàng" name={`customerItems[${index}].customerName`} /> */}
                             </Panel>
-
                             <Panel condition={{ x: `{{customerItems.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
                               <FieldInput label="Mã thẻ SV" name={`customerItems[${index}].cardNumber`} />
                               <FieldInput label="Tên trường" name={`customerItems[${index}].universityName`} />
@@ -279,14 +285,18 @@ export default (props) => {
                               <FieldInput label="Tên mẹ" name={`customerItems[${index}].motherName`} />
                               <FieldInput label="SĐT mẹ" name={`customerItems[${index}].motherPhone`} />
                             </Panel>
+                            <FieldInput label="Giá" name={`customerItems[${index}].price`} isCurrency={true} />
+                            <FieldInput label="Lãi" name={`customerItems[${index}].interest`} />
+                            <FieldArea label="Mô tả" name={`customerItems[${index}].description`} />
                           </div>
-                        )
+                        );
                       }}
                     </RepeatingGroup>
                   )}
                 />
                 <FieldArea label="Mục đích vay" name="borrowPurpose" />
-                <FieldInput label="Ngày trả" name="datePay" />
+                <FieldDatePicker label="Ngày vay" name="dateBorrow" />
+                <FieldDatePicker label="Ngày trả" name="datePay" />
               </Col>
             </Row>
 
@@ -306,5 +316,5 @@ export default (props) => {
         </>
       )}
     </Formik>
-  )
-}
+  );
+};

@@ -36,10 +36,11 @@ export const getProperty = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -61,6 +62,7 @@ export const getProperty = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      interest
       createdAt
       updatedAt
     }
@@ -115,6 +117,7 @@ export const listPropertys = /* GraphQL */ `
         universityName
         gpa
         graduationYear
+        interest
         createdAt
         updatedAt
       }
@@ -141,10 +144,11 @@ export const getCustomer = /* GraphQL */ `
         street
         hamlet
         village
-        district
-        province
         lane
         alley
+        district
+        province
+        city
         customer {
           id
           firstName
@@ -199,6 +203,7 @@ export const getCustomer = /* GraphQL */ `
           universityName
           gpa
           graduationYear
+          interest
           createdAt
           updatedAt
         }
@@ -233,10 +238,11 @@ export const listCustomers = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -249,7 +255,29 @@ export const listCustomers = /* GraphQL */ `
         note
         customerImages
         properties {
-          nextToken
+          items {
+            id
+            loanType
+            description
+            imageUrls
+            type
+            userId
+            year
+            customerName
+            itemName
+            price
+            color
+            frameNumber
+            machineNumber
+            plateNumber
+            dateBorrow
+            customer {id}
+            cardNumber
+            universityName
+            gpa
+            graduationYear
+            interest
+          }
         }
         createdAt
         updatedAt
@@ -266,10 +294,11 @@ export const getAddress = /* GraphQL */ `
       street
       hamlet
       village
-      district
-      province
       lane
       alley
+      district
+      province
+      city
       customer {
         id
         firstName
@@ -287,10 +316,11 @@ export const getAddress = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -326,10 +356,11 @@ export const listAddresss = /* GraphQL */ `
         street
         hamlet
         village
-        district
-        province
         lane
         alley
+        district
+        province
+        city
         customer {
           id
           firstName

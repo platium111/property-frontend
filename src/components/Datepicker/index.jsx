@@ -19,7 +19,7 @@ export default ({ label, condition, compareType, placeholder = label, ...props }
         <DatePicker
           {...props}
           placeholder={placeholder}
-          defaultValue={moment(new Date(), dateFormatList[0])}
+          /* defaultValue={moment(new Date(), dateFormatList[0])} */
           format={dateFormatList}
           onChange={(_, dateString = moment(new Date(), dateFormatList[0])) => {
             setFieldValue(name, dateString);

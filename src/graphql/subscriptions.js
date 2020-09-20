@@ -36,10 +36,11 @@ export const onCreateProperty = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -61,6 +62,7 @@ export const onCreateProperty = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      interest
       createdAt
       updatedAt
     }
@@ -101,10 +103,11 @@ export const onUpdateProperty = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -126,6 +129,7 @@ export const onUpdateProperty = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      interest
       createdAt
       updatedAt
     }
@@ -166,10 +170,11 @@ export const onDeleteProperty = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -191,6 +196,7 @@ export const onDeleteProperty = /* GraphQL */ `
       universityName
       gpa
       graduationYear
+      interest
       createdAt
       updatedAt
     }
@@ -215,10 +221,11 @@ export const onCreateCustomer = /* GraphQL */ `
         street
         hamlet
         village
-        district
-        province
         lane
         alley
+        district
+        province
+        city
         customer {
           id
           firstName
@@ -273,6 +280,7 @@ export const onCreateCustomer = /* GraphQL */ `
           universityName
           gpa
           graduationYear
+          interest
           createdAt
           updatedAt
         }
@@ -302,10 +310,11 @@ export const onUpdateCustomer = /* GraphQL */ `
         street
         hamlet
         village
-        district
-        province
         lane
         alley
+        district
+        province
+        city
         customer {
           id
           firstName
@@ -360,6 +369,7 @@ export const onUpdateCustomer = /* GraphQL */ `
           universityName
           gpa
           graduationYear
+          interest
           createdAt
           updatedAt
         }
@@ -389,10 +399,11 @@ export const onDeleteCustomer = /* GraphQL */ `
         street
         hamlet
         village
-        district
-        province
         lane
         alley
+        district
+        province
+        city
         customer {
           id
           firstName
@@ -447,6 +458,7 @@ export const onDeleteCustomer = /* GraphQL */ `
           universityName
           gpa
           graduationYear
+          interest
           createdAt
           updatedAt
         }
@@ -465,10 +477,11 @@ export const onCreateAddress = /* GraphQL */ `
       street
       hamlet
       village
-      district
-      province
       lane
       alley
+      district
+      province
+      city
       customer {
         id
         firstName
@@ -486,10 +499,11 @@ export const onCreateAddress = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -520,10 +534,11 @@ export const onUpdateAddress = /* GraphQL */ `
       street
       hamlet
       village
-      district
-      province
       lane
       alley
+      district
+      province
+      city
       customer {
         id
         firstName
@@ -541,10 +556,11 @@ export const onUpdateAddress = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
@@ -575,10 +591,11 @@ export const onDeleteAddress = /* GraphQL */ `
       street
       hamlet
       village
-      district
-      province
       lane
       alley
+      district
+      province
+      city
       customer {
         id
         firstName
@@ -596,10 +613,11 @@ export const onDeleteAddress = /* GraphQL */ `
           street
           hamlet
           village
-          district
-          province
           lane
           alley
+          district
+          province
+          city
           createdAt
           updatedAt
         }
