@@ -22,7 +22,9 @@ type Property @model {
   interest: Float
 }
 
-type Customer @model {
+type Customer @model
+  @key(name: "listCustomerByCreatedAt", fields: ["createdAt"], queryField: "listCustomerByCreatedAt")
+{
   id: ID!
   firstName: String!
   lastName: String!
@@ -41,6 +43,7 @@ type Customer @model {
   identityCardNo: String
   issueDate: String
   note: String
+  createdAt: AWSDateTime!
   customerImages: [String]
   properties: [Property] @connection(name: "CustomerProperties")
 }

@@ -51,11 +51,11 @@ export const onCreateProperty = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       cardNumber
@@ -118,11 +118,11 @@ export const onUpdateProperty = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       cardNumber
@@ -185,11 +185,11 @@ export const onDeleteProperty = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       cardNumber
@@ -244,8 +244,8 @@ export const onCreateCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         createdAt
@@ -258,6 +258,7 @@ export const onCreateCustomer = /* GraphQL */ `
       identityCardNo
       issueDate
       note
+      createdAt
       customerImages
       properties {
         items {
@@ -286,7 +287,6 @@ export const onCreateCustomer = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -333,8 +333,8 @@ export const onUpdateCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         createdAt
@@ -347,6 +347,7 @@ export const onUpdateCustomer = /* GraphQL */ `
       identityCardNo
       issueDate
       note
+      createdAt
       customerImages
       properties {
         items {
@@ -375,7 +376,6 @@ export const onUpdateCustomer = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -422,8 +422,8 @@ export const onDeleteCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         createdAt
@@ -436,6 +436,7 @@ export const onDeleteCustomer = /* GraphQL */ `
       identityCardNo
       issueDate
       note
+      createdAt
       customerImages
       properties {
         items {
@@ -464,7 +465,6 @@ export const onDeleteCustomer = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -514,11 +514,11 @@ export const onCreateAddress = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       createdAt
@@ -571,11 +571,11 @@ export const onUpdateAddress = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       createdAt
@@ -628,11 +628,11 @@ export const onDeleteAddress = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       createdAt

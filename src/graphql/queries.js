@@ -51,11 +51,11 @@ export const getProperty = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       cardNumber
@@ -109,8 +109,8 @@ export const listPropertys = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         cardNumber
@@ -167,8 +167,8 @@ export const getCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         createdAt
@@ -181,6 +181,7 @@ export const getCustomer = /* GraphQL */ `
       identityCardNo
       issueDate
       note
+      createdAt
       customerImages
       properties {
         items {
@@ -209,7 +210,6 @@ export const getCustomer = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
     }
   }
@@ -253,6 +253,7 @@ export const listCustomers = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           items {
@@ -279,7 +280,6 @@ export const listCustomers = /* GraphQL */ `
             interest
           }
         }
-        createdAt
         updatedAt
       }
       nextToken
@@ -331,11 +331,11 @@ export const getAddress = /* GraphQL */ `
         identityCardNo
         issueDate
         note
+        createdAt
         customerImages
         properties {
           nextToken
         }
-        createdAt
         updatedAt
       }
       createdAt
@@ -379,11 +379,69 @@ export const listAddresss = /* GraphQL */ `
           identityCardNo
           issueDate
           note
-          customerImages
           createdAt
+          customerImages
           updatedAt
         }
         createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listCustomerByCreatedAt = /* GraphQL */ `
+  query ListCustomerByCreatedAt(
+    $createdAt: AWSDateTime
+    $sortDirection: ModelSortDirection
+    $filter: ModelCustomerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCustomerByCreatedAt(
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumber
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          lane
+          alley
+          district
+          province
+          city
+          createdAt
+          updatedAt
+        }
+        loanType
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        createdAt
+        customerImages
+        properties {
+          nextToken
+        }
         updatedAt
       }
       nextToken
