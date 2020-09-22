@@ -99,18 +99,18 @@ export default (props) => {
           },
         } = await create(address, createAddress);
 
-        // customer
+        // customer -> customerAddressId
         const customerRespond = await create(
           {
             ...restValues,
             dateBorrow,
             datePay,
-            customerAddressId,
+            addressId: customerAddressId,
             // imageUrls: filesUploaded || [],
           },
           createCustomer
         );
-        // student card & property
+        // student card & property -> propertyCustomerId
         await Promise.all(
           customerItems.map(async (item) => {
             const {
@@ -142,7 +142,7 @@ export default (props) => {
                   graduationYear,
                   interest,
                   loanType,
-                  propertyCustomerId: customerRespond.data.createCustomer.id,
+                  customerId: customerRespond.data.createCustomer.id,
                 },
                 createProperty
               );
@@ -163,7 +163,7 @@ export default (props) => {
                   plateNumber,
                   dateBorrow,
                   interest,
-                  propertyCustomerId: customerRespond.data.createCustomer.id,
+                  customerId: customerRespond.data.createCustomer.id,
                 },
                 createProperty
               );

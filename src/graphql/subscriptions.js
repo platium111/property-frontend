@@ -19,45 +19,7 @@ export const onCreateProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
+      customerId
       cardNumber
       universityName
       gpa
@@ -86,45 +48,7 @@ export const onUpdateProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
+      customerId
       cardNumber
       universityName
       gpa
@@ -153,45 +77,7 @@ export const onDeleteProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
+      customerId
       cardNumber
       universityName
       gpa
@@ -226,31 +112,10 @@ export const onCreateCustomer = /* GraphQL */ `
         district
         province
         city
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
+      addressId
       loanType
       dateBorrow
       borrowPurpose
@@ -277,6 +142,7 @@ export const onCreateCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          customerId
           cardNumber
           universityName
           gpa
@@ -315,31 +181,10 @@ export const onUpdateCustomer = /* GraphQL */ `
         district
         province
         city
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
+      addressId
       loanType
       dateBorrow
       borrowPurpose
@@ -366,6 +211,7 @@ export const onUpdateCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          customerId
           cardNumber
           universityName
           gpa
@@ -404,31 +250,10 @@ export const onDeleteCustomer = /* GraphQL */ `
         district
         province
         city
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
+      addressId
       loanType
       dateBorrow
       borrowPurpose
@@ -455,6 +280,7 @@ export const onDeleteCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          customerId
           cardNumber
           universityName
           gpa
@@ -482,45 +308,6 @@ export const onCreateAddress = /* GraphQL */ `
       district
       province
       city
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -539,45 +326,6 @@ export const onUpdateAddress = /* GraphQL */ `
       district
       province
       city
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -596,45 +344,6 @@ export const onDeleteAddress = /* GraphQL */ `
       district
       province
       city
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
       createdAt
       updatedAt
     }

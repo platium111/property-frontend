@@ -1,4 +1,6 @@
-type Property @model {
+type Property @model 
+  @key(name: "byCustomer", fields: ["customerId", "itemName"])
+{
   id: ID!
   loanType: String
   description: String
@@ -14,7 +16,7 @@ type Property @model {
   machineNumber: String
   plateNumber: String
   dateBorrow: String
-  customer: Customer @connection(name: "CustomerProperties")
+  customerId: ID
   cardNumber: String
   universityName: String
   gpa: Float
@@ -35,7 +37,8 @@ type Customer @model
   dateOfBirth: String
   motherPhone: String
   fatherPhone: String
-  address: Address @connection(name: "CustomerAddress")
+  address: Address @connection(fields: ["addressId"])
+  addressId: ID!
   loanType: String
   dateBorrow: String
   borrowPurpose: String
@@ -45,10 +48,11 @@ type Customer @model
   note: String
   createdAt: AWSDateTime!
   customerImages: [String]
-  properties: [Property] @connection(name: "CustomerProperties")
+  properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
 }
 
-type Address @model {
+type Address @model
+ {
   id: ID!
   homeNumber: String
   street: String
@@ -59,5 +63,4 @@ type Address @model {
   district: String
   province: String
   city: String
-  customer: Customer @connection(name: "CustomerAddress")
 }

@@ -19,45 +19,7 @@ export const getProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
+      customerId
       cardNumber
       universityName
       gpa
@@ -91,28 +53,7 @@ export const listPropertys = /* GraphQL */ `
         machineNumber
         plateNumber
         dateBorrow
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
+        customerId
         cardNumber
         universityName
         gpa
@@ -149,31 +90,10 @@ export const getCustomer = /* GraphQL */ `
         district
         province
         city
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
+      addressId
       loanType
       dateBorrow
       borrowPurpose
@@ -200,6 +120,7 @@ export const getCustomer = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
+          customerId
           cardNumber
           universityName
           gpa
@@ -246,6 +167,7 @@ export const listCustomers = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        addressId
         loanType
         dateBorrow
         borrowPurpose
@@ -256,29 +178,7 @@ export const listCustomers = /* GraphQL */ `
         createdAt
         customerImages
         properties {
-          items {
-            id
-            loanType
-            description
-            imageUrls
-            type
-            userId
-            year
-            customerName
-            itemName
-            price
-            color
-            frameNumber
-            machineNumber
-            plateNumber
-            dateBorrow
-            customer {id}
-            cardNumber
-            universityName
-            gpa
-            graduationYear
-            interest
-          }
+          nextToken
         }
         updatedAt
       }
@@ -299,45 +199,6 @@ export const getAddress = /* GraphQL */ `
       district
       province
       city
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        fatherName
-        motherName
-        phoneNumber
-        dateOfBirth
-        motherPhone
-        fatherPhone
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        loanType
-        dateBorrow
-        borrowPurpose
-        datePay
-        identityCardNo
-        issueDate
-        note
-        createdAt
-        customerImages
-        properties {
-          nextToken
-        }
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -361,28 +222,6 @@ export const listAddresss = /* GraphQL */ `
         district
         province
         city
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          fatherName
-          motherName
-          phoneNumber
-          dateOfBirth
-          motherPhone
-          fatherPhone
-          loanType
-          dateBorrow
-          borrowPurpose
-          datePay
-          identityCardNo
-          issueDate
-          note
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -430,6 +269,7 @@ export const listCustomerByCreatedAt = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        addressId
         loanType
         dateBorrow
         borrowPurpose

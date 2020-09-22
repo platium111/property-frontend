@@ -195,3 +195,16 @@ amplify env checkout dev (current is feature)
 - [list_graphql] getting errors if don't declare nested object inside nested object
 
 listCustomer has `items` -> inside items has `properties` -> inside it has `customer` -> need declar `customer {id}`
+
+22/9/2020
+- [another_way_1toN]
+Customer has `properties` -> has connection with keyName + fields
+Property has `customerId` and has @key with `name` equals `keyName` and `fields` has `customerId` and another properties of table ~ (both consider as secondary index)
+
+-> another way: both of them has @connection(name: "sameName") -> but this way has automatic ID is generated
+Customer will have `customerAddressId` and Property will have `propertyCustomerId`
+
+- [1to1] 
+Customer has one `address` has @connection with only fields["id"] + addressId as another properties of table
+in Address has nothing relating to customer
+
