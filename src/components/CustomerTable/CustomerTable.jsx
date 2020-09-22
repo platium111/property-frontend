@@ -4,7 +4,7 @@ import Styles from './index.style';
 // import dataTable from "./data";
 import columnsTable from './columns';
 import { Typography } from 'antd';
-import { listCustomers } from '../../graphql/queries';
+import { listCustomersAndProperties } from '../../graphql/customQuery';
 import { list } from '../../services/generic';
 import { useState } from 'react';
 import { tranformDbData } from '../../_utils';
@@ -21,7 +21,8 @@ export default function CustomerTable(props) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const result = await list(null, listCustomers);
+      const result = await list(null, listCustomersAndProperties);
+      debugger;
       const customers = result?.data?.listCustomers?.items || [];
       console.log('fetch list customer data', customers);
       const transformDataToTable = customers.map((customer) => {
@@ -29,7 +30,7 @@ export default function CustomerTable(props) {
           firstName,
           middleName,
           lastName,
-          phoneNumber,
+          phoneNumbers,
           dateOfBirth,
           address,
           dateBorrow,
@@ -62,7 +63,7 @@ export default function CustomerTable(props) {
         console.log('loantypesum', transformLoanTypeSummary);
         return {
           name: `${firstName} ${middleName} ${lastName}`,
-          phoneNumber,
+          phoneNumbers,
           dateOfBirth,
           address: transformAddress,
           loanTypeSummary: `Xe : ${transformLoanTypeSummary.xe} | Giấy tờ: ${transformLoanTypeSummary.giayTo}`,

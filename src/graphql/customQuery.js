@@ -20,6 +20,80 @@ export const searchListProperty = `
     }
   }
 `
+export const listCustomersAndProperties = /* GraphQL */ `
+  query listCustomersAndProperties(
+    $filter: ModelCustomerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCustomers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        firstName
+        lastName
+        middleName
+        fatherName
+        motherName
+        phoneNumbers
+        dateOfBirth
+        motherPhone
+        fatherPhone
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          lane
+          alley
+          district
+          province
+          city
+          createdAt
+          updatedAt
+        }
+        addressId
+        loanType
+        dateBorrow
+        borrowPurpose
+        datePay
+        identityCardNo
+        issueDate
+        note
+        createdAt
+        customerImages
+        properties {
+          items {
+            id
+            loanType
+            description
+            imageUrls
+            type
+            userId
+            year
+            customerName
+            itemName
+            price
+            color
+            frameNumber
+            machineNumber
+            plateNumber
+            dateBorrow
+            customerId
+            cardNumber
+            universityName
+            gpa
+            graduationYear
+            interest
+          }
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+
 
 export const searchListCustomer = `
   query searchListCustomers($searchQuery: String) {
@@ -31,7 +105,7 @@ export const searchListCustomer = `
         middleName
         fatherName
         motherName
-        phoneNumber
+        phoneNumbers
         dateOfBirth
         motherPhone
         fatherPhone

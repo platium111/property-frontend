@@ -208,3 +208,6 @@ Customer will have `customerAddressId` and Property will have `propertyCustomerI
 Customer has one `address` has @connection with only fields["id"] + addressId as another properties of table
 in Address has nothing relating to customer
 
+- [error_get_nested_obj_graphql]
+Customer has Property but default dont get any Property, we add in default query which will be removed after codegen -> just create new query and copy the same then put more properties in Property inside Customer
+

@@ -33,7 +33,7 @@ type Customer @model
   middleName: String
   fatherName: String
   motherName: String
-  phoneNumber: String
+  phoneNumbers: [String]
   dateOfBirth: String
   motherPhone: String
   fatherPhone: String

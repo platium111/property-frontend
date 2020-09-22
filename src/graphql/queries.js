@@ -75,7 +75,7 @@ export const getCustomer = /* GraphQL */ `
       middleName
       fatherName
       motherName
-      phoneNumber
+      phoneNumbers
       dateOfBirth
       motherPhone
       fatherPhone
@@ -149,7 +149,7 @@ export const listCustomers = /* GraphQL */ `
         middleName
         fatherName
         motherName
-        phoneNumber
+        phoneNumbers
         dateOfBirth
         motherPhone
         fatherPhone
@@ -251,7 +251,7 @@ export const listCustomerByCreatedAt = /* GraphQL */ `
         middleName
         fatherName
         motherName
-        phoneNumber
+        phoneNumbers
         dateOfBirth
         motherPhone
         fatherPhone

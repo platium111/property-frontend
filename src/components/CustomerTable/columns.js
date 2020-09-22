@@ -5,7 +5,7 @@ export default [
   },
   {
     Header: "Số điện thoại",
-    accessor: "phoneNumber",
+    accessor: "phoneNumbers",
   },
   {
     Header: "Ngày sinh",

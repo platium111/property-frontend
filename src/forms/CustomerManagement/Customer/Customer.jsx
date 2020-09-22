@@ -33,7 +33,7 @@ export default (props) => {
     middleName,
     fatherName,
     motherName,
-    phoneNumber,
+    phoneNumbers,
     dateOfBirth,
     motherPhone,
     fatherPhone,
@@ -57,6 +57,8 @@ export default (props) => {
 
   async function handleSubmit(values, { setSubmitting, resetForm }) {
     const {
+      otherPhoneNumber,
+      phoneNumber,
       homeNumber,
       street,
       hamlet,
@@ -103,6 +105,7 @@ export default (props) => {
         const customerRespond = await create(
           {
             ...restValues,
+            phoneNumbers: [phoneNumber, otherPhoneNumber],
             dateBorrow,
             datePay,
             addressId: customerAddressId,
@@ -189,6 +192,7 @@ export default (props) => {
     setSubmitting(false);
   }
 
+  const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
   return (
     <Formik
       initialValues={{
@@ -198,6 +202,7 @@ export default (props) => {
         fatherName,
         motherName,
         phoneNumber,
+        otherPhoneNumber,
         dateOfBirth,
         motherPhone,
         fatherPhone,
@@ -228,6 +233,7 @@ export default (props) => {
                 <FieldInput label="Họ" name="lastName" />
                 <FieldInput label="Tên đệm" name="middleName" />
                 <FieldInput name="phoneNumber" label="Số điện thoại" />
+                <FieldInput name="otherPhoneNumber" label="Số điện thoại khác" />
                 <FieldDatePicker label="Ngày sinh" name="dateOfBirth" />
                 <FieldInput label="Số nhà" name="homeNumber" />
                 <FieldInput label="Đường" name="street" />

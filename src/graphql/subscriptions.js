@@ -97,7 +97,7 @@ export const onCreateCustomer = /* GraphQL */ `
       middleName
       fatherName
       motherName
-      phoneNumber
+      phoneNumbers
       dateOfBirth
       motherPhone
       fatherPhone
@@ -166,7 +166,7 @@ export const onUpdateCustomer = /* GraphQL */ `
       middleName
       fatherName
       motherName
-      phoneNumber
+      phoneNumbers
       dateOfBirth
       motherPhone
       fatherPhone
@@ -235,7 +235,7 @@ export const onDeleteCustomer = /* GraphQL */ `
       middleName
       fatherName
       motherName
-      phoneNumber
+      phoneNumbers
       dateOfBirth
       motherPhone
       fatherPhone
