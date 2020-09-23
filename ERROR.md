@@ -211,3 +211,48 @@ in Address has nothing relating to customer
 - [error_get_nested_obj_graphql]
 Customer has Property but default dont get any Property, we add in default query which will be removed after codegen -> just create new query and copy the same then put more properties in Property inside Customer
 
+23/9/2020
+Regular expression
+
+/cat/g
+- `g` ~ `match all` means searching for all results
+if text has 2 cat -> it will get 2 cat
+- `i` ~ `case sensitive`
+
+/a+/g | a or more than one a
+- `+ one or more`
+
+/er?/g | after e is r, so r is optional
+- `? is optional` -> result e, ee, er
+
+/er*/g | can have or more at end
+- `* is 0 or more` -> result e, er, err
+
+/.at/g
+- `. is anything` -> result fat, sat
+
+/\./g 
+- `\. meaning find .` 
+
+/.\./g | result t., a.
+
+/\w/g | word
+- `\w is matching word character`
+
+/\s/g | white space
+
+/\W/g | not word
+/\S/g | not space
+
+/\w{4} | find 4 character
+- `{4} is finding 4 characters`
+- `{4,} is 4 or more`
+- `{4,6} is 4 or 5 or 6`
+
+/[fa]at/g
+- `[fa] meaning f or a` -> result fat, aat
+
+/[a-z]at/g
+- `[a-z] meaning from a to z`
+- `[a-zA-Z]`
+

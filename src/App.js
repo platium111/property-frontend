@@ -89,7 +89,7 @@ const App = (props) => {
                   </Col>
                 </Route>
                 <Route path="/list-customer">
-                  <Col span={16} >
+                  <Col span={24} >
                     <ListCustomer />
                   </Col>
                 </Route>
