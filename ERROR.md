@@ -232,7 +232,7 @@ if text has 2 cat -> it will get 2 cat
 - `. is anything` -> result fat, sat
 
 /\./g 
-- `\. meaning find .` 
+- `\. meaning find dot` 
 
 /.\./g | result t., a.
 
@@ -256,3 +256,34 @@ if text has 2 cat -> it will get 2 cat
 - `[a-z] meaning from a to z`
 - `[a-zA-Z]`
 
+24/9/2020
+/(t|T)ha/g | result tha, Tha
+- `() ~ create own group` can combine with other outside
+- compare to /t|The/g -> result t or The
+
+/(t|r|k){2,3}/g -> return tkrab, trkbhu
+
+/^Y/g 
+- `^ ~ beginning`
+
+/\.$/g
+- `$ ~ end of line`
+
+/(?<=[t|T]he)./g | . is find anything -> 
+example `the one who got the dog is` -> return space following the
+
+/(?!=[t|T]he)./g || not follow by -> find remaining
+- `?!= meaning not that follow`
+
+/.(?=[t|T]he)./g | return any one character before `the`
+- `?= ~ look ahead`
+- `?! ~ meaning remaining look ahead`
+
+vd phone number
+/\d{10}/g - 1234567890
+/(?<code>\d{3})[ -]?(\d{3})[ -]?\(d{4})/g - 123-456-7890
+
+/\(?(?<code>\d{3})\)?[ -]?(\d{3})[ -]?\(d{4})/g - (123) 456-7890
+
+/(?:(\+1)[ -])\(?(?<code>\d{3})\)?[ -]?(\d{3})[ -]?\(d{4})/g - +1 123 456 7890
+* `?: mean no longer belong to group`
