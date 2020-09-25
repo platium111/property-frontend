@@ -287,3 +287,9 @@ vd phone number
 
 /(?:(\+1)[ -])\(?(?<code>\d{3})\)?[ -]?(\d{3})[ -]?\(d{4})/g - +1 123 456 7890
 * `?: mean no longer belong to group`
+
+25/9/2020
+- [customer_resolver] add Query {//new here} and also has `type X` to define as modal for data
+-> update in `stacks` package of amplify -> will update resources file to point to vtl file
+-> write `vtl` file
+-> create lambda function
