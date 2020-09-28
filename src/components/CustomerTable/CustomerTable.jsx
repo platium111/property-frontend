@@ -22,7 +22,6 @@ export default function CustomerTable(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await list(null, listCustomersAndProperties);
-      debugger;
       const customers = result?.data?.listCustomers?.items || [];
       console.log('fetch list customer data', customers);
       const transformDataToTable = customers.map((customer) => {
@@ -38,7 +37,6 @@ export default function CustomerTable(props) {
           properties,
           identityCardNo,
         } = customer;
-        debugger;
         const transformAddress = tranformDbData(address, 'address')
           ?.filter((item) => !!item)
           .join(', ');

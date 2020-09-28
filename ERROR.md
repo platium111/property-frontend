@@ -296,3 +296,7 @@ vd phone number
 
 27/9/2020
 - [remove_emplify] `amplify function remove`
+
+28/9/2020
+- Having Cell with actions such as delete, edit
+- New `Button` component
