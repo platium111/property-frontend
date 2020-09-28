@@ -30,67 +30,6 @@
     "EmptyResource": {
       "Type": "Custom::EmptyResource",
       "Condition": "AlwaysFalse"
-    },
-    "QueryPropertiesForCustomerResolver": {
-      "Type": "AWS::AppSync::Resolver",
-      "Properties": {
-        "ApiId": {
-          "Ref": "AppSyncApiId"
-        },
-        "DataSourceName": "PropertyTable",
-        "TypeName": "Query",
-        "FieldName": "propertiesForCustomer",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.propertiesForCustomer.req.vtl",
-            {
-              "S3DeploymentBucket": {
-                "Ref": "S3DeploymentBucket"
-              },
-              "S3DeploymentRootKey": {
-                "Ref": "S3DeploymentRootKey"
-              }
-            }
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.propertiesForCustomer.res.vtl",
-            {
-              "S3DeploymentBucket": {
-                "Ref": "S3DeploymentBucket"
-              },
-              "S3DeploymentRootKey": {
-                "Ref": "S3DeploymentRootKey"
-              }
-            }
-          ]
-        }
-      }
-    },
-    "QueryPropertiesFromCustomerLambdaDataSource": {
-      "Type": "AWS::AppSync::DataSource",
-      "Properties": {
-        "ApiId": {
-          "Ref": "AppSyncApiId"
-        },
-        "Name": "QueryPropertiesFromCustomerFunction",
-        "Type": "AWS_LAMBDA",
-        "ServiceRoleArn": {
-          "Fn::GetAtt": [
-            "QueryPropertiesFromCustomerLambdaDataSourceRole",
-            "Arn"
-          ]
-        },
-        "LambdaConfig": {
-          "LambdaFunctionArn": {
-            "Fn::Sub": [
-              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:queryPropertiesFromCustomer-${env}",
-              { "env": { "Ref": "env" } }
-            ]
-          }
-        }
-      }
     }
   },
   "Conditions": {

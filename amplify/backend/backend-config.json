@@ -45,12 +45,5 @@
 			"type": "manual"
 		}
 	},
-	"function": {
-		"queryPropertiesFromCustomer": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda",
-			"dependsOn": []
-		}
-	}
+	"function": {}
 }

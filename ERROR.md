@@ -293,3 +293,6 @@ vd phone number
 -> update in `stacks` package of amplify -> will update resources file to point to vtl file
 -> write `vtl` file
 -> create lambda function
+
+27/9/2020
+- [remove_emplify] `amplify function remove`

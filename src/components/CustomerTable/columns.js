@@ -30,5 +30,9 @@ export default [
   {
     Header: "CMT",
     accessor: 'identityCardNo'
+  },
+  {
+    Header: "Sửa/Xóa",
+    accessor: 'actions'
   }
 ]

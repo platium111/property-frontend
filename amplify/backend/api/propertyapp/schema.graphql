@@ -58,7 +58,6 @@ type PropertyConnectWithCustomer {
 
 type Query {
   propertiesForCustomer(customerId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
-  queryPropertiesFromCustomer(msg: String): String
 }
 
 type Address @model
