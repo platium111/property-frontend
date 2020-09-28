@@ -300,3 +300,4 @@ vd phone number
 28/9/2020
 - Having Cell with actions such as delete, edit
 - New `Button` component
+- Dynamic import with hook
