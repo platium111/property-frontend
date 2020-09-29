@@ -3,6 +3,6 @@ import Customer from "./Customer";
 
 export default function(props) {
   return (
-    <Customer />
+    <Customer {...props}/>
   )
 }

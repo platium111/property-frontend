@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import FieldButton from '../Button';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const StyledButtonGroup = styled.div`
   display: flex;
@@ -48,14 +49,21 @@ export default [
     Header: 'Sửa/Xóa',
     id: 'actions',
     accessor: 'actions',
-    Cell: ({ row }) => {
+    Cell: ({ row, ...restProps }) => {
+      /* const {
+        original: { originalData },
+      } = row; */
+      debugger;
+      function onEdit(id) {}
       return (
         <>
           <Formik>
             {(props) => (
               <Form>
                 <StyledButtonGroup>
-                  <FieldButton type="primary" name="edit" icon="EditOutlined" />
+                  <Link to="/edit-customer">
+                    <FieldButton type="primary" name="edit" icon="EditOutlined" />
+                  </Link>
                   <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" />
                 </StyledButtonGroup>
               </Form>

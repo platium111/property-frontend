@@ -301,3 +301,7 @@ vd phone number
 - Having Cell with actions such as delete, edit
 - New `Button` component
 - Dynamic import with hook
+
+29/9/2020
+- [Writing_custom_cell] write edit and delete button in cell in `columns`
+- integrating with router for click in to Edit and show Customer

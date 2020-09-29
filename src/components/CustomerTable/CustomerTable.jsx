@@ -9,6 +9,8 @@ import { list } from '../../services/generic';
 import { useState } from 'react';
 import { tranformDbData } from '../../_utils';
 import { LOAN_TYPE } from '../../_constants';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import Customer from '../../forms/CustomerManagement/Customer';
 
 const { Title } = Typography;
 
@@ -26,6 +28,7 @@ export default function CustomerTable(props) {
       console.log('fetch list customer data', customers);
       const transformDataToTable = customers.map((customer) => {
         const {
+          id,
           firstName,
           middleName,
           lastName,
@@ -37,6 +40,7 @@ export default function CustomerTable(props) {
           properties,
           identityCardNo,
         } = customer;
+
         const transformAddress = tranformDbData(address, 'address')
           ?.filter((item) => !!item)
           .join(', ');
@@ -60,6 +64,7 @@ export default function CustomerTable(props) {
           );
         console.log('loantypesum', transformLoanTypeSummary);
         return {
+          id,
           name: `${firstName} ${middleName} ${lastName}`,
           phoneNumbers,
           dateOfBirth,
@@ -68,6 +73,7 @@ export default function CustomerTable(props) {
           dateBorrow,
           datePay,
           identityCardNo,
+          originalData: customer,
         };
       });
       setDataTable(transformDataToTable);
@@ -76,41 +82,51 @@ export default function CustomerTable(props) {
   }, []);
 
   return (
-    <div>
-      <Title
-        style={{
-          margin: '2px auto',
-          textAlign: 'center',
-          marginBottom: '20px',
-        }}
-      >
-        Bảng khách hàng
-      </Title>
-      <Styles>
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((group) => (
-              <tr {...group.getHeaderGroupProps()}>
-                {group.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                  })}
+    <Router>
+      <div>
+        <Title
+          style={{
+            margin: '2px auto',
+            textAlign: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          Bảng khách hàng
+        </Title>
+        <Styles>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((group) => (
+                <tr {...group.getHeaderGroupProps()}>
+                  {group.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </Styles>
-    </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Styles>
+      </div>
+      <Switch>
+        <Route path="/edit-customer">
+          <Customer />
+        </Route>
+        <Route path="/">
+          <></>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
