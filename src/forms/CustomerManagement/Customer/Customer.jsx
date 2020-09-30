@@ -195,6 +195,7 @@ export default (props) => {
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         firstName,
         lastName,
@@ -234,7 +235,7 @@ export default (props) => {
                 <FieldInput label="Tên đệm" name="middleName" />
                 <FieldInput name="phoneNumber" label="Số điện thoại" />
                 <FieldInput name="otherPhoneNumber" label="Số điện thoại khác" />
-                <FieldDatePicker label="Ngày sinh" name="dateOfBirth" />
+                <FieldDatePicker label="Ngày sinh" name="dateOfBirth" value={dateOfBirth} />
                 <FieldInput label="Số nhà" name="homeNumber" />
                 <FieldInput label="Đường" name="street" />
                 <FieldInput label="Thôn" name="hamlet" />

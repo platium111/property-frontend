@@ -1,16 +1,9 @@
 import React from 'react';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useFormikContext } from 'formik';
 import FieldButton from '../Button';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const StyledButtonGroup = styled.div`
-  display: flex;
-  align-items: center;
-  button:last-of-type {
-    margin-left: 8px;
-  }
-`;
 
 export default [
   {
@@ -45,32 +38,5 @@ export default [
     Header: 'CMT',
     accessor: 'identityCardNo',
   },
-  {
-    Header: 'Sửa/Xóa',
-    id: 'actions',
-    accessor: 'actions',
-    Cell: ({ row, ...restProps }) => {
-      /* const {
-        original: { originalData },
-      } = row; */
-      debugger;
-      function onEdit(id) {}
-      return (
-        <>
-          <Formik>
-            {(props) => (
-              <Form>
-                <StyledButtonGroup>
-                  <Link to="/edit-customer">
-                    <FieldButton type="primary" name="edit" icon="EditOutlined" />
-                  </Link>
-                  <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" />
-                </StyledButtonGroup>
-              </Form>
-            )}
-          </Formik>
-        </>
-      );
-    },
-  },
+  
 ];

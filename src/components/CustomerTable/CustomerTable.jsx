@@ -1,7 +1,9 @@
 import React from 'react';
-import { useTable } from 'react-table';
-import Styles from './index.style';
+import { useRowSelect, useTable } from 'react-table';
+import { StyledTable, StyledButtonGroupInRow } from './index.style';
 // import dataTable from "./data";
+import { Form, Formik, useFormikContext } from 'formik';
+import FieldButton from '../Button';
 import columnsTable from './columns';
 import { Typography } from 'antd';
 import { listCustomersAndProperties } from '../../graphql/customQuery';
@@ -9,16 +11,52 @@ import { list } from '../../services/generic';
 import { useState } from 'react';
 import { tranformDbData } from '../../_utils';
 import { LOAN_TYPE } from '../../_constants';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Customer from '../../forms/CustomerManagement/Customer';
 
 const { Title } = Typography;
 
 export default function CustomerTable(props) {
+  const [customerSelected, setCustomerSelected] = useState();
   const [dataTable, setDataTable] = useState([]);
   const data = React.useMemo(() => dataTable, [dataTable]);
   const columns = React.useMemo(() => columnsTable, []);
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns, data }, useRowSelect, (hooks) => {
+    hooks.visibleColumns.push((columns) => [
+      ...columns,
+      {
+        Header: 'Sửa/Xóa',
+        id: 'actions',
+        accessor: 'actions',
+        Cell: ({ row }) => {
+          const {
+            original: { originalData },
+          } = row;
+
+          function onEdit() {
+            setCustomerSelected(originalData);
+          }
+          return (
+            <>
+              <Formik>
+                {(props) => {
+                  return (
+                    <Form>
+                      <StyledButtonGroupInRow>
+                        {/* <Link to="/edit-customer"> */}
+                        <FieldButton type="primary" name="edit" icon="EditOutlined" onClick={onEdit} />
+                        {/* </Link> */}
+                        <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" />
+                      </StyledButtonGroupInRow>
+                    </Form>
+                  );
+                }}
+              </Formik>
+            </>
+          );
+        },
+      },
+    ]);
+  });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
   React.useEffect(() => {
@@ -81,52 +119,45 @@ export default function CustomerTable(props) {
     fetchData();
   }, []);
 
+  console.log('customerSelected', customerSelected);
   return (
-    <Router>
-      <div>
-        <Title
-          style={{
-            margin: '2px auto',
-            textAlign: 'center',
-            marginBottom: '20px',
-          }}
-        >
-          Bảng khách hàng
-        </Title>
-        <Styles>
-          <table {...getTableProps()}>
-            <thead>
-              {headerGroups.map((group) => (
-                <tr {...group.getHeaderGroupProps()}>
-                  {group.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                  ))}
+    // <Router>
+    <div>
+      <Title
+        style={{
+          margin: '2px auto',
+          textAlign: 'center',
+          marginBottom: '20px',
+        }}
+      >
+        Bảng khách hàng
+      </Title>
+      <StyledTable>
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((group) => (
+              <tr {...group.getHeaderGroupProps()}>
+                {group.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                  })}
                 </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </Styles>
-      </div>
-      <Switch>
-        <Route path="/edit-customer">
-          <Customer />
-        </Route>
-        <Route path="/">
-          <></>
-        </Route>
-      </Switch>
-    </Router>
+              );
+            })}
+          </tbody>
+        </table>
+      </StyledTable>
+      <Customer {...customerSelected} />
+    </div>
   );
 }
