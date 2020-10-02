@@ -315,3 +315,7 @@ vd phone number
 [ref](https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/row-selection?file=/src/App.js)
 
 - [fix_initialise_value_formik] using `enableReinitialize` in prop to change value in initialize value
+
+2/10/2020
+- fix few field to get value from initialising
+
