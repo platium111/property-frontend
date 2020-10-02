@@ -13,7 +13,6 @@ export default ({ label, condition, compareType, placeholder = label, defaultVal
   const { values, setFieldValue } = useFormikContext();
   const { result: isShow } = useConditional({ values, name, condition, compareType });
 
-  debugger;
   return (
     isShow && (
       <FormItem label={label} name={name}>

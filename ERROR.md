@@ -312,5 +312,6 @@ vd phone number
 - [fix_date_picker] because in edit mode, we need to pass value, so set value for datepicker as a prop
 
 - [fix_cell_recognise_id] when choosing Edit in each row, need to custom cell by using useTable with passing column in there, so we can have the same file in CustomerTable, so can handle edit and pass data
+[ref](https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/row-selection?file=/src/App.js)
 
 - [fix_initialise_value_formik] using `enableReinitialize` in prop to change value in initialize value
