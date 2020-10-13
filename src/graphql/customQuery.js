@@ -120,7 +120,7 @@ export const searchListCustomer = `
           lane
           alley
         }
-        propertyInfo {
+        properties {
           items {
             id
             description
@@ -137,13 +137,6 @@ export const searchListCustomer = `
             plateNumber
             dateBorrow
           }
-        }
-        studentInfo {
-          id
-          cardNumber
-          universityName
-          gpa
-          graduationYear
         }
         loanType
         dateBorrow

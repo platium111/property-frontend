@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRowSelect, useTable } from 'react-table';
 import { StyledTable, StyledButtonGroupInRow } from './index.style';
 // import dataTable from "./data";
@@ -12,7 +12,8 @@ import { useState } from 'react';
 import { tranformDbData } from '../../_utils';
 import { LOAN_TYPE } from '../../_constants';
 import Customer from '../../forms/CustomerManagement/Customer';
-
+import { remove } from '../../services/generic';
+import { deleteCustomer } from '../../graphql/mutations';
 const { Title } = Typography;
 
 export default function CustomerTable(props) {
@@ -27,13 +28,22 @@ export default function CustomerTable(props) {
         Header: 'Sửa/Xóa',
         id: 'actions',
         accessor: 'actions',
-        Cell: ({ row }) => {
+        Cell: ({ row, data, ...restProps }) => {
           const {
             original: { originalData },
           } = row;
 
           function onEdit() {
             setCustomerSelected(originalData);
+          }
+
+          async function onDelete() {
+            // change data in local table and api
+            const { id: customerId } = originalData;
+            const newDataTable = data.filter((item) => item.id !== customerId);
+
+            setDataTable(newDataTable);
+            await remove({ id: customerId }, deleteCustomer);
           }
           return (
             <>
@@ -45,7 +55,7 @@ export default function CustomerTable(props) {
                         {/* <Link to="/edit-customer"> */}
                         <FieldButton type="primary" name="edit" icon="EditOutlined" onClick={onEdit} />
                         {/* </Link> */}
-                        <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" />
+                        <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" onClick={onDelete} />
                       </StyledButtonGroupInRow>
                     </Form>
                   );

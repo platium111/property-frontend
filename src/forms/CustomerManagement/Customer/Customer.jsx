@@ -193,7 +193,6 @@ export default (props) => {
 
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  debugger;
   return (
     <Formik
       enableReinitialize
