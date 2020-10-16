@@ -390,3 +390,4 @@ Focusing on youtube analytic and Cracking English everyday
 
 - refactor Customer with `actions` and fix error
 - refactor mother, father name and phone
+- done displaying message | when submission data returned -> setdata as a state, then display message based on that

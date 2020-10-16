@@ -3,7 +3,7 @@ import { getCustomer } from '../graphql/queries';
 import { create, update, get } from '../services/generic/index';
 import { CUSTOMER_STATUS, LOAN_TYPE } from '../_constants';
 
-export default async function ({ setSubmitting, values, status }) {
+export default async function ({ setSubmitting, values, status, setCustomerSubmited }) {
   const {
     id,
     otherPhoneNumber,
@@ -131,7 +131,11 @@ export default async function ({ setSubmitting, values, status }) {
           }
         })
       );
-      await get(customerRespond.data.createCustomer.id, getCustomer);
+      // after submit done, need to setData for customer for displaying message
+      const result = await get(customerRespond.data.createCustomer.id, getCustomer);
+      if (result?.data?.getCustomer) {
+        setCustomerSubmited(result?.data?.getCustomer);
+      }
       break;
     case CUSTOMER_STATUS.edit:
       await update(

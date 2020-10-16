@@ -1,8 +1,8 @@
 // Render Prop
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, FieldArray } from 'formik';
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd';
-import { Typography, Row, Col } from 'antd';
+import { Typography, Row, Col, Result } from 'antd';
 import { DebugValues } from '../../../components/index';
 import FieldInput from '../../../components/Input';
 import FieldSelect from '../../../components/Select';
@@ -35,8 +35,10 @@ export default (props) => {
     properties: propertiesFromProps,
   } = props;
 
+  const [customerSubmited, setCustomerSubmited] = useState();
+  const isSubmissionSuccess = !!customerSubmited;
   async function handleSubmit(values, { setSubmitting }) {
-    await submitAction({ values, setSubmitting, status });
+    await submitAction({ values, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
@@ -151,6 +153,9 @@ export default (props) => {
                 {status === CUSTOMER_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
               </SubmitButton>
             </FormItem>
+            {isSubmissionSuccess && (
+              <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
+            )}
             <DebugValues {...props} />
           </Form>
         </>
