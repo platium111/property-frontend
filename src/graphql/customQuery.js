@@ -19,25 +19,17 @@ export const searchListProperty = `
       }
     }
   }
-`
+`;
 export const listCustomersAndProperties = /* GraphQL */ `
-  query listCustomersAndProperties(
-    $filter: ModelCustomerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query listCustomersAndProperties($filter: ModelCustomerFilterInput, $limit: Int, $nextToken: String) {
     listCustomers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         firstName
         lastName
         middleName
-        fatherName
-        motherName
         phoneNumbers
         dateOfBirth
-        motherPhone
-        fatherPhone
         address {
           id
           homeNumber
@@ -83,6 +75,10 @@ export const listCustomersAndProperties = /* GraphQL */ `
             gpa
             graduationYear
             interest
+            fatherName
+            motherName
+            motherPhone
+            fatherPhone
           }
         }
         updatedAt
@@ -92,7 +88,6 @@ export const listCustomersAndProperties = /* GraphQL */ `
   }
 `;
 
-
 export const searchListCustomer = `
   query searchListCustomers($searchQuery: String) {
     listCustomers(filter: { firstName: { beginsWith: $searchQuery } }) {
@@ -101,12 +96,8 @@ export const searchListCustomer = `
         firstName
         lastName
         middleName
-        fatherName
-        motherName
         phoneNumbers
         dateOfBirth
-        motherPhone
-        fatherPhone
         address {
           id
           homeNumber
@@ -134,6 +125,10 @@ export const searchListCustomer = `
             machineNumber
             plateNumber
             dateBorrow
+            fatherName
+            motherName
+            motherPhone
+            fatherPhone
           }
         }
         dateBorrow
@@ -146,4 +141,4 @@ export const searchListCustomer = `
       }
     }
   }
-`
+`;

@@ -379,9 +379,14 @@ Focusing on youtube analytic and Cracking English everyday
 
 - delete data from data, using await in onDelete
 
-14/10/2020
+16/10/2020
 
 - [e_only_add_one_property] why only can submit one properties? -> giayTo is not working. it is because giayTo doesn't have itemName in input. We need to have because using one-to-many with second global index which includes 2 keys
 
 - cannot have 2 same name in the form
 - fix loanType and type wrong when having loanType in customer -> we moved to properties.
+
+17/10/2020
+
+- refactor Customer with `actions` and fix error
+- refactor mother, father name and phone

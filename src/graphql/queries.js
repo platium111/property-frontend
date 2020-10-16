@@ -33,6 +33,10 @@ export const propertiesForCustomer = /* GraphQL */ `
         gpa
         graduationYear
         interest
+        fatherName
+        motherName
+        motherPhone
+        fatherPhone
         createdAt
         updatedAt
       }
@@ -63,6 +67,10 @@ export const getProperty = /* GraphQL */ `
       gpa
       graduationYear
       interest
+      fatherName
+      motherName
+      motherPhone
+      fatherPhone
       createdAt
       updatedAt
     }
@@ -96,6 +104,10 @@ export const listPropertys = /* GraphQL */ `
         gpa
         graduationYear
         interest
+        fatherName
+        motherName
+        motherPhone
+        fatherPhone
         createdAt
         updatedAt
       }
@@ -110,12 +122,8 @@ export const getCustomer = /* GraphQL */ `
       firstName
       lastName
       middleName
-      fatherName
-      motherName
       phoneNumbers
       dateOfBirth
-      motherPhone
-      fatherPhone
       address {
         id
         homeNumber
@@ -161,6 +169,10 @@ export const getCustomer = /* GraphQL */ `
           gpa
           graduationYear
           interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }
@@ -182,12 +194,8 @@ export const listCustomers = /* GraphQL */ `
         firstName
         lastName
         middleName
-        fatherName
-        motherName
         phoneNumbers
         dateOfBirth
-        motherPhone
-        fatherPhone
         address {
           id
           homeNumber
@@ -283,12 +291,8 @@ export const listCustomerByCreatedAt = /* GraphQL */ `
         firstName
         lastName
         middleName
-        fatherName
-        motherName
         phoneNumbers
         dateOfBirth
-        motherPhone
-        fatherPhone
         address {
           id
           homeNumber

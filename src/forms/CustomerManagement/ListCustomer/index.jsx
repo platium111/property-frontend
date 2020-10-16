@@ -1,16 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Input } from "antd";
-import { searchListCustomer } from "../../../graphql/customQuery";
-import gql from "graphql-tag";
-import { ApolloContext } from "react-apollo";
-import {CustomerTable} from "../../../components/CustomerTable";
-import EditItem from "../Customer";
-import { CUSTOMER_STATUS } from "../Customer/Customer";
+import React, { useContext, useState, useEffect } from 'react';
+import { Input } from 'antd';
+import { searchListCustomer } from '../../../graphql/customQuery';
+import gql from 'graphql-tag';
+import { ApolloContext } from 'react-apollo';
+import { CustomerTable } from '../../../components/CustomerTable';
+import EditItem from '../Customer';
+import { CUSTOMER_STATUS } from '../../../_constants';
 
 const { Search } = Input;
 
-const FIND_CUSTOMER = "Tìm kiếm khách hàng";
-const FIND_BUTTON = "Tìm kiếm";
+const FIND_CUSTOMER = 'Tìm kiếm khách hàng';
+const FIND_BUTTON = 'Tìm kiếm';
 
 async function findCustomers(client, text) {
   const queryResult = await client.query({
@@ -22,7 +22,7 @@ async function findCustomers(client, text) {
     data: { listCustomers },
   } = queryResult;
 
-  console.log("found items:", queryResult);
+  console.log('found items:', queryResult);
   return listCustomers?.items;
 }
 
@@ -33,9 +33,7 @@ export default function (props) {
   const [displayDetailItem, setDisplayDetailItem] = useState(false);
   const [clickedCustomerId, setClickedCustomerId] = useState();
 
-  const clickedProperty = foundCustomers.find(
-    (property) => property.id === clickedCustomerId
-  );
+  const clickedProperty = foundCustomers.find((property) => property.id === clickedCustomerId);
 
   // TODO after update, if not change search query, data looks the same but actually updated in aws
   useEffect(() => {
@@ -54,7 +52,7 @@ export default function (props) {
         placeholder={FIND_CUSTOMER}
         enterButton={FIND_BUTTON}
         size="large"
-        onSearch={async(value) => {
+        onSearch={async (value) => {
           setSearchText(value);
           setDisplayDetailItem(false);
         }}
@@ -62,9 +60,7 @@ export default function (props) {
       <CustomerTable />
       {/* Display list or detail cards */}
       {displayDetailItem ? (
-        <EditItem
-          property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }}
-        />
+        <EditItem property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />
       ) : (
         <>
           {/* <PropertyCards

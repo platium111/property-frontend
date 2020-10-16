@@ -3,9 +3,7 @@ import React from 'react';
 import { Formik, FieldArray } from 'formik';
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd';
 import { Typography, Row, Col } from 'antd';
-import { DebugValues, GalleryView } from '../../../components/index';
-import { create, update, get } from '../../../services/generic/index';
-import { buildGalleryPhotos } from '../../../_utils/index';
+import { DebugValues } from '../../../components/index';
 import FieldInput from '../../../components/Input';
 import FieldSelect from '../../../components/Select';
 import FieldArea from '../../../components/TextArea';
@@ -13,181 +11,33 @@ import FieldDatePicker from '../../../components/Datepicker';
 import validation from './validate';
 import { header, layout, tailLayout } from '../../_style';
 import Panel from '../../../components/Wrapper';
-import { createCustomer, updateCustomer, createAddress, createProperty } from '../../../graphql/mutations';
-import { getCustomer } from '../../../graphql/queries';
 import { RepeatingGroup } from '../../../components/RepeatingGroup';
-import { provinceData, cityData, LOAN_TYPE } from '../../../_constants';
+import { provinceData, cityData, LOAN_TYPE, CUSTOMER_STATUS } from '../../../_constants';
+import submitAction from '../../../actions/submitAction';
 
 const { Title } = Typography;
 
-export const CUSTOMER_STATUS = {
-  edit: 'edit',
-  new: 'new',
-};
-
 export default (props) => {
   const {
-    id,
     firstName,
     lastName,
     middleName,
-    fatherName,
-    motherName,
     phoneNumbers,
     dateOfBirth,
-    motherPhone,
-    fatherPhone,
     address,
     dateBorrow,
     borrowPurpose,
     datePay,
     identityCardNo,
     issueDate,
-    status = CUSTOMER_STATUS.add,
+    status = CUSTOMER_STATUS.new,
     note,
     properties: propertiesFromProps,
-    // customerImages,
-    //onFileChange,
-    //onFileUpload,
-    // imageUrls,
-    // imagesUrlProps,
   } = props;
 
-  async function handleSubmit(values, { setSubmitting, resetForm }) {
-    const {
-      otherPhoneNumber,
-      phoneNumber,
-      homeNumber,
-      street,
-      hamlet,
-      village,
-      district,
-      province,
-      lane,
-      alley,
-      city,
-      description,
-      imageUrls,
-      userId,
-      year,
-      customerName,
-      itemName,
-      price,
-      color,
-      frameNumber,
-      machineNumber,
-      plateNumber,
-      dateBorrow,
-      datePay,
-      cardNumber,
-      properties,
-      ...restValues
-    } = values;
-    const address = { homeNumber, street, hamlet, village, lane, alley, district, province, city };
-
-    console.log('--onSubmit-->', values);
-    // ! funny thing is onFileUpload -> set changed in fileUploaded but cannot get immediately, it rerender after done
-    // let filesUploaded = (await onFileUpload()) || imagesUrlProps
-    // console.log('fileUploaded', filesUploaded)
-    switch (status) {
-      case CUSTOMER_STATUS.add:
-        // address
-        const {
-          data: {
-            createAddress: { id: customerAddressId },
-          },
-        } = await create(address, createAddress);
-
-        // customer -> customerAddressId
-        const customerRespond = await create(
-          {
-            ...restValues,
-            phoneNumbers: [phoneNumber, otherPhoneNumber],
-            dateBorrow,
-            datePay,
-            addressId: customerAddressId,
-            // imageUrls: filesUploaded || [],
-          },
-          createCustomer
-        );
-        // student card & property -> propertyCustomerId
-        await Promise.all(
-          properties.map(async (item) => {
-            const {
-              cardNumber,
-              universityName,
-              gpa,
-              graduationYear,
-              loanType,
-              imageUrls,
-              userId,
-              year,
-              customerName,
-              itemName,
-              price,
-              color,
-              frameNumber,
-              machineNumber,
-              plateNumber,
-              interest,
-            } = item;
-            if (loanType === LOAN_TYPE.giayTo) {
-              // get result | studentCardRespond?.data?.createProperty?.id
-              await create(
-                {
-                  itemName,
-                  cardNumber,
-                  universityName,
-                  gpa,
-                  graduationYear,
-                  interest,
-                  loanType,
-                  customerId: customerRespond.data.createCustomer.id,
-                },
-                createProperty
-              );
-            } else if (loanType === LOAN_TYPE.xe) {
-              await create(
-                {
-                  loanType,
-                  imageUrls,
-                  userId,
-                  year,
-                  customerName,
-                  itemName,
-                  price,
-                  color,
-                  frameNumber,
-                  machineNumber,
-                  plateNumber,
-                  dateBorrow,
-                  interest,
-                  customerId: customerRespond.data.createCustomer.id,
-                },
-                createProperty
-              );
-            }
-          })
-        );
-        await get(customerRespond.data.createCustomer.id, getCustomer);
-        resetForm({ values: {} });
-        break;
-      case CUSTOMER_STATUS.edit:
-        await update(
-          {
-            ...values,
-            id: id,
-            // imageUrls: filesUploaded,
-          },
-          updateCustomer
-        );
-        break;
-      default:
-        break;
-    }
-    setSubmitting(false);
+  async function handleSubmit(values, { setSubmitting }) {
+    await submitAction({ values, setSubmitting, status });
   }
-
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
   return (
@@ -197,13 +47,9 @@ export default (props) => {
         firstName,
         lastName,
         middleName,
-        fatherName,
-        motherName,
         phoneNumber,
         otherPhoneNumber,
         dateOfBirth,
-        motherPhone,
-        fatherPhone,
         ...address,
         properties: propertiesFromProps?.items || [{ loanType: '' }],
         dateBorrow,
@@ -218,7 +64,6 @@ export default (props) => {
     >
       {(props) => (
         <>
-          {/* // <Space direction="vertical" align="center" size="middle" style={{width: "100%"}}> */}
           <Title style={header}>{status === CUSTOMER_STATUS.add ? 'Thêm Khách Hàng Mới' : 'Sửa thông tin khách hàng'}</Title>
           <Form {...layout}>
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
@@ -301,11 +146,6 @@ export default (props) => {
               </Col>
             </Row>
 
-            {/* <FormItem label="Tải ảnh lên" name="itemImages">
-              <input type="file" multiple onChange={(e) => onFileChange(e)} />
-            </FormItem>
-            {imageUrls && <GalleryView photos={buildGalleryPhotos(imageUrls)} />} */}
-
             <FormItem {...tailLayout} name="submitBtn">
               <SubmitButton type="primary" disabled={props.isSubmitting} htmlType="submit">
                 {status === CUSTOMER_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
@@ -313,7 +153,6 @@ export default (props) => {
             </FormItem>
             <DebugValues {...props} />
           </Form>
-          {/* // </Space> */}
         </>
       )}
     </Formik>

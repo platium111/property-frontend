@@ -24,6 +24,10 @@ export const onCreateProperty = /* GraphQL */ `
       gpa
       graduationYear
       interest
+      fatherName
+      motherName
+      motherPhone
+      fatherPhone
       createdAt
       updatedAt
     }
@@ -52,6 +56,10 @@ export const onUpdateProperty = /* GraphQL */ `
       gpa
       graduationYear
       interest
+      fatherName
+      motherName
+      motherPhone
+      fatherPhone
       createdAt
       updatedAt
     }
@@ -80,6 +88,10 @@ export const onDeleteProperty = /* GraphQL */ `
       gpa
       graduationYear
       interest
+      fatherName
+      motherName
+      motherPhone
+      fatherPhone
       createdAt
       updatedAt
     }
@@ -92,12 +104,8 @@ export const onCreateCustomer = /* GraphQL */ `
       firstName
       lastName
       middleName
-      fatherName
-      motherName
       phoneNumbers
       dateOfBirth
-      motherPhone
-      fatherPhone
       address {
         id
         homeNumber
@@ -143,6 +151,10 @@ export const onCreateCustomer = /* GraphQL */ `
           gpa
           graduationYear
           interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }
@@ -159,12 +171,8 @@ export const onUpdateCustomer = /* GraphQL */ `
       firstName
       lastName
       middleName
-      fatherName
-      motherName
       phoneNumbers
       dateOfBirth
-      motherPhone
-      fatherPhone
       address {
         id
         homeNumber
@@ -210,6 +218,10 @@ export const onUpdateCustomer = /* GraphQL */ `
           gpa
           graduationYear
           interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }
@@ -226,12 +238,8 @@ export const onDeleteCustomer = /* GraphQL */ `
       firstName
       lastName
       middleName
-      fatherName
-      motherName
       phoneNumbers
       dateOfBirth
-      motherPhone
-      fatherPhone
       address {
         id
         homeNumber
@@ -277,6 +285,10 @@ export const onDeleteCustomer = /* GraphQL */ `
           gpa
           graduationYear
           interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }
