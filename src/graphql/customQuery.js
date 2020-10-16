@@ -53,7 +53,6 @@ export const listCustomersAndProperties = /* GraphQL */ `
           updatedAt
         }
         addressId
-        loanType
         dateBorrow
         borrowPurpose
         datePay
@@ -68,7 +67,6 @@ export const listCustomersAndProperties = /* GraphQL */ `
             loanType
             description
             imageUrls
-            type
             userId
             year
             customerName
@@ -125,7 +123,7 @@ export const searchListCustomer = `
             id
             description
             imageUrls
-            type
+            loanType
             userId
             year
             customerName
@@ -138,7 +136,6 @@ export const searchListCustomer = `
             dateBorrow
           }
         }
-        loanType
         dateBorrow
         borrowPurpose
         datePay

@@ -1,11 +1,8 @@
-type Property @model 
-  @key(name: "byCustomer", fields: ["customerId", "itemName"])
-{
+type Property @model @key(name: "byCustomer", fields: ["customerId", "itemName"]) {
   id: ID!
   loanType: String
   description: String
   imageUrls: [String]
-  type: String
   userId: String
   year: String
   customerName: String
@@ -24,9 +21,7 @@ type Property @model
   interest: Float
 }
 
-type Customer @model
-  @key(name: "listCustomerByCreatedAt", fields: ["createdAt"], queryField: "listCustomerByCreatedAt")
-{
+type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"], queryField: "listCustomerByCreatedAt") {
   id: ID!
   firstName: String!
   lastName: String!
@@ -39,7 +34,6 @@ type Customer @model
   fatherPhone: String
   address: Address @connection(fields: ["addressId"])
   addressId: ID!
-  loanType: String
   dateBorrow: String
   borrowPurpose: String
   datePay: String
@@ -60,8 +54,7 @@ type Query {
   propertiesForCustomer(customerId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
 }
 
-type Address @model
- {
+type Address @model {
   id: ID!
   homeNumber: String
   street: String

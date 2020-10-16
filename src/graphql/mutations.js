@@ -11,7 +11,6 @@ export const createProperty = /* GraphQL */ `
       loanType
       description
       imageUrls
-      type
       userId
       year
       customerName
@@ -43,7 +42,6 @@ export const updateProperty = /* GraphQL */ `
       loanType
       description
       imageUrls
-      type
       userId
       year
       customerName
@@ -75,7 +73,6 @@ export const deleteProperty = /* GraphQL */ `
       loanType
       description
       imageUrls
-      type
       userId
       year
       customerName
@@ -128,7 +125,6 @@ export const createCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      loanType
       dateBorrow
       borrowPurpose
       datePay
@@ -143,7 +139,6 @@ export const createCustomer = /* GraphQL */ `
           loanType
           description
           imageUrls
-          type
           userId
           year
           customerName
@@ -200,7 +195,6 @@ export const updateCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      loanType
       dateBorrow
       borrowPurpose
       datePay
@@ -215,7 +209,6 @@ export const updateCustomer = /* GraphQL */ `
           loanType
           description
           imageUrls
-          type
           userId
           year
           customerName
@@ -272,7 +265,6 @@ export const deleteCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      loanType
       dateBorrow
       borrowPurpose
       datePay
@@ -287,7 +279,6 @@ export const deleteCustomer = /* GraphQL */ `
           loanType
           description
           imageUrls
-          type
           userId
           year
           customerName

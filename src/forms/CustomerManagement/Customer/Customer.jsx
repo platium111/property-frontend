@@ -38,7 +38,6 @@ export default (props) => {
     motherPhone,
     fatherPhone,
     address,
-    loanType,
     dateBorrow,
     borrowPurpose,
     datePay,
@@ -69,7 +68,6 @@ export default (props) => {
       city,
       description,
       imageUrls,
-      type,
       userId,
       year,
       customerName,
@@ -122,7 +120,6 @@ export default (props) => {
               graduationYear,
               loanType,
               imageUrls,
-              type,
               userId,
               year,
               customerName,
@@ -138,6 +135,7 @@ export default (props) => {
               // get result | studentCardRespond?.data?.createProperty?.id
               await create(
                 {
+                  itemName,
                   cardNumber,
                   universityName,
                   gpa,
@@ -153,7 +151,6 @@ export default (props) => {
                 {
                   loanType,
                   imageUrls,
-                  type,
                   userId,
                   year,
                   customerName,
@@ -209,7 +206,6 @@ export default (props) => {
         fatherPhone,
         ...address,
         properties: propertiesFromProps?.items || [{ loanType: '' }],
-        loanType,
         dateBorrow,
         borrowPurpose,
         datePay,
@@ -272,7 +268,6 @@ export default (props) => {
                               <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
                             </FieldSelect>
                             <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
-                              <FieldInput label="Tên đồ" name={`properties[${index}].itemName`} />
                               <FieldInput label="Màu sắc" name={`properties[${index}].color`} />
                               <FieldInput label="Năm sản xuất" name={`properties[${index}].year`} />
                               <FieldInput label="Số khung" name={`properties[${index}].frameNumber`} />
@@ -290,6 +285,7 @@ export default (props) => {
                               <FieldInput label="Tên mẹ" name={`properties[${index}].motherName`} />
                               <FieldInput label="SĐT mẹ" name={`properties[${index}].motherPhone`} />
                             </Panel>
+                            <FieldInput label="Tên đồ / giấy tờ" name={`properties[${index}].itemName`} />
                             <FieldInput label="Giá" name={`properties[${index}].price`} isCurrency={true} />
                             <FieldInput label="Lãi" name={`properties[${index}].interest`} />
                             <FieldArea label="Mô tả" name={`properties[${index}].description`} />
