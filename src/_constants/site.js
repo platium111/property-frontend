@@ -16,3 +16,5 @@ export const CUSTOMER_STATUS = {
   edit: 'edit',
   new: 'new',
 };
+
+export const GLOBAL_DATE_FORMAT = "DD/MM/YYYY";

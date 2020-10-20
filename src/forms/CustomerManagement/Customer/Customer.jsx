@@ -37,6 +37,7 @@ export default (props) => {
 
   const [customerSubmited, setCustomerSubmited] = useState();
   const isSubmissionSuccess = !!customerSubmited;
+
   async function handleSubmit(values, { setSubmitting }) {
     await submitAction({ values, setSubmitting, status, setCustomerSubmited });
   }
@@ -64,102 +65,133 @@ export default (props) => {
       validationSchema={validation}
       onSubmit={handleSubmit}
     >
-      {(props) => (
-        <>
-          <Title style={header}>{status === CUSTOMER_STATUS.add ? 'Thêm Khách Hàng Mới' : 'Sửa thông tin khách hàng'}</Title>
-          <Form {...layout}>
-            {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
-            <Row>
-              <Col sm={24} md={12}>
-                <FieldInput label="Tên" name="firstName" />
-                <FieldInput label="Họ" name="lastName" />
-                <FieldInput label="Tên đệm" name="middleName" />
-                <FieldInput name="phoneNumber" label="Số điện thoại" />
-                <FieldInput name="otherPhoneNumber" label="Số điện thoại khác" />
-                <FieldDatePicker label="Ngày sinh" name="dateOfBirth" value={dateOfBirth} />
-                <FieldInput label="Số nhà" name="homeNumber" />
-                <FieldInput label="Đường" name="street" />
-                <FieldInput label="Thôn" name="hamlet" />
-                <FieldInput label="Xã" name="village" />
-                <FieldInput label="Ngõ" name="lane" />
-                <FieldInput label="Ngách" name="alley" />
-                <FieldInput label="Huyện" name="district" />
-                <FieldSelect label="Tỉnh" name="province" defaultValue="" showSearch>
-                  <Select.Option value="">--Lựa chọn--</Select.Option>
-                  {provinceData && provinceData.map((province) => <Select.Option value={province}>{province}</Select.Option>)}
-                </FieldSelect>
-                <FieldSelect label="Thành phố" name="city" defaultValue="" showSearch>
-                  <Select.Option value="">--Lựa chọn--</Select.Option>
-                  {cityData && cityData.map((city) => <Select.Option value={city}>{city}</Select.Option>)}
-                </FieldSelect>
-              </Col>
-              <Col sm={24} md={12}>
-                <FieldInput label="Chứng minh thư" name="identityCardNo" />
-                <FieldInput
-                  label="Ngày phát hành"
-                  name="issueDate"
-                  condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
-                  compareType="string"
-                />
-                <FieldInput label="Ghi chú" name="note" />
-                <FieldArray
-                  name="properties"
-                  render={(arrayHelpers) => (
-                    <RepeatingGroup arrayHelpers={arrayHelpers} items={props.values.properties}>
-                      {({ item: customerItem, index }) => {
-                        return (
-                          <div>
-                            <FieldSelect label="Loại vay" name={`properties[${index}].loanType`}>
-                              <Select.Option value="">--Lựa chọn--</Select.Option>
-                              <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
-                              <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
-                            </FieldSelect>
-                            <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
-                              <FieldInput label="Màu sắc" name={`properties[${index}].color`} />
-                              <FieldInput label="Năm sản xuất" name={`properties[${index}].year`} />
-                              <FieldInput label="Số khung" name={`properties[${index}].frameNumber`} />
-                              <FieldInput label="Số máy" name={`properties[${index}].machineNumber`} />
-                              <FieldInput label="Biển kiểm soát" name={`properties[${index}].plateNumber`} />
-                              {/* <FieldInput label="Tên khách hàng" name={`properties[${index}].customerName`} /> */}
-                            </Panel>
-                            <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
-                              <FieldInput label="Mã thẻ SV" name={`properties[${index}].cardNumber`} />
-                              <FieldInput label="Tên trường" name={`properties[${index}].universityName`} />
-                              <FieldInput label="Điểm trung bình" name={`properties[${index}].gpa`} />
-                              <FieldInput label="Năm tốt nghiệp" name={`properties[${index}].graduationYear`} />
-                              <FieldInput label="Tên bố" name={`properties[${index}].fatherName`} />
-                              <FieldInput label="SĐT bố" name={`properties[${index}].fatherPhone`} />
-                              <FieldInput label="Tên mẹ" name={`properties[${index}].motherName`} />
-                              <FieldInput label="SĐT mẹ" name={`properties[${index}].motherPhone`} />
-                            </Panel>
-                            <FieldInput label="Tên đồ / giấy tờ" name={`properties[${index}].itemName`} />
-                            <FieldInput label="Giá" name={`properties[${index}].price`} isCurrency={true} />
-                            <FieldInput label="Lãi" name={`properties[${index}].interest`} />
-                            <FieldArea label="Mô tả" name={`properties[${index}].description`} />
-                          </div>
-                        );
-                      }}
-                    </RepeatingGroup>
-                  )}
-                />
-                <FieldArea label="Mục đích vay" name="borrowPurpose" />
-                <FieldDatePicker label="Ngày vay" name="dateBorrow" />
-                <FieldDatePicker label="Ngày trả" name="datePay" />
-              </Col>
-            </Row>
+      {(props) => {
+        const { values: formValues } = props;
 
-            <FormItem {...tailLayout} name="submitBtn">
-              <SubmitButton type="primary" disabled={props.isSubmitting} htmlType="submit">
-                {status === CUSTOMER_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
-              </SubmitButton>
-            </FormItem>
-            {isSubmissionSuccess && (
-              <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
-            )}
-            <DebugValues {...props} />
-          </Form>
-        </>
-      )}
+        const totalProperties = formValues?.properties?.reduce(
+          (total, { price = 0, interest = 0 }) => {
+            const calculateInterest = (price * interest) / 1000000;
+            const priceItem = total.price + price;
+            const interestItem = total.interest + calculateInterest;
+            return { ...total, price: priceItem, interest: interestItem };
+          },
+          { price: 0, interest: 0 }
+        );
+
+        return (
+          <>
+            <Title style={header}>{status === CUSTOMER_STATUS.add ? 'Thêm Khách Hàng Mới' : 'Sửa thông tin khách hàng'}</Title>
+            <Form {...layout}>
+              {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
+              <Row>
+                <Col sm={24} md={12}>
+                  <FieldInput label="Tên" name="firstName" />
+                  <FieldInput label="Họ" name="lastName" />
+                  <FieldInput label="Tên đệm" name="middleName" />
+                  <FieldInput name="phoneNumber" label="Số điện thoại" />
+                  <FieldInput name="otherPhoneNumber" label="Số điện thoại khác" />
+                  <FieldDatePicker label="Ngày sinh" name="dateOfBirth" value={dateOfBirth} />
+                  <FieldInput label="Số nhà" name="homeNumber" />
+                  <FieldInput label="Đường" name="street" />
+                  <FieldInput label="Thôn" name="hamlet" />
+                  <FieldInput label="Xã" name="village" />
+                  <FieldInput label="Ngõ" name="lane" />
+                  <FieldInput label="Ngách" name="alley" />
+                  <FieldInput label="Huyện" name="district" />
+                  <FieldSelect label="Tỉnh" name="province" defaultValue="" showSearch>
+                    <Select.Option value="">--Lựa chọn--</Select.Option>
+                    {provinceData && provinceData.map((province) => <Select.Option value={province}>{province}</Select.Option>)}
+                  </FieldSelect>
+                  <FieldSelect label="Thành phố" name="city" defaultValue="" showSearch>
+                    <Select.Option value="">--Lựa chọn--</Select.Option>
+                    {cityData && cityData.map((city) => <Select.Option value={city}>{city}</Select.Option>)}
+                  </FieldSelect>
+                </Col>
+                <Col sm={24} md={12}>
+                  <FieldInput label="Chứng minh thư" name="identityCardNo" />
+                  <FieldInput
+                    label="Ngày phát hành"
+                    name="issueDate"
+                    condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
+                    compareType="string"
+                  />
+                  <FieldInput label="Ghi chú" name="note" />
+                  <FieldArray
+                    name="properties"
+                    render={(arrayHelpers) => (
+                      <RepeatingGroup arrayHelpers={arrayHelpers} items={props.values.properties}>
+                        {({ item: customerItem, index }) => {
+                          return (
+                            <div>
+                              <div>
+                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`}>
+                                  <Select.Option value="">--Lựa chọn--</Select.Option>
+                                  <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
+                                  <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
+                                </FieldSelect>
+                                <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
+                                  <FieldInput label="Màu sắc" name={`properties[${index}].color`} />
+                                  <FieldInput label="Năm sản xuất" name={`properties[${index}].year`} />
+                                  <FieldInput label="Số khung" name={`properties[${index}].frameNumber`} />
+                                  <FieldInput label="Số máy" name={`properties[${index}].machineNumber`} />
+                                  <FieldInput label="Biển kiểm soát" name={`properties[${index}].plateNumber`} />
+                                  {/* <FieldInput label="Tên khách hàng" name={`properties[${index}].customerName`} /> */}
+                                </Panel>
+                                <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
+                                  <FieldInput label="Mã thẻ SV" name={`properties[${index}].cardNumber`} />
+                                  <FieldInput label="Tên trường" name={`properties[${index}].universityName`} />
+                                  <FieldInput label="Điểm trung bình" name={`properties[${index}].gpa`} />
+                                  <FieldInput label="Năm tốt nghiệp" name={`properties[${index}].graduationYear`} />
+                                  <FieldInput label="Tên bố" name={`properties[${index}].fatherName`} />
+                                  <FieldInput label="SĐT bố" name={`properties[${index}].fatherPhone`} />
+                                  <FieldInput label="Tên mẹ" name={`properties[${index}].motherName`} />
+                                  <FieldInput label="SĐT mẹ" name={`properties[${index}].motherPhone`} />
+                                </Panel>
+                                <FieldInput label="Tên đồ / giấy tờ" name={`properties[${index}].itemName`} />
+                                <FieldInput label="Giá" name={`properties[${index}].price`} isCurrency={true} />
+                                <FieldInput label="Lãi" name={`properties[${index}].interest`} isCurrency={true} />
+                                <FieldArea label="Mô tả" name={`properties[${index}].description`} />
+                              </div>
+                              <div>
+                                <p>Tinh toan khuyen cao</p>
+                                <p>
+                                  {customerItem.price &&
+                                    customerItem.interest &&
+                                    `So tien lai: ${(customerItem.price * customerItem.interest) / 1000000}`}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        }}
+                      </RepeatingGroup>
+                    )}
+                  />
+                  {totalProperties && (
+                    <div>
+                      <p>Tinh toan tong</p>
+                      <p>{`Tổng giá: ${totalProperties.price}`}</p>
+                      <p>{`Tổng lãi: ${totalProperties.interest}`}</p>
+                    </div>
+                  )}
+                  <FieldArea label="Mục đích vay" name="borrowPurpose" />
+                  <FieldDatePicker label="Ngày vay" name="dateBorrow" />
+                  <FieldDatePicker label="Ngày trả" name="datePay" />
+                </Col>
+              </Row>
+
+              <FormItem {...tailLayout} name="submitBtn">
+                <SubmitButton type="primary" disabled={props.isSubmitting} htmlType="submit">
+                  {status === CUSTOMER_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
+                </SubmitButton>
+              </FormItem>
+              {isSubmissionSuccess && (
+                <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
+              )}
+              <DebugValues {...props} />
+            </Form>
+          </>
+        );
+      }}
     </Formik>
   );
 };

@@ -5,6 +5,7 @@ import { DatePicker } from 'antd';
 import useConditional from '../../_hooks/useConditional';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import { GLOBAL_DATE_FORMAT } from '../../_constants';
 
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
@@ -20,10 +21,10 @@ export default ({ label, condition, compareType, placeholder = label, defaultVal
           {...props}
           name={name}
           placeholder={placeholder}
-          value={value && moment(value, dateFormatList[0])}
+          value={value && moment(value, GLOBAL_DATE_FORMAT)}
           // defaultValue={defaultValue && moment(defaultValue, dateFormatList[0])}
           format={dateFormatList}
-          onChange={(_, dateString = moment(new Date(), dateFormatList[0])) => {
+          onChange={(_, dateString = moment(new Date(), GLOBAL_DATE_FORMAT)) => {
             setFieldValue(name, dateString);
           }}
         />

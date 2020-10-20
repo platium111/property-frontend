@@ -2,7 +2,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd'
-import { Typography, DatePicker } from 'antd'
+import { Typography } from 'antd'
 import { DebugValues, GalleryView } from '../../../components/index'
 import { create, update } from '../../../services/generic/index'
 import { buildGalleryPhotos } from '../../../_utils/index'
@@ -23,7 +23,7 @@ export const PROPERTY_STATUS = {
 export default (props) => {
   const {
     id,
-    type,
+    loanType,
     itemName,
     year,
     customerName,
@@ -77,7 +77,7 @@ export default (props) => {
   return (
     <Formik
       initialValues={{
-        type,
+        loanType,
         itemName,
         year,
         color,
@@ -98,7 +98,7 @@ export default (props) => {
           <Title style={header}>{status === PROPERTY_STATUS.add ? 'Thêm Đồ Mới' : 'Sửa thông tin đồ'}</Title>
           <Form {...layout}>
             {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
-            <FieldSelect label="Loại vay" name="type" placeholder="Loại vay">
+            <FieldSelect label="Loại vay" name="loanType" placeholder="Loại vay">
               <Select.Option value="">--Lựa chọn--</Select.Option>
               <Select.Option value="xe">Xe</Select.Option>
             </FieldSelect>

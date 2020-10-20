@@ -45,7 +45,7 @@ export default function (props) {
     if (searchText && searchText.length >= 3) {
       searchTextFn();
     }
-  }, [searchText]);
+  }, [searchText, client]);
   return (
     <div>
       <Search
@@ -59,17 +59,7 @@ export default function (props) {
       />
       <CustomerTable />
       {/* Display list or detail cards */}
-      {displayDetailItem ? (
-        <EditItem property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />
-      ) : (
-        <>
-          {/* <PropertyCards
-            properties={foundProperties}
-            setClickedPropertyId={setClickedCustomerId}
-            setDisplayDetailItem={setDisplayDetailItem}
-          /> */}
-        </>
-      )}
+      {displayDetailItem && <EditItem property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />}
     </div>
   );
 }

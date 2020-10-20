@@ -18,7 +18,7 @@ export default ({ label, name, placeholder = label, compareType, condition, mask
       target: { value },
     } = e;
     // custom value for masking | const tranformValue = value.split("/").join("");
-    if (value && isCurrency) {
+    if (isCurrency) {
       const parseValue = Number(value.replace(/[^0-9.-]+/g, ''));
       const currency = new Intl.NumberFormat().format(parseValue); // 123,456
       setCurrencyValue(currency);
