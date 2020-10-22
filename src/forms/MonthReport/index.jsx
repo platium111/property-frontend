@@ -35,21 +35,24 @@ const EditableCell = ({
     parseFloat(xuat) -
     parseFloat(chi) -
     parseFloat(chuyenKhoan);
-  // useEffect(() => {
-  //   if (id === 'tienMat' && index !== 0) {
-  //     setValue(tienMatValue);
-  //     // updateMyData(index, id, tienMatValue);
-  //   } else if (id === 'doThucTe' && index !== 0) {
-  //     setValue(parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
-  //     // updateMyData(index, id, parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
-  //   } else if (id === 'ngay' && index !== 0) {
-  //     const newDate = moment(rows[index - 1]?.values?.ngay, GLOBAL_DATE_FORMAT)
-  //       .add(1, 'days')
-  //       .format(GLOBAL_DATE_FORMAT);
-  //     setValue(newDate);
-  //     // update MyData(index, id, newDate);
-  //   }
-  // }, [updateMyData, index, rows, id, nhan, rut, banGiao, xuat, thu, lai, chi, chuyenKhoan, tienMat, doThucTe]);
+
+  const doThucTeValue = parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu);
+
+  useEffect(() => {
+    if (id === 'tienMat' && index !== 0) {
+      setValue(tienMatValue);
+      // updateMyData(index, id, tienMatValue);
+    } else if (id === 'doThucTe' && index !== 0) {
+      setValue(doThucTeValue);
+      // updateMyData(index, id, parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
+    } else if (id === 'ngay' && index !== 0) {
+      const newDate = moment(rows[index - 1]?.values?.ngay, GLOBAL_DATE_FORMAT)
+        .add(1, 'days')
+        .format(GLOBAL_DATE_FORMAT);
+      setValue(newDate);
+      // update MyData(index, id, newDate);
+    }
+  }, [updateMyData, index, rows, id, nhan, rut, banGiao, xuat, thu, lai, chi, chuyenKhoan, tienMat, doThucTe]);
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -57,15 +60,15 @@ const EditableCell = ({
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    if (index !== 0) {
-      updateMyData(index, id, value);
-    updateMyData(index, 'tienMatValue', tienMatValue);
+    // if (index !== 0) {
+    updateMyData(index, id, value);
+    /* updateMyData(index, 'tienMatValue', tienMatValue);
       updateMyData(index, 'doThucTe', parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
       const newDate = moment(rows[index - 1]?.values?.ngay, GLOBAL_DATE_FORMAT)
         .add(1, 'days')
         .format(GLOBAL_DATE_FORMAT);
-      updateMyData(index, 'ngay', newDate);
-    }
+      updateMyData(index, 'ngay', newDate); */
+    // }
   };
 
   // If the initialValue is changed external, sync it up with our state
