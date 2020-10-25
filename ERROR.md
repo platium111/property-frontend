@@ -391,3 +391,13 @@ Focusing on youtube analytic and Cracking English everyday
 - refactor Customer with `actions` and fix error
 - refactor mother, father name and phone
 - done displaying message | when submission data returned -> setdata as a state, then display message based on that
+
+24/10/2020
+
+- fix errors in update non-editable data
+  -> have value in local -> when update that value because of onBlur -> updateMyData -> rerender -> all good on onBlur
+  but need to update calculated data such as tienMat, doThucTe
+  -> need depend on value to updateMyData -> useEffect here
+
+- add row feature
+  because data is passed through useTable -> get latest from here and add to data

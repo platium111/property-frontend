@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRowSelect, useTable } from 'react-table';
-import { StyledTable, StyledButtonGroupInRow } from './index.style';
+import { StyledButtonGroupInRow } from '../_foundation/styles/index.style';
+import { StyledTable } from './index.style';
 // import dataTable from "./data";
-import { Form, Formik, useFormikContext } from 'formik';
+import { Form, Formik } from 'formik';
 import FieldButton from '../Button';
 import columnsTable from './columns';
 import { Typography } from 'antd';

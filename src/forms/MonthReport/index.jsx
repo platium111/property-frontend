@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react';
-import { useTable } from 'react-table';
+import { useTable, useRowSelect } from 'react-table';
 import Styles from './index.style';
-import dataTable from './data';
+import initDataTable from './data';
 import columnsTable from './columns';
+import { Formik } from 'formik';
 import { Typography } from 'antd';
 import moment from 'moment';
 import { GLOBAL_DATE_FORMAT } from '../../_constants';
+import { StyledButtonGroupInRow } from '../../components/_foundation/styles/index.style';
+import { FieldButton } from '../../components';
 
 const { Title } = Typography;
+
+function addOneDay(dateValue) {
+  return moment(dateValue, GLOBAL_DATE_FORMAT).add(1, 'days').format(GLOBAL_DATE_FORMAT);
+}
 
 const EditableCell = ({
   value: initialValue,
@@ -37,22 +44,41 @@ const EditableCell = ({
     parseFloat(chuyenKhoan);
 
   const doThucTeValue = parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu);
+  const banGiaoValue = parseFloat(rows[index - 1]?.values?.tienMat);
+  const ngayValue = addOneDay(rows[index - 1]?.values?.ngay);
 
+  // update local values
+  useEffect(() => {
+    if (index !== 0) {
+      switch (id) {
+        case 'tienMat':
+          setValue(tienMatValue);
+          break;
+        case 'doThucTe':
+          setValue(doThucTeValue);
+          break;
+        case 'ngay':
+          setValue(ngayValue);
+          break;
+        case 'banGiao':
+          setValue(banGiaoValue);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [updateMyData, doThucTeValue, index, tienMatValue, rows, id, nhan, rut, banGiao, xuat, thu, lai, chi, chuyenKhoan, tienMat, doThucTe]);
+
+  // update to table value on tienMat and doThucTe because of not blur on these fields
   useEffect(() => {
     if (id === 'tienMat' && index !== 0) {
-      setValue(tienMatValue);
-      // updateMyData(index, id, tienMatValue);
+      updateMyData(index, id, tienMatValue);
     } else if (id === 'doThucTe' && index !== 0) {
-      setValue(doThucTeValue);
-      // updateMyData(index, id, parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
-    } else if (id === 'ngay' && index !== 0) {
-      const newDate = moment(rows[index - 1]?.values?.ngay, GLOBAL_DATE_FORMAT)
-        .add(1, 'days')
-        .format(GLOBAL_DATE_FORMAT);
-      setValue(newDate);
-      // update MyData(index, id, newDate);
+      updateMyData(index, id, doThucTeValue);
+    } else if (id === 'banGiao' && index !== 0) {
+      updateMyData(index, id, banGiaoValue);
     }
-  }, [updateMyData, index, rows, id, nhan, rut, banGiao, xuat, thu, lai, chi, chuyenKhoan, tienMat, doThucTe]);
+  }, [value]);
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -60,15 +86,7 @@ const EditableCell = ({
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    // if (index !== 0) {
     updateMyData(index, id, value);
-    /* updateMyData(index, 'tienMatValue', tienMatValue);
-      updateMyData(index, 'doThucTe', parseFloat(rows[index - 1]?.values?.doThucTe) + parseFloat(xuat) - parseFloat(thu));
-      const newDate = moment(rows[index - 1]?.values?.ngay, GLOBAL_DATE_FORMAT)
-        .add(1, 'days')
-        .format(GLOBAL_DATE_FORMAT);
-      updateMyData(index, 'ngay', newDate); */
-    // }
   };
 
   // If the initialValue is changed external, sync it up with our state
@@ -76,7 +94,7 @@ const EditableCell = ({
     setValue(initialValue);
   }, [initialValue]);
 
-  return (id !== 'tienMat' && id !== 'doThucTe' && id !== 'ngay') || index === 0 ? (
+  return (id !== 'tienMat' && id !== 'doThucTe' && id !== 'ngay' && id !== 'banGiao') || index === 0 ? (
     <input value={value} onChange={onChange} onBlur={onBlur} style={{ minWidth: 30, width: '100%', maxWidth: 200 }} />
   ) : (
     <p>{value}</p>
@@ -89,15 +107,60 @@ const defaultColumn = {
 
 export default function MonthReport(props) {
   // const data = React.useMemo(() => dataTable, []);
-  const [data, setData] = React.useState(dataTable);
-
+  const [dataTable, setDataTable] = React.useState(initDataTable);
+  const data = React.useMemo(() => dataTable, [dataTable]);
   const columns = React.useMemo(() => columnsTable, []);
-  const tableInstance = useTable({ columns, data, defaultColumn, updateMyData, myDataTable: data });
+
+  const tableInstance = useTable({ columns, data, defaultColumn, updateMyData, myDataTable: data }, useRowSelect, (hooks) => {
+    hooks.visibleColumns.push((columns) => [
+      ...columns,
+      {
+        Header: 'Sửa/Xóa',
+        id: 'actions',
+        accessor: 'actions',
+        Cell: ({ row, data, ...restProps }) => {
+          async function onAdd() {
+            // change data in local table and api
+            const newDataTable = [
+              ...data,
+              {
+                ngay: addOneDay(data[data.length - 1].ngay),
+                nhan: '',
+                rut: '',
+                banGiao: '',
+                xuat: '',
+                thu: '',
+                lai: '',
+                chi: '',
+                chuyenKhoan: '',
+                tienMat: '',
+                doThucTe: '',
+              },
+            ];
+            setDataTable(newDataTable);
+          }
+          return (
+            <>
+              <Formik>
+                {(props) => {
+                  return (
+                    <StyledButtonGroupInRow>
+                      <FieldButton type="primary" name="add" icon="PlusOutlined" onClick={onAdd} />
+                    </StyledButtonGroupInRow>
+                  );
+                }}
+              </Formik>
+            </>
+          );
+        },
+      },
+    ]);
+  });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, footerGroups } = tableInstance;
 
   function updateMyData(rowIndex, columnId, value) {
     // We also turn on the flag to not reset the page
-    setData((old) =>
+    setDataTable((old) =>
       old.map((row, index) => {
         if (index === rowIndex) {
           return {
