@@ -401,3 +401,8 @@ Focusing on youtube analytic and Cracking English everyday
 
 - add row feature
   because data is passed through useTable -> get latest from here and add to data
+
+28/10/2020
+
+- remove mock data
+- refactor month utils

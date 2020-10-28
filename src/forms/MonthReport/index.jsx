@@ -5,31 +5,23 @@ import initDataTable from './data';
 import columnsTable from './columns';
 import { Formik } from 'formik';
 import { Typography } from 'antd';
-import moment from 'moment';
-import { GLOBAL_DATE_FORMAT } from '../../_constants';
 import { StyledButtonGroupInRow } from '../../components/_foundation/styles/index.style';
 import { FieldButton } from '../../components';
+import { addOneDay } from './utils';
 
 const { Title } = Typography;
-
-function addOneDay(dateValue) {
-  return moment(dateValue, GLOBAL_DATE_FORMAT).add(1, 'days').format(GLOBAL_DATE_FORMAT);
-}
 
 const EditableCell = ({
   value: initialValue,
   row: { index, values },
   column: { id },
   updateMyData, // This is a custom function that we supplied to our table instance
-  myDataTable,
   rows,
-  ...restProps
 }) => {
   const newValues = Object.keys(values).reduce((newObj, currentKey) => {
     return values[currentKey] === '' ? { ...newObj, [currentKey]: 0 } : { ...newObj, [currentKey]: values[currentKey] };
   }, {});
   let { nhan, rut, banGiao, xuat, thu, lai, chi, chuyenKhoan, tienMat, doThucTe } = newValues;
-  console.log('newValues', newValues);
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue);
 
