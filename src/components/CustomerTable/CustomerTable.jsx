@@ -17,7 +17,7 @@ import { remove } from '../../services/generic';
 import { deleteCustomer } from '../../graphql/mutations';
 const { Title } = Typography;
 
-export default function CustomerTable(props) {
+export default function CustomerTable({ searchText }) {
   const [customerSelected, setCustomerSelected] = useState();
   const [dataTable, setDataTable] = useState([]);
   const data = React.useMemo(() => dataTable, [dataTable]);
@@ -72,7 +72,7 @@ export default function CustomerTable(props) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const result = await list(null, listCustomersAndProperties);
+      const result = await list({ firstName: { contains: searchText } }, listCustomersAndProperties);
       const customers = result?.data?.listCustomers?.items || [];
       console.log('fetch list customer data', customers);
       const transformDataToTable = customers.map((customer) => {
@@ -128,7 +128,7 @@ export default function CustomerTable(props) {
       setDataTable(transformDataToTable);
     };
     fetchData();
-  }, []);
+  }, [searchText]);
 
   console.log('customerSelected', customerSelected);
   return (

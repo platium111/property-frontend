@@ -406,3 +406,8 @@ Focusing on youtube analytic and Cracking English everyday
 
 - remove mock data
 - refactor month utils
+
+30/10/2020
+
+- feat: search text in customers
+- [e_not_passing_full_variable_props] <Customer searchText> -> is is boolean value

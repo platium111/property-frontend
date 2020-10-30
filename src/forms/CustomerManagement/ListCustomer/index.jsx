@@ -57,7 +57,7 @@ export default function (props) {
           setDisplayDetailItem(false);
         }}
       />
-      <CustomerTable />
+      <CustomerTable searchText={searchText} />
       {/* Display list or detail cards */}
       {displayDetailItem && <EditItem property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />}
     </div>
