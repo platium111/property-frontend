@@ -72,7 +72,8 @@ export default function CustomerTable({ searchText }) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const result = await list({ firstName: { contains: searchText } }, listCustomersAndProperties);
+      const filter = searchText ? { firstName: { contains: searchText } } : null;
+      const result = await list(filter, listCustomersAndProperties);
       const customers = result?.data?.listCustomers?.items || [];
       console.log('fetch list customer data', customers);
       const transformDataToTable = customers.map((customer) => {
