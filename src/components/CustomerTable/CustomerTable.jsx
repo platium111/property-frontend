@@ -7,14 +7,12 @@ import { Form, Formik } from 'formik';
 import FieldButton from '../Button';
 import columnsTable from './columns';
 import { Typography } from 'antd';
-import { listCustomersAndProperties } from '../../graphql/customQuery';
-import { list } from '../../services/generic';
 import { useState } from 'react';
-import { tranformDbData } from '../../_utils';
-import { LOAN_TYPE } from '../../_constants';
 import Customer from '../../forms/CustomerManagement/Customer';
 import { remove } from '../../services/generic';
 import { deleteCustomer } from '../../graphql/mutations';
+import { searchCustomerAction } from '../../actions';
+
 const { Title } = Typography;
 
 export default function CustomerTable({ searchText }) {
@@ -71,69 +69,10 @@ export default function CustomerTable({ searchText }) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const filter = searchText ? { firstName: { contains: searchText } } : null;
-      const result = await list(filter, listCustomersAndProperties);
-      const customers = result?.data?.listCustomers?.items || [];
-      console.log('fetch list customer data', customers);
-      const transformDataToTable = customers.map((customer) => {
-        const {
-          id,
-          firstName,
-          middleName,
-          lastName,
-          phoneNumbers,
-          dateOfBirth,
-          address,
-          dateBorrow,
-          datePay,
-          properties,
-          identityCardNo,
-        } = customer;
-
-        const transformAddress = tranformDbData(address, 'address')
-          ?.filter((item) => !!item)
-          .join(', ');
-        const transformLoanTypeSummary =
-          properties.items &&
-          properties.items.reduce(
-            (totalObj, currentProperty) => {
-              if (currentProperty.loanType === LOAN_TYPE.xe) {
-                return {
-                  ...totalObj,
-                  [LOAN_TYPE.xe]: Number(totalObj[LOAN_TYPE.xe]) + 1,
-                };
-              } else {
-                return {
-                  ...totalObj,
-                  [LOAN_TYPE.giayTo]: Number(totalObj[LOAN_TYPE.giayTo]) + 1,
-                };
-              }
-            },
-            { [LOAN_TYPE.xe]: 0, [LOAN_TYPE.giayTo]: 0 }
-          );
-        console.log('loantypesum', transformLoanTypeSummary);
-        return {
-          id,
-          name: `${firstName} ${middleName} ${lastName}`,
-          phoneNumbers,
-          dateOfBirth,
-          address: transformAddress,
-          loanTypeSummary: `Xe : ${transformLoanTypeSummary.xe} | Giấy tờ: ${transformLoanTypeSummary.giayTo}`,
-          dateBorrow,
-          datePay,
-          identityCardNo,
-          originalData: customer,
-        };
-      });
-      setDataTable(transformDataToTable);
-    };
-    fetchData();
+    searchCustomerAction(searchText, setDataTable);
   }, [searchText]);
 
-  console.log('customerSelected', customerSelected);
   return (
-    // <Router>
     <div>
       <Title
         style={{

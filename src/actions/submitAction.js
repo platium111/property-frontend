@@ -3,7 +3,7 @@ import { getCustomer } from '../graphql/queries';
 import { create, update, get } from '../services/generic/index';
 import { CUSTOMER_STATUS, LOAN_TYPE } from '../_constants';
 
-export default async function ({ setSubmitting, values, status, setCustomerSubmited }) {
+export const submitAction = async ({ setSubmitting, values, status, setCustomerSubmited }) => {
   const {
     id,
     otherPhoneNumber,
@@ -150,4 +150,4 @@ export default async function ({ setSubmitting, values, status, setCustomerSubmi
       break;
   }
   setSubmitting(false);
-}
+};

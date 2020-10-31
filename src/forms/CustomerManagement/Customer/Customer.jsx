@@ -1,5 +1,5 @@
 // Render Prop
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Formik, FieldArray } from 'formik';
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd';
 import { Typography, Row, Col, Result } from 'antd';
@@ -13,7 +13,7 @@ import { header, layout, tailLayout } from '../../_style';
 import Panel from '../../../components/Wrapper';
 import { RepeatingGroup } from '../../../components/RepeatingGroup';
 import { provinceData, cityData, LOAN_TYPE, CUSTOMER_STATUS } from '../../../_constants';
-import submitAction from '../../../actions/submitAction';
+import { submitAction } from '../../../actions';
 
 const { Title } = Typography;
 

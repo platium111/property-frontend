@@ -47,7 +47,7 @@ export default function (props) {
     if (searchText && searchText.length >= 3) {
       searchTextFn();
     }
-  }, [searchText]);
+  }, [searchText, client]);
   return (
     <div>
       <Search
