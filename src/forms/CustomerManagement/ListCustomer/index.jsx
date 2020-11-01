@@ -4,7 +4,7 @@ import { searchListCustomer } from '../../../graphql/customQuery';
 import gql from 'graphql-tag';
 import { ApolloContext } from 'react-apollo';
 import { CustomerTable } from '../../../components/CustomerTable';
-import EditItem from '../Customer';
+import EditCustomer from '../Customer';
 import { CUSTOMER_STATUS } from '../../../_constants';
 
 const { Search } = Input;
@@ -46,6 +46,7 @@ export default function (props) {
       searchTextFn();
     }
   }, [searchText, client]);
+  debugger;
   return (
     <div>
       <Search
@@ -59,7 +60,7 @@ export default function (props) {
       />
       <CustomerTable searchText={searchText} />
       {/* Display list or detail cards */}
-      {displayDetailItem && <EditItem property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />}
+      {displayDetailItem && <EditCustomer property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />}
     </div>
   );
 }

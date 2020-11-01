@@ -2,7 +2,6 @@ import React from 'react';
 import { useRowSelect, useTable } from 'react-table';
 import { StyledButtonGroupInRow } from '../_foundation/styles/index.style';
 import { StyledTable } from './index.style';
-// import dataTable from "./data";
 import { Form, Formik } from 'formik';
 import FieldButton from '../Button';
 import columnsTable from './columns';
@@ -12,6 +11,7 @@ import Customer from '../../forms/CustomerManagement/Customer';
 import { remove } from '../../services/generic';
 import { deleteCustomer } from '../../graphql/mutations';
 import { searchCustomerAction } from '../../actions';
+import { CUSTOMER_STATUS } from '../../_constants';
 
 const { Title } = Typography;
 
@@ -33,7 +33,7 @@ export default function CustomerTable({ searchText }) {
           } = row;
 
           function onEdit() {
-            setCustomerSelected(originalData);
+            setCustomerSelected({ ...originalData, status: CUSTOMER_STATUS.edit });
           }
 
           async function onDelete() {

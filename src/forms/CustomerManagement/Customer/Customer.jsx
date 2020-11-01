@@ -19,6 +19,7 @@ const { Title } = Typography;
 
 export default (props) => {
   const {
+    id,
     firstName,
     lastName,
     middleName,
@@ -33,13 +34,19 @@ export default (props) => {
     status = CUSTOMER_STATUS.new,
     note,
     properties: propertiesFromProps,
+    addressId,
   } = props;
+
+  console.log('clark id', id);
+  console.log('clark addressid', addressId);
 
   const [customerSubmited, setCustomerSubmited] = useState();
   const isSubmissionSuccess = !!customerSubmited;
 
   async function handleSubmit(values, { setSubmitting }) {
-    await submitAction({ values, setSubmitting, status, setCustomerSubmited });
+    // ! don't understand why id is set to addressID -> explicit pass id in
+    console.log('values', values);
+    await submitAction({ values: { ...values, id, addressId: address.id }, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
@@ -47,6 +54,7 @@ export default (props) => {
     <Formik
       enableReinitialize
       initialValues={{
+        id,
         firstName,
         lastName,
         middleName,
@@ -181,7 +189,7 @@ export default (props) => {
 
               <FormItem {...tailLayout} name="submitBtn">
                 <SubmitButton type="primary" disabled={props.isSubmitting} htmlType="submit">
-                  {status === CUSTOMER_STATUS.add ? 'Tạo mới' : 'Cập nhập'}
+                  {status === CUSTOMER_STATUS.new ? 'Tạo mới' : 'Cập nhập'}
                 </SubmitButton>
               </FormItem>
               {isSubmissionSuccess && (

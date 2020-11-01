@@ -411,3 +411,8 @@ Focusing on youtube analytic and Cracking English everyday
 
 - feat: search text in customers
 - [e_not_passing_full_variable_props] <Customer searchText> -> is is boolean value
+
+1/11/2020
+- [e_fixing_customer] DB Condition Check error -> fix by checking mandatory condtion, when we pass data to update db
+second is id is missed when click on a customer to edit
+

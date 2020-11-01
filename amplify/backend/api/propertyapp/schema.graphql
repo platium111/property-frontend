@@ -40,7 +40,7 @@ type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"]
   identityCardNo: String
   issueDate: String
   note: String
-  createdAt: AWSDateTime!
+  createdAt: AWSDateTime
   customerImages: [String]
   properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
 }
