@@ -14,7 +14,7 @@ import Panel from '../../../components/Wrapper';
 import { RepeatingGroup } from '../../../components/RepeatingGroup';
 import { provinceData, cityData, LOAN_TYPE, CUSTOMER_STATUS } from '../../../_constants';
 import { submitAction } from '../../../actions';
-
+import moment from 'moment';
 const { Title } = Typography;
 
 export default (props) => {
@@ -34,22 +34,22 @@ export default (props) => {
     status = CUSTOMER_STATUS.new,
     note,
     properties: propertiesFromProps,
-    addressId,
   } = props;
 
-  console.log('clark id', id);
-  console.log('clark addressid', addressId);
+  console.log('customerProps', props);
 
   const [customerSubmited, setCustomerSubmited] = useState();
   const isSubmissionSuccess = !!customerSubmited;
 
   async function handleSubmit(values, { setSubmitting }) {
     // ! don't understand why id is set to addressID -> explicit pass id in
-    console.log('values', values);
+    console.log('handleSubmit', values);
     await submitAction({ values: { ...values, id, addressId: address.id }, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
+  const sortedProperties = propertiesFromProps?.items?.sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)));
+  console.log('sortedProperties', sortedProperties);
   return (
     <Formik
       enableReinitialize
@@ -62,7 +62,7 @@ export default (props) => {
         otherPhoneNumber,
         dateOfBirth,
         ...address,
-        properties: propertiesFromProps?.items || [{ loanType: '' }],
+        properties: sortedProperties || [{ loanType: '' }],
         dateBorrow,
         borrowPurpose,
         datePay,
@@ -127,7 +127,10 @@ export default (props) => {
                   <FieldArray
                     name="properties"
                     render={(arrayHelpers) => (
-                      <RepeatingGroup arrayHelpers={arrayHelpers} items={props.values.properties}>
+                      <RepeatingGroup
+                        arrayHelpers={arrayHelpers}
+                        items={propertiesFromProps?.items?.sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)))}
+                      >
                         {({ item: customerItem, index }) => {
                           return (
                             <div>
