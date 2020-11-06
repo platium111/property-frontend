@@ -5,13 +5,13 @@ import useConditional from '../../_hooks/useConditional';
 import InputMask from 'react-input-mask';
 import { useState } from 'react';
 
-export default ({ label, name, placeholder = label, compareType, condition, mask, isCurrency }) => {
+export default ({ label, name, placeholder = label, compareType, value, condition, mask, isCurrency }) => {
   const [field] = useField({ name }); // value, onChange, onBlur
   const { values, setFieldValue } = useFormikContext();
   const { result: isShow } = useConditional({ values, name, condition, compareType });
   const [currencyValue, setCurrencyValue] = useState();
 
-  const displayValue = isCurrency ? currencyValue : field.value || '';
+  const displayValue = (isCurrency ? currencyValue : field.value) || value || '';
   // * help to custom value instead of mask value
   function handleChange(e) {
     const {
@@ -32,7 +32,7 @@ export default ({ label, name, placeholder = label, compareType, condition, mask
         {mask ? (
           <InputMask mask={mask} value={displayValue} onChange={handleChange}>
             {(maskProps) => {
-              return <Input {...maskProps} name={name} placeholder={placeholder} />;
+              return <Input {...maskProps} value={displayValue} name={name} placeholder={placeholder} />;
             }}
           </InputMask>
         ) : (

@@ -418,3 +418,8 @@ Focusing on youtube analytic and Cracking English everyday
   second is id is missed when click on a customer to edit
 
 - todo: need to fix update property, order of property changed -> so errors here
+
+6/11/2020
+
+- [e_editgrid_data_when_editting_in_property] need to pass value from props into component
+- [e_fix_price_and_interest] need to fix inside FieldInput value, passsing value into mask value

@@ -15,6 +15,7 @@ import { RepeatingGroup } from '../../../components/RepeatingGroup';
 import { provinceData, cityData, LOAN_TYPE, CUSTOMER_STATUS } from '../../../_constants';
 import { submitAction } from '../../../actions';
 import moment from 'moment';
+import { cloneDeep } from 'lodash';
 const { Title } = Typography;
 
 export default (props) => {
@@ -48,7 +49,8 @@ export default (props) => {
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  const sortedProperties = propertiesFromProps?.items?.sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)));
+  const sortedProperties =
+    propertiesFromProps && cloneDeep(propertiesFromProps.items).sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)));
   console.log('sortedProperties', sortedProperties);
   return (
     <Formik
@@ -127,11 +129,8 @@ export default (props) => {
                   <FieldArray
                     name="properties"
                     render={(arrayHelpers) => (
-                      <RepeatingGroup
-                        arrayHelpers={arrayHelpers}
-                        items={propertiesFromProps?.items?.sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)))}
-                      >
-                        {({ item: customerItem, index }) => {
+                      <RepeatingGroup arrayHelpers={arrayHelpers} items={sortedProperties}>
+                        {({ item: customerItem = {}, index }) => {
                           return (
                             <div>
                               <div>
@@ -141,27 +140,48 @@ export default (props) => {
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
                                 </FieldSelect>
                                 <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.xe }} compareType="string">
-                                  <FieldInput label="Màu sắc" name={`properties[${index}].color`} />
-                                  <FieldInput label="Năm sản xuất" name={`properties[${index}].year`} />
-                                  <FieldInput label="Số khung" name={`properties[${index}].frameNumber`} />
-                                  <FieldInput label="Số máy" name={`properties[${index}].machineNumber`} />
-                                  <FieldInput label="Biển kiểm soát" name={`properties[${index}].plateNumber`} />
+                                  <FieldInput label="Màu sắc" value={customerItem.color} name={`properties[${index}].color`} />
+                                  <FieldInput label="Năm sản xuất" value={customerItem.year} name={`properties[${index}].year`} />
+                                  <FieldInput label="Số khung" value={customerItem.frameNumber} name={`properties[${index}].frameNumber`} />
+                                  <FieldInput
+                                    label="Số máy"
+                                    value={customerItem.machineNumber}
+                                    name={`properties[${index}].machineNumber`}
+                                  />
+                                  <FieldInput
+                                    label="Biển kiểm soát"
+                                    value={customerItem.plateNumber}
+                                    name={`properties[${index}].plateNumber`}
+                                  />
                                   {/* <FieldInput label="Tên khách hàng" name={`properties[${index}].customerName`} /> */}
                                 </Panel>
                                 <Panel condition={{ x: `{{properties.[${index}].loanType}}`, y: LOAN_TYPE.giayTo }} compareType="string">
-                                  <FieldInput label="Mã thẻ SV" name={`properties[${index}].cardNumber`} />
-                                  <FieldInput label="Tên trường" name={`properties[${index}].universityName`} />
-                                  <FieldInput label="Điểm trung bình" name={`properties[${index}].gpa`} />
-                                  <FieldInput label="Năm tốt nghiệp" name={`properties[${index}].graduationYear`} />
-                                  <FieldInput label="Tên bố" name={`properties[${index}].fatherName`} />
-                                  <FieldInput label="SĐT bố" name={`properties[${index}].fatherPhone`} />
-                                  <FieldInput label="Tên mẹ" name={`properties[${index}].motherName`} />
-                                  <FieldInput label="SĐT mẹ" name={`properties[${index}].motherPhone`} />
+                                  <FieldInput label="Mã thẻ SV" value={customerItem.cardNumber} name={`properties[${index}].cardNumber`} />
+                                  <FieldInput
+                                    label="Tên trường"
+                                    value={customerItem.universityName}
+                                    name={`properties[${index}].universityName`}
+                                  />
+                                  <FieldInput label="Điểm trung bình" value={customerItem.gpa} name={`properties[${index}].gpa`} />
+                                  <FieldInput
+                                    label="Năm tốt nghiệp"
+                                    value={customerItem.graduationYear}
+                                    name={`properties[${index}].graduationYear`}
+                                  />
+                                  <FieldInput label="Tên bố" value={customerItem.fatherNumber} name={`properties[${index}].fatherName`} />
+                                  <FieldInput label="SĐT bố" value={customerItem.fatherPhone} name={`properties[${index}].fatherPhone`} />
+                                  <FieldInput label="Tên mẹ" value={customerItem.motherName} name={`properties[${index}].motherName`} />
+                                  <FieldInput label="SĐT mẹ" value={customerItem.motherPhone} name={`properties[${index}].motherPhone`} />
                                 </Panel>
-                                <FieldInput label="Tên đồ / giấy tờ" name={`properties[${index}].itemName`} />
-                                <FieldInput label="Giá" name={`properties[${index}].price`} isCurrency={true} />
-                                <FieldInput label="Lãi" name={`properties[${index}].interest`} isCurrency={true} />
-                                <FieldArea label="Mô tả" name={`properties[${index}].description`} />
+                                <FieldInput label="Tên đồ / giấy tờ" value={customerItem.itemName} name={`properties[${index}].itemName`} />
+                                <FieldInput label="Giá" value={customerItem.price} name={`properties[${index}].price`} isCurrency={true} />
+                                <FieldInput
+                                  label="Lãi"
+                                  value={customerItem.interest}
+                                  name={`properties[${index}].interest`}
+                                  isCurrency={true}
+                                />
+                                <FieldArea label="Mô tả" value={customerItem.description} name={`properties[${index}].description`} />
                               </div>
                               <div>
                                 <p>Tinh toan khuyen cao</p>
