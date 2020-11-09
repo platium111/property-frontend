@@ -108,7 +108,7 @@ export default function CustomerTable({ searchText }) {
           </tbody>
         </table>
       </StyledTable>
-      <Customer {...customerSelected} />
+      {customerSelected && <Customer {...customerSelected} />}
     </div>
   );
 }

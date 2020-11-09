@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 
 export default function (props) {
-  const { onClick, icon, type, danger } = props;
+  const { onClick, icon, type, danger, value } = props;
   const [IconComponent, setIconComponent] = React.useState();
 
   useEffect(() => {
@@ -10,8 +10,14 @@ export default function (props) {
       const loadingIcon = await import('@ant-design/icons');
       setIconComponent(loadingIcon[icon]);
     }
-    loadIcon();
-  }, []);
+    if (icon) {
+      loadIcon();
+    }
+  }, [icon]);
 
-  return <Button type={type} icon={IconComponent && <IconComponent />} danger={danger} onClick={onClick} />;
+  return (
+    <Button type={type} icon={IconComponent && <IconComponent />} danger={danger} onClick={onClick}>
+      {value}
+    </Button>
+  );
 }

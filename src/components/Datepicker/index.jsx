@@ -6,7 +6,6 @@ import useConditional from '../../_hooks/useConditional';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { GLOBAL_DATE_FORMAT } from '../../_constants';
-
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
 export default ({ label, condition, compareType, placeholder = label, defaultValue, value, ...props }) => {

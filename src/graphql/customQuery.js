@@ -5,7 +5,7 @@ export const searchListProperty = `
         id
         description
         imageUrls
-        type
+        loanType
         userId
         year
         customerName

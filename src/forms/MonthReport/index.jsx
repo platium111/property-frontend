@@ -87,7 +87,7 @@ const EditableCell = ({
   }, [initialValue]);
 
   return (id !== 'tienMat' && id !== 'doThucTe' && id !== 'ngay' && id !== 'banGiao') || index === 0 ? (
-    <input value={value} onChange={onChange} onBlur={onBlur} style={{ minWidth: 30, width: '100%', maxWidth: 200 }} />
+    <input value={value} onChange={onChange} onBlur={onBlur} style={{ minWidth: index === 0 ? 40 : 30, width: '100%', maxWidth: 200 }} />
   ) : (
     <p>{value}</p>
   );
