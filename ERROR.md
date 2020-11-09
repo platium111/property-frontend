@@ -428,3 +428,7 @@ Focusing on youtube analytic and Cracking English everyday
 
 - add day report
 - Using table from ant
+
+10/11/2020
+
+- [e_selectInRepeatingGroup] using sortProperties, so when it is null -> passing null to editgrid -> before I used in initializeValue, so I forgot

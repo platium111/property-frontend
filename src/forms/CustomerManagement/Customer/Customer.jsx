@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Formik, FieldArray } from 'formik';
 import { Form, Select, FormItem, SubmitButton } from 'formik-antd';
-import { Typography, Row, Col, Result } from 'antd';
+import { Typography, Row, Col, Result, Divider } from 'antd';
 import { DebugValues } from '../../../components/index';
 import FieldInput from '../../../components/Input';
 import FieldSelect from '../../../components/Select';
@@ -49,8 +49,8 @@ export default (props) => {
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  const sortedProperties =
-    propertiesFromProps && cloneDeep(propertiesFromProps.items).sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)));
+  const sortedProperties = (propertiesFromProps &&
+    cloneDeep(propertiesFromProps.items).sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)))) || [{ loanType: '' }];
   console.log('sortedProperties', sortedProperties);
   return (
     <Formik
@@ -64,7 +64,7 @@ export default (props) => {
         otherPhoneNumber,
         dateOfBirth,
         ...address,
-        properties: sortedProperties || [{ loanType: '' }],
+        properties: sortedProperties,
         dateBorrow,
         borrowPurpose,
         datePay,
@@ -95,12 +95,22 @@ export default (props) => {
               {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
               <Row>
                 <Col sm={24} md={12}>
+                  <Divider orientation="left">Thông tin cơ bản</Divider>
                   <FieldInput label="Tên" name="firstName" />
                   <FieldInput label="Họ" name="lastName" />
                   <FieldInput label="Tên đệm" name="middleName" />
                   <FieldInput name="phoneNumber" label="Số điện thoại" />
                   <FieldInput name="otherPhoneNumber" label="Số điện thoại khác" />
                   <FieldDatePicker label="Ngày sinh" name="dateOfBirth" value={dateOfBirth} />
+                  <FieldInput label="Chứng minh thư" name="identityCardNo" />
+                  <FieldInput
+                    label="Ngày phát hành"
+                    name="issueDate"
+                    condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
+                    compareType="string"
+                  />
+
+                  <Divider orientation="left">Địa chỉ</Divider>
                   <FieldInput label="Số nhà" name="homeNumber" />
                   <FieldInput label="Đường" name="street" />
                   <FieldInput label="Thôn" name="hamlet" />
@@ -118,14 +128,7 @@ export default (props) => {
                   </FieldSelect>
                 </Col>
                 <Col sm={24} md={12}>
-                  <FieldInput label="Chứng minh thư" name="identityCardNo" />
-                  <FieldInput
-                    label="Ngày phát hành"
-                    name="issueDate"
-                    condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
-                    compareType="string"
-                  />
-                  <FieldInput label="Ghi chú" name="note" />
+                  <Divider orientation="left">Thông tin tài sản</Divider>
                   <FieldArray
                     name="properties"
                     render={(arrayHelpers) => (
@@ -134,7 +137,7 @@ export default (props) => {
                           return (
                             <div>
                               <div>
-                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`}>
+                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType}>
                                   <Select.Option value="">--Lựa chọn--</Select.Option>
                                   <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
@@ -207,6 +210,7 @@ export default (props) => {
                   <FieldArea label="Mục đích vay" name="borrowPurpose" />
                   <FieldDatePicker label="Ngày vay" name="dateBorrow" />
                   <FieldDatePicker label="Ngày trả" name="datePay" />
+                  <FieldInput label="Ghi chú" name="note" />
                 </Col>
               </Row>
 
