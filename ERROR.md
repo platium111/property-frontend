@@ -423,3 +423,8 @@ Focusing on youtube analytic and Cracking English everyday
 
 - [e_editgrid_data_when_editting_in_property] need to pass value from props into component
 - [e_fix_price_and_interest] need to fix inside FieldInput value, passsing value into mask value
+
+9/11/2020
+
+- add day report
+- Using table from ant
