@@ -6,6 +6,7 @@ import { ApolloContext } from 'react-apollo';
 import { CustomerTable } from '../../../components/CustomerTable';
 import EditCustomer from '../Customer';
 import { CUSTOMER_STATUS } from '../../../_constants';
+import RepaymentTable from '../../RepaymentTable';
 
 const { Search } = Input;
 
@@ -31,9 +32,6 @@ export default function (props) {
   const [searchText, setSearchText] = useState();
   const [foundCustomers, setFoundCustomers] = useState([]);
   const [displayDetailItem, setDisplayDetailItem] = useState(false);
-  const [clickedCustomerId, setClickedCustomerId] = useState();
-
-  const clickedProperty = foundCustomers.find((property) => property.id === clickedCustomerId);
 
   // TODO after update, if not change search query, data looks the same but actually updated in aws
   useEffect(() => {
@@ -60,7 +58,8 @@ export default function (props) {
       />
       <CustomerTable searchText={searchText} />
       {/* Display list or detail cards */}
-      {displayDetailItem && <EditCustomer property={{ ...clickedProperty, status: CUSTOMER_STATUS.edit }} />}
+      {displayDetailItem && <EditCustomer />}
+      <RepaymentTable />
     </div>
   );
 }

@@ -25,6 +25,18 @@ type Property @model @key(name: "byCustomer", fields: ["customerId", "itemName"]
   fatherPhone: String
 }
 
+type Repayment @model @key(name: "byCustomer", fields: ["customerId"]) {
+  id: ID!
+  customerId: ID
+  fromDate: String
+  toDate: String
+  totalInterestAmount: Float
+  otherMoney: Float
+  customerPayAmount: Float
+  isPaid: Boolean
+  note: String
+}
+
 type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"], queryField: "listCustomerByCreatedAt") {
   id: ID!
   firstName: String!
@@ -34,15 +46,17 @@ type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"]
   dateOfBirth: String
   address: Address @connection(fields: ["addressId"])
   addressId: ID!
-  dateBorrow: String
-  borrowPurpose: String
-  datePay: String
   identityCardNo: String
   issueDate: String
   note: String
   createdAt: AWSDateTime
   customerImages: [String]
+  dateBorrow: String
+  borrowPurpose: String
+  datePay: String
   properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
+  loanStatus: String
+  repayments: [Repayment] @connection(keyName: "byCustomer", fields: ["id"])
 }
 
 type PropertyConnectWithCustomer {

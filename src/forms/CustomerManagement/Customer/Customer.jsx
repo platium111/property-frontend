@@ -222,7 +222,7 @@ export default (props) => {
               {isSubmissionSuccess && (
                 <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
               )}
-              <DebugValues {...props} />
+              {/* <DebugValues {...props} /> */}
             </Form>
           </>
         );
