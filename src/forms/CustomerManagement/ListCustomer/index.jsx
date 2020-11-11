@@ -5,8 +5,7 @@ import gql from 'graphql-tag';
 import { ApolloContext } from 'react-apollo';
 import { CustomerTable } from '../../../components/CustomerTable';
 import EditCustomer from '../Customer';
-import { CUSTOMER_STATUS } from '../../../_constants';
-import RepaymentTable from '../../RepaymentTable';
+import { EnhancedRepaymentTable } from '../../RepaymentTable';
 
 const { Search } = Input;
 
@@ -32,6 +31,7 @@ export default function (props) {
   const [searchText, setSearchText] = useState();
   const [foundCustomers, setFoundCustomers] = useState([]);
   const [displayDetailItem, setDisplayDetailItem] = useState(false);
+  const [displayType, setDisplayType] = useState();
 
   // TODO after update, if not change search query, data looks the same but actually updated in aws
   useEffect(() => {
@@ -56,10 +56,10 @@ export default function (props) {
           setDisplayDetailItem(false);
         }}
       />
-      <CustomerTable searchText={searchText} />
+      <CustomerTable searchText={searchText} displayType={displayType} setDisplayType={setDisplayType} />
       {/* Display list or detail cards */}
       {displayDetailItem && <EditCustomer />}
-      <RepaymentTable />
+      {displayType === 'repayment' && <EnhancedRepaymentTable />}
     </div>
   );
 }

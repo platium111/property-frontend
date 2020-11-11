@@ -15,7 +15,7 @@ import { CUSTOMER_STATUS } from '../../_constants';
 
 const { Title } = Typography;
 
-export default function CustomerTable({ searchText }) {
+export default function CustomerTable({ searchText, setDisplayType, displayType }) {
   const [customerSelected, setCustomerSelected] = useState();
   const [dataTable, setDataTable] = useState([]);
   const data = React.useMemo(() => dataTable, [dataTable]);
@@ -34,6 +34,15 @@ export default function CustomerTable({ searchText }) {
 
           function onEdit() {
             setCustomerSelected({ ...originalData, status: CUSTOMER_STATUS.edit });
+            setDisplayType && setDisplayType('edit');
+          }
+
+          function onRepayment() {
+            setDisplayType && setDisplayType('repayment');
+          }
+
+          function onPayItem() {
+            return null;
           }
 
           async function onDelete() {
@@ -51,9 +60,15 @@ export default function CustomerTable({ searchText }) {
                   return (
                     <Form>
                       <StyledButtonGroupInRow>
-                        {/* <Link to="/edit-customer"> */}
                         <FieldButton type="primary" name="edit" icon="EditOutlined" onClick={onEdit} />
-                        {/* </Link> */}
+                        <FieldButton type="primary" name="repayment" icon="FileAddOutlined" onClick={onRepayment} />
+                        <FieldButton
+                          type="primary"
+                          name="payItem"
+                          icon="FileExcelOutlined"
+                          onClick={onPayItem}
+                          iconStyle={{ color: 'red' }}
+                        />
                         <FieldButton type="primary" danger name="delete" icon="ScissorOutlined" onClick={onDelete} />
                       </StyledButtonGroupInRow>
                     </Form>
@@ -108,7 +123,7 @@ export default function CustomerTable({ searchText }) {
           </tbody>
         </table>
       </StyledTable>
-      {customerSelected && <Customer {...customerSelected} />}
+      {customerSelected && displayType === 'edit' && <Customer {...customerSelected} />}
     </div>
   );
 }

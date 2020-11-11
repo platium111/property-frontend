@@ -1,70 +1,58 @@
 import React from 'react';
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag, Space, Typography } from 'antd';
+import { FieldCheckbox } from '../../components';
+import { withFormik } from 'formik';
 
+const { Title } = Typography;
 const { Column, ColumnGroup } = Table;
 
 const data = [
   {
     key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    fromDate: '10/10/2020',
+    toDate: '20/10/2020',
+    daysNumber: 10,
+    interestAmount: 360000,
+    otherMoney: 10000,
+    totalInterestAmount: 370000,
+    customerPaidAmount: 370000,
+    paidStatus: false,
+    note: 'khong co gi',
   },
 ];
 
-export default function (props) {
+const RepaymentTable = (props) => {
+  const { values } = props;
+  console.log('RepaymentTable Component', values);
   return (
     <div>
+      <Title>Trả lãi</Title>
       <Table dataSource={data}>
-        <ColumnGroup title="Name">
-          <Column title="First Name" dataIndex="firstName" key="firstName" />
-          <Column title="Last Name" dataIndex="lastName" key="lastName" />
+        <ColumnGroup title="Ngày">
+          <Column title="Từ ngày" dataIndex="fromDate" key="fromDate" />
+          <Column title="Đến ngày" dataIndex="toDate" key="toDate" />
         </ColumnGroup>
-        <Column title="Age" dataIndex="age" key="age" />
-        <Column title="Address" dataIndex="address" key="address" />
+        <Column title="Số ngày" dataIndex="daysNumber" key="daysNumber" />
+        <Column title="Tiền lãi" dataIndex="interestAmount" key="interestAmount" />
+        <Column title="Tiền khác" dataIndex="otherMoney" key="otherMoney" />
+        <Column title="Tổng lãi" dataIndex="totalInterestAmount" key="totalInterestAmount" />
+        <Column title="Tiền khách trả" dataIndex="customerPaidAmount" key="customerPaidAmount" />
         <Column
-          title="Tags"
-          dataIndex="tags"
-          key="tags"
-          render={(tags) => (
-            <>
-              {tags.map((tag) => (
-                <Tag color="blue" key={tag}>
-                  {tag}
-                </Tag>
-              ))}
-            </>
-          )}
+          title="Tình trạng"
+          dataIndex="paidStatus"
+          key="paidStatus"
+          render={(text, record) => {
+            return (
+              <Space size="middle">
+                <FieldCheckbox name={`paidStatus-${record.key}`} />
+              </Space>
+            );
+          }}
         />
-        <Column
-          title="Action"
-          key="action"
-          render={(text, record) => (
-            <Space size="middle">
-              <a>Invite {record.lastName}</a>
-              <a>Delete</a>
-            </Space>
-          )}
-        />
+        <Column title="Ghi chú" dataIndex="note" key="note" />
       </Table>
     </div>
   );
-}
+};
+
+export const EnhancedRepaymentTable = withFormik({ mapPropsToValues: () => ({ name: '' }) })(RepaymentTable);
