@@ -25,9 +25,9 @@ type Property @model @key(name: "byCustomer", fields: ["customerId", "itemName"]
   fatherPhone: String
 }
 
-type Repayment @model @key(name: "byCustomer", fields: ["customerId"]) {
+type Repayment @model @key(name: "byContract", fields: ["contractId"]) {
   id: ID!
-  customerId: ID
+  contractId: ID
   fromDate: String
   toDate: String
   totalInterestAmount: Float
@@ -55,8 +55,15 @@ type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"]
   borrowPurpose: String
   datePay: String
   properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
+  contracts: [Contract] @connection(keyName: "byCustomer", fields: ["id"])
+}
+
+type Contract @model @key(name: "byCustomer", fields: ["customerId"]) {
+  id: ID!
+  customerId: ID
   loanStatus: String
-  repayments: [Repayment] @connection(keyName: "byCustomer", fields: ["id"])
+  createdAt: AWSDateTime
+  repayments: [Repayment] @connection(keyName: "byContract", fields: ["id"])
 }
 
 type PropertyConnectWithCustomer {

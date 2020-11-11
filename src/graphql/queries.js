@@ -139,14 +139,14 @@ export const getCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      dateBorrow
-      borrowPurpose
-      datePay
       identityCardNo
       issueDate
       note
       createdAt
       customerImages
+      dateBorrow
+      borrowPurpose
+      datePay
       properties {
         items {
           id
@@ -173,6 +173,16 @@ export const getCustomer = /* GraphQL */ `
           motherName
           motherPhone
           fatherPhone
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          customerId
+          loanStatus
           createdAt
           updatedAt
         }
@@ -211,17 +221,49 @@ export const listCustomers = /* GraphQL */ `
           updatedAt
         }
         addressId
-        dateBorrow
-        borrowPurpose
-        datePay
         identityCardNo
         issueDate
         note
         createdAt
         customerImages
+        dateBorrow
+        borrowPurpose
+        datePay
         properties {
           nextToken
         }
+        contracts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getContract = /* GraphQL */ `
+  query GetContract($id: ID!) {
+    getContract(id: $id) {
+      id
+      customerId
+      loanStatus
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listContracts = /* GraphQL */ `
+  query ListContracts(
+    $filter: ModelContractFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        customerId
+        loanStatus
+        createdAt
         updatedAt
       }
       nextToken
@@ -308,15 +350,18 @@ export const listCustomerByCreatedAt = /* GraphQL */ `
           updatedAt
         }
         addressId
-        dateBorrow
-        borrowPurpose
-        datePay
         identityCardNo
         issueDate
         note
         createdAt
         customerImages
+        dateBorrow
+        borrowPurpose
+        datePay
         properties {
+          nextToken
+        }
+        contracts {
           nextToken
         }
         updatedAt

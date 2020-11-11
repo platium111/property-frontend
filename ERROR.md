@@ -441,3 +441,7 @@ Focusing on youtube analytic and Cracking English everyday
 - Add Checkbox component
 - RepaymentTable component
 - Working with Table, Column in ant
+- [e_changing_graphql_schema] usually get this error
+  `Attempting to add and remove a global secondary index at the same time on the`
+  -> need to remove table in graphql and remove connection
+  -> add again

@@ -133,14 +133,14 @@ export const createCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      dateBorrow
-      borrowPurpose
-      datePay
       identityCardNo
       issueDate
       note
       createdAt
       customerImages
+      dateBorrow
+      borrowPurpose
+      datePay
       properties {
         items {
           id
@@ -167,6 +167,16 @@ export const createCustomer = /* GraphQL */ `
           motherName
           motherPhone
           fatherPhone
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          customerId
+          loanStatus
           createdAt
           updatedAt
         }
@@ -203,14 +213,14 @@ export const updateCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      dateBorrow
-      borrowPurpose
-      datePay
       identityCardNo
       issueDate
       note
       createdAt
       customerImages
+      dateBorrow
+      borrowPurpose
+      datePay
       properties {
         items {
           id
@@ -237,6 +247,16 @@ export const updateCustomer = /* GraphQL */ `
           motherName
           motherPhone
           fatherPhone
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          customerId
+          loanStatus
           createdAt
           updatedAt
         }
@@ -273,14 +293,14 @@ export const deleteCustomer = /* GraphQL */ `
         updatedAt
       }
       addressId
-      dateBorrow
-      borrowPurpose
-      datePay
       identityCardNo
       issueDate
       note
       createdAt
       customerImages
+      dateBorrow
+      borrowPurpose
+      datePay
       properties {
         items {
           id
@@ -312,6 +332,58 @@ export const deleteCustomer = /* GraphQL */ `
         }
         nextToken
       }
+      contracts {
+        items {
+          id
+          customerId
+          loanStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createContract = /* GraphQL */ `
+  mutation CreateContract(
+    $input: CreateContractInput!
+    $condition: ModelContractConditionInput
+  ) {
+    createContract(input: $input, condition: $condition) {
+      id
+      customerId
+      loanStatus
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateContract = /* GraphQL */ `
+  mutation UpdateContract(
+    $input: UpdateContractInput!
+    $condition: ModelContractConditionInput
+  ) {
+    updateContract(input: $input, condition: $condition) {
+      id
+      customerId
+      loanStatus
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteContract = /* GraphQL */ `
+  mutation DeleteContract(
+    $input: DeleteContractInput!
+    $condition: ModelContractConditionInput
+  ) {
+    deleteContract(input: $input, condition: $condition) {
+      id
+      customerId
+      loanStatus
+      createdAt
       updatedAt
     }
   }
