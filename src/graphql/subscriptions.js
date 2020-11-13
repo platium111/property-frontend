@@ -97,6 +97,57 @@ export const onDeleteProperty = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRepayment = /* GraphQL */ `
+  subscription OnCreateRepayment {
+    onCreateRepayment {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRepayment = /* GraphQL */ `
+  subscription OnUpdateRepayment {
+    onUpdateRepayment {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRepayment = /* GraphQL */ `
+  subscription OnDeleteRepayment {
+    onDeleteRepayment {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateCustomer = /* GraphQL */ `
   subscription OnCreateCustomer {
     onCreateCustomer {
@@ -335,6 +386,22 @@ export const onCreateContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -346,6 +413,22 @@ export const onUpdateContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -357,6 +440,22 @@ export const onDeleteContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }

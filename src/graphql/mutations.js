@@ -106,6 +106,66 @@ export const deleteProperty = /* GraphQL */ `
     }
   }
 `;
+export const createRepayment = /* GraphQL */ `
+  mutation CreateRepayment(
+    $input: CreateRepaymentInput!
+    $condition: ModelRepaymentConditionInput
+  ) {
+    createRepayment(input: $input, condition: $condition) {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateRepayment = /* GraphQL */ `
+  mutation UpdateRepayment(
+    $input: UpdateRepaymentInput!
+    $condition: ModelRepaymentConditionInput
+  ) {
+    updateRepayment(input: $input, condition: $condition) {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteRepayment = /* GraphQL */ `
+  mutation DeleteRepayment(
+    $input: DeleteRepaymentInput!
+    $condition: ModelRepaymentConditionInput
+  ) {
+    deleteRepayment(input: $input, condition: $condition) {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createCustomer = /* GraphQL */ `
   mutation CreateCustomer(
     $input: CreateCustomerInput!
@@ -356,6 +416,22 @@ export const createContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -370,6 +446,22 @@ export const updateContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -384,6 +476,22 @@ export const deleteContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }

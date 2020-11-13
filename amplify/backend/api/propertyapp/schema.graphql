@@ -48,13 +48,8 @@ type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"]
   addressId: ID!
   identityCardNo: String
   issueDate: String
-  note: String
   createdAt: AWSDateTime
   customerImages: [String]
-  dateBorrow: String
-  borrowPurpose: String
-  datePay: String
-  properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
   contracts: [Contract] @connection(keyName: "byCustomer", fields: ["id"])
 }
 
@@ -64,6 +59,11 @@ type Contract @model @key(name: "byCustomer", fields: ["customerId"]) {
   loanStatus: String
   createdAt: AWSDateTime
   repayments: [Repayment] @connection(keyName: "byContract", fields: ["id"])
+  dateBorrow: String
+  datePay: String
+  borrowPurpose: String
+  note: String
+  properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
 }
 
 type PropertyConnectWithCustomer {

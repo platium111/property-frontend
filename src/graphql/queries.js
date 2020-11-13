@@ -115,6 +115,47 @@ export const listPropertys = /* GraphQL */ `
     }
   }
 `;
+export const getRepayment = /* GraphQL */ `
+  query GetRepayment($id: ID!) {
+    getRepayment(id: $id) {
+      id
+      contractId
+      fromDate
+      toDate
+      totalInterestAmount
+      otherMoney
+      customerPayAmount
+      isPaid
+      note
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRepayments = /* GraphQL */ `
+  query ListRepayments(
+    $filter: ModelRepaymentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRepayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        contractId
+        fromDate
+        toDate
+        totalInterestAmount
+        otherMoney
+        customerPayAmount
+        isPaid
+        note
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getCustomer = /* GraphQL */ `
   query GetCustomer($id: ID!) {
     getCustomer(id: $id) {
@@ -248,6 +289,22 @@ export const getContract = /* GraphQL */ `
       customerId
       loanStatus
       createdAt
+      repayments {
+        items {
+          id
+          contractId
+          fromDate
+          toDate
+          totalInterestAmount
+          otherMoney
+          customerPayAmount
+          isPaid
+          note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -264,6 +321,9 @@ export const listContracts = /* GraphQL */ `
         customerId
         loanStatus
         createdAt
+        repayments {
+          nextToken
+        }
         updatedAt
       }
       nextToken
