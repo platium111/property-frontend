@@ -3,12 +3,12 @@
 
 export const propertiesForCustomer = /* GraphQL */ `
   query PropertiesForCustomer(
-    $customerId: ID!
+    $contractId: ID!
     $limit: Int
     $nextToken: String
   ) {
     propertiesForCustomer(
-      customerId: $customerId
+      contractId: $contractId
       limit: $limit
       nextToken: $nextToken
     ) {
@@ -27,7 +27,7 @@ export const propertiesForCustomer = /* GraphQL */ `
         machineNumber
         plateNumber
         dateBorrow
-        customerId
+        contractId
         cardNumber
         universityName
         gpa
@@ -61,7 +61,7 @@ export const getProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customerId
+      contractId
       cardNumber
       universityName
       gpa
@@ -98,7 +98,7 @@ export const listPropertys = /* GraphQL */ `
         machineNumber
         plateNumber
         dateBorrow
-        customerId
+        contractId
         cardNumber
         universityName
         gpa
@@ -182,49 +182,18 @@ export const getCustomer = /* GraphQL */ `
       addressId
       identityCardNo
       issueDate
-      note
       createdAt
       customerImages
-      dateBorrow
-      borrowPurpose
-      datePay
-      properties {
-        items {
-          id
-          loanType
-          description
-          imageUrls
-          userId
-          year
-          customerName
-          itemName
-          price
-          color
-          frameNumber
-          machineNumber
-          plateNumber
-          dateBorrow
-          customerId
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          interest
-          fatherName
-          motherName
-          motherPhone
-          fatherPhone
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       contracts {
         items {
           id
           customerId
           loanStatus
           createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
           updatedAt
         }
         nextToken
@@ -264,15 +233,8 @@ export const listCustomers = /* GraphQL */ `
         addressId
         identityCardNo
         issueDate
-        note
         createdAt
         customerImages
-        dateBorrow
-        borrowPurpose
-        datePay
-        properties {
-          nextToken
-        }
         contracts {
           nextToken
         }
@@ -305,6 +267,41 @@ export const getContract = /* GraphQL */ `
         }
         nextToken
       }
+      dateBorrow
+      datePay
+      borrowPurpose
+      note
+      properties {
+        items {
+          id
+          loanType
+          description
+          imageUrls
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          contractId
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -322,6 +319,13 @@ export const listContracts = /* GraphQL */ `
         loanStatus
         createdAt
         repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
+        properties {
           nextToken
         }
         updatedAt
@@ -412,15 +416,8 @@ export const listCustomerByCreatedAt = /* GraphQL */ `
         addressId
         identityCardNo
         issueDate
-        note
         createdAt
         customerImages
-        dateBorrow
-        borrowPurpose
-        datePay
-        properties {
-          nextToken
-        }
         contracts {
           nextToken
         }

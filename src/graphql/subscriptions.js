@@ -18,7 +18,7 @@ export const onCreateProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customerId
+      contractId
       cardNumber
       universityName
       gpa
@@ -50,7 +50,7 @@ export const onUpdateProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customerId
+      contractId
       cardNumber
       universityName
       gpa
@@ -82,7 +82,7 @@ export const onDeleteProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      customerId
+      contractId
       cardNumber
       universityName
       gpa
@@ -174,49 +174,18 @@ export const onCreateCustomer = /* GraphQL */ `
       addressId
       identityCardNo
       issueDate
-      note
       createdAt
       customerImages
-      dateBorrow
-      borrowPurpose
-      datePay
-      properties {
-        items {
-          id
-          loanType
-          description
-          imageUrls
-          userId
-          year
-          customerName
-          itemName
-          price
-          color
-          frameNumber
-          machineNumber
-          plateNumber
-          dateBorrow
-          customerId
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          interest
-          fatherName
-          motherName
-          motherPhone
-          fatherPhone
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       contracts {
         items {
           id
           customerId
           loanStatus
           createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
           updatedAt
         }
         nextToken
@@ -251,49 +220,18 @@ export const onUpdateCustomer = /* GraphQL */ `
       addressId
       identityCardNo
       issueDate
-      note
       createdAt
       customerImages
-      dateBorrow
-      borrowPurpose
-      datePay
-      properties {
-        items {
-          id
-          loanType
-          description
-          imageUrls
-          userId
-          year
-          customerName
-          itemName
-          price
-          color
-          frameNumber
-          machineNumber
-          plateNumber
-          dateBorrow
-          customerId
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          interest
-          fatherName
-          motherName
-          motherPhone
-          fatherPhone
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       contracts {
         items {
           id
           customerId
           loanStatus
           createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
           updatedAt
         }
         nextToken
@@ -328,49 +266,18 @@ export const onDeleteCustomer = /* GraphQL */ `
       addressId
       identityCardNo
       issueDate
-      note
       createdAt
       customerImages
-      dateBorrow
-      borrowPurpose
-      datePay
-      properties {
-        items {
-          id
-          loanType
-          description
-          imageUrls
-          userId
-          year
-          customerName
-          itemName
-          price
-          color
-          frameNumber
-          machineNumber
-          plateNumber
-          dateBorrow
-          customerId
-          cardNumber
-          universityName
-          gpa
-          graduationYear
-          interest
-          fatherName
-          motherName
-          motherPhone
-          fatherPhone
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       contracts {
         items {
           id
           customerId
           loanStatus
           createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
           updatedAt
         }
         nextToken
@@ -397,6 +304,41 @@ export const onCreateContract = /* GraphQL */ `
           customerPayAmount
           isPaid
           note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      dateBorrow
+      datePay
+      borrowPurpose
+      note
+      properties {
+        items {
+          id
+          loanType
+          description
+          imageUrls
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          contractId
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }
@@ -429,6 +371,41 @@ export const onUpdateContract = /* GraphQL */ `
         }
         nextToken
       }
+      dateBorrow
+      datePay
+      borrowPurpose
+      note
+      properties {
+        items {
+          id
+          loanType
+          description
+          imageUrls
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          contractId
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -451,6 +428,41 @@ export const onDeleteContract = /* GraphQL */ `
           customerPayAmount
           isPaid
           note
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      dateBorrow
+      datePay
+      borrowPurpose
+      note
+      properties {
+        items {
+          id
+          loanType
+          description
+          imageUrls
+          userId
+          year
+          customerName
+          itemName
+          price
+          color
+          frameNumber
+          machineNumber
+          plateNumber
+          dateBorrow
+          contractId
+          cardNumber
+          universityName
+          gpa
+          graduationYear
+          interest
+          fatherName
+          motherName
+          motherPhone
+          fatherPhone
           createdAt
           updatedAt
         }

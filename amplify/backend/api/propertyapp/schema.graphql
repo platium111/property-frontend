@@ -1,4 +1,4 @@
-type Property @model @key(name: "byCustomer", fields: ["customerId", "itemName"]) {
+type Property @model @key(name: "byContract", fields: ["contractId", "itemName"]) {
   id: ID!
   loanType: String
   description: String
@@ -13,7 +13,7 @@ type Property @model @key(name: "byCustomer", fields: ["customerId", "itemName"]
   machineNumber: String
   plateNumber: String
   dateBorrow: String
-  customerId: ID
+  contractId: ID
   cardNumber: String
   universityName: String
   gpa: Float
@@ -63,7 +63,7 @@ type Contract @model @key(name: "byCustomer", fields: ["customerId"]) {
   datePay: String
   borrowPurpose: String
   note: String
-  properties: [Property] @connection(keyName: "byCustomer", fields: ["id"])
+  properties: [Property] @connection(keyName: "byContract", fields: ["id"])
 }
 
 type PropertyConnectWithCustomer {
@@ -72,7 +72,7 @@ type PropertyConnectWithCustomer {
 }
 
 type Query {
-  propertiesForCustomer(customerId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
+  propertiesForCustomer(contractId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
 }
 
 type Address @model {
