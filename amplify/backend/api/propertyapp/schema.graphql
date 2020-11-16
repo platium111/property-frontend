@@ -71,10 +71,37 @@ type PropertyConnectWithCustomer {
   nextToken: String
 }
 
-type Query {
-  propertiesForCustomer(contractId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
+"""
+CUSTOMER BATCH MUTATION
+"""
+type CustomerResponse {
+  items: [Customer]
+  nextToken: String
 }
 
+input CustomerInputData {
+  customer: CustomerInput
+  address: AddressInput
+}
+
+input CustomerInput {
+  id: ID!
+  firstName: String
+}
+
+input AddressInput {
+  id: ID!
+  homeNumber: String
+}
+
+type Mutation {
+  propertiesForCustomer(contractId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
+  batchUpdateCustomerWithChildren(input: CustomerInputData, nextToken: String): CustomerResponse
+}
+
+"""
+-------------------------
+"""
 type Address @model {
   id: ID!
   homeNumber: String

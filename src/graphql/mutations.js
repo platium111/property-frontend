@@ -1,6 +1,90 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const propertiesForCustomer = /* GraphQL */ `
+  mutation PropertiesForCustomer(
+    $contractId: ID!
+    $limit: Int
+    $nextToken: String
+  ) {
+    propertiesForCustomer(
+      contractId: $contractId
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        loanType
+        description
+        imageUrls
+        userId
+        year
+        customerName
+        itemName
+        price
+        color
+        frameNumber
+        machineNumber
+        plateNumber
+        dateBorrow
+        contractId
+        cardNumber
+        universityName
+        gpa
+        graduationYear
+        interest
+        fatherName
+        motherName
+        motherPhone
+        fatherPhone
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const batchUpdateCustomerWithChildren = /* GraphQL */ `
+  mutation BatchUpdateCustomerWithChildren(
+    $input: CustomerInputData
+    $nextToken: String
+  ) {
+    batchUpdateCustomerWithChildren(input: $input, nextToken: $nextToken) {
+      items {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          lane
+          alley
+          district
+          province
+          city
+          createdAt
+          updatedAt
+        }
+        addressId
+        identityCardNo
+        issueDate
+        createdAt
+        customerImages
+        contracts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const createProperty = /* GraphQL */ `
   mutation CreateProperty(
     $input: CreatePropertyInput!

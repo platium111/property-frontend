@@ -1,49 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const propertiesForCustomer = /* GraphQL */ `
-  query PropertiesForCustomer(
-    $contractId: ID!
-    $limit: Int
-    $nextToken: String
-  ) {
-    propertiesForCustomer(
-      contractId: $contractId
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        loanType
-        description
-        imageUrls
-        userId
-        year
-        customerName
-        itemName
-        price
-        color
-        frameNumber
-        machineNumber
-        plateNumber
-        dateBorrow
-        contractId
-        cardNumber
-        universityName
-        gpa
-        graduationYear
-        interest
-        fatherName
-        motherName
-        motherPhone
-        fatherPhone
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getProperty = /* GraphQL */ `
   query GetProperty($id: ID!) {
     getProperty(id: $id) {

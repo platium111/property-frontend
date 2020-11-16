@@ -1,4 +1,12 @@
-import { createCustomer, updateCustomer, createAddress, updateAddress, createProperty, updateProperty } from '../graphql/mutations';
+import {
+  createCustomer,
+  updateCustomer,
+  createAddress,
+  updateAddress,
+  createProperty,
+  updateProperty,
+  batchUpdateCustomerWithChildren,
+} from '../graphql/mutations';
 import { getCustomer } from '../graphql/queries';
 import { create, update, get } from '../services/generic/index';
 import { CUSTOMER_STATUS, LOAN_TYPE } from '../_constants';
@@ -36,8 +44,13 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
     addressId,
     ...restValues
   } = values;
-  
+
   const address = { homeNumber, street, hamlet, village, lane, alley, district, province, city, id: values.addressId };
+  // testing new feauture batch mutation
+  const mockCustomer = { id: '999999999', firstName: 'clark' };
+  const mockAddress = { id: '88888888', homeNumber: '36 fran street' };
+  const responseTest = await create({ customer: mockCustomer, address: mockAddress }, batchUpdateCustomerWithChildren);
+  console.log('clarkResponse', responseTest);
   // address
   const addressActionResult =
     actionType === CUSTOMER_STATUS.new ? await create(address, createAddress) : await update(address, updateAddress);
@@ -95,7 +108,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
         motherName,
         motherPhone,
         description,
-        id: propertyId
+        id: propertyId,
       } = item;
       if (loanType === LOAN_TYPE.giayTo) {
         // get result | studentCardRespond?.data?.createProperty?.id

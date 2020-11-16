@@ -45,7 +45,7 @@ export default (props) => {
   async function handleSubmit(values, { setSubmitting }) {
     // ! don't understand why id is set to addressID -> explicit pass id in
     console.log('handleSubmit', values);
-    await submitAction({ values: { ...values, id, addressId: address.id }, setSubmitting, status, setCustomerSubmited });
+    await submitAction({ values: { ...values, id: id || '', addressId: address?.id }, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
@@ -90,7 +90,7 @@ export default (props) => {
 
         return (
           <>
-            <Title style={header}>{status === CUSTOMER_STATUS.add ? 'Thêm Khách Hàng Mới' : 'Sửa thông tin khách hàng'}</Title>
+            <Title style={header}>{status === CUSTOMER_STATUS.new ? 'Thêm Hợp Đồng Mới' : 'Sửa thông tin hợp đồng'}</Title>
             <Form {...layout}>
               {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
               <Row>

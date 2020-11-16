@@ -445,3 +445,8 @@ Focusing on youtube analytic and Cracking English everyday
   `Attempting to add and remove a global secondary index at the same time on the`
   -> need to remove table in graphql and remove connection
   -> add again
+
+16/11/2020
+
+- Batch custom query, resolver from multiple table
+  create Query, Mutation in .graphql -> based on function name inside those, it will generate this function in Mutation or Queries in package code of react -> then generate `resolvers` in build -> can override name to custom that resolver
