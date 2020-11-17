@@ -1,20 +1,14 @@
 #set( $limit = $util.defaultIfNull($context.args.limit, 10) )
 {
-  "version": "2017-02-28",
-  "operation": "Query",
-  "query": {
-    "expression": "#connectionAttribute = :connectionAttribute",
-    "expressionNames": {
-        "#connectionAttribute": "commentTodoId"
-    },
-    "expressionValues": {
-        ":connectionAttribute": {
-            "S": "$context.args.todoId"
-        }
-    }
+  "version" : "2018-05-29",
+  "operation" : "UpdateItem",
+  "key" : {
+        "id" : { "S" : "0f960db9-78a9-4a45-a943-1afb748da26b" }
   },
-  "scanIndexForward": true,
-  "limit": $limit,
-  "nextToken": #if( $context.args.nextToken ) "$context.args.nextToken" #else null #end,
-  "index": "gsi-TodoComments"
+  "update" : {
+      "expression" : "SET firstName :plusOne, lastName :plusOne",
+      "expressionValues" : {
+          ":plusOne" : { "S" : "add here" }
+      }
+  }
 }

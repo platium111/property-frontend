@@ -1,5 +1,12 @@
 #set($data = {
-    "id" : "456",
-    "meta" : "Valid Response"
+    "items" : [
+      {
+        "id" : "456",
+        "firstName" : "clark return",
+        "lastName": "trinh",
+        "addressId": "43242342234",
+        "updatedAt": $util.time.nowISO8601()
+      } 
+    ]
 })
 $util.toJson($data)

@@ -450,3 +450,14 @@ Focusing on youtube analytic and Cracking English everyday
 
 - Batch custom query, resolver from multiple table
   create Query, Mutation in .graphql -> based on function name inside those, it will generate this function in Mutation or Queries in package code of react -> then generate `resolvers` in build -> can override name to custom that resolver
+
+17/11/2020
+
+- BIG SUCCESS with custom resolver.
+
+1. in .graphql file, create Query, Mutation depend on what you want. Note: `input` is the type defined for input paramenter in graphql function. it will generate function in `queries` or `mutation` in react. This will define for mapping data from server
+2. in api/propertyApp/resolvers : create Mutation.batchUpdateCustomerWithChildren.req.vtl and also create one for response -> it will override in `build`
+   Note: there are different type of way to write req and res which includes dynamodb or lambda.
+   For `dynamodb`, we have UpdateItem, PutItem, UpdateItem...
+   [ref_req] https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-reference-dynamodb.html#aws-appsync-resolver-mapping-template-reference-dynamodb-putitem
+3. .req.vtl and res.vtl are put in `stacks/CustomResources.json`, it will map with which table used.
