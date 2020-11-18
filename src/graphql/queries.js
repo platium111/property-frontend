@@ -18,7 +18,6 @@ export const getProperty = /* GraphQL */ `
       machineNumber
       plateNumber
       dateBorrow
-      contractId
       cardNumber
       universityName
       gpa
@@ -28,6 +27,35 @@ export const getProperty = /* GraphQL */ `
       motherName
       motherPhone
       fatherPhone
+      contract {
+        id
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
+          createdAt
+          customerImages
+          updatedAt
+        }
+        loanStatus
+        createdAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
+        properties {
+          nextToken
+        }
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -55,7 +83,6 @@ export const listPropertys = /* GraphQL */ `
         machineNumber
         plateNumber
         dateBorrow
-        contractId
         cardNumber
         universityName
         gpa
@@ -65,6 +92,16 @@ export const listPropertys = /* GraphQL */ `
         motherName
         motherPhone
         fatherPhone
+        contract {
+          id
+          loanStatus
+          createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -76,7 +113,35 @@ export const getRepayment = /* GraphQL */ `
   query GetRepayment($id: ID!) {
     getRepayment(id: $id) {
       id
-      contractId
+      contract {
+        id
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
+          createdAt
+          customerImages
+          updatedAt
+        }
+        loanStatus
+        createdAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
+        properties {
+          nextToken
+        }
+        updatedAt
+      }
       fromDate
       toDate
       totalInterestAmount
@@ -98,7 +163,16 @@ export const listRepayments = /* GraphQL */ `
     listRepayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        contractId
+        contract {
+          id
+          loanStatus
+          createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
+          updatedAt
+        }
         fromDate
         toDate
         totalInterestAmount
@@ -133,10 +207,22 @@ export const getCustomer = /* GraphQL */ `
         district
         province
         city
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
+          createdAt
+          customerImages
+          updatedAt
+        }
         createdAt
         updatedAt
       }
-      addressId
       identityCardNo
       issueDate
       createdAt
@@ -144,7 +230,6 @@ export const getCustomer = /* GraphQL */ `
       contracts {
         items {
           id
-          customerId
           loanStatus
           createdAt
           dateBorrow
@@ -187,7 +272,6 @@ export const listCustomers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        addressId
         identityCardNo
         issueDate
         createdAt
@@ -205,13 +289,41 @@ export const getContract = /* GraphQL */ `
   query GetContract($id: ID!) {
     getContract(id: $id) {
       id
-      customerId
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          lane
+          alley
+          district
+          province
+          city
+          createdAt
+          updatedAt
+        }
+        identityCardNo
+        issueDate
+        createdAt
+        customerImages
+        contracts {
+          nextToken
+        }
+        updatedAt
+      }
       loanStatus
       createdAt
       repayments {
         items {
           id
-          contractId
           fromDate
           toDate
           totalInterestAmount
@@ -244,7 +356,6 @@ export const getContract = /* GraphQL */ `
           machineNumber
           plateNumber
           dateBorrow
-          contractId
           cardNumber
           universityName
           gpa
@@ -272,7 +383,19 @@ export const listContracts = /* GraphQL */ `
     listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        customerId
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
+          createdAt
+          customerImages
+          updatedAt
+        }
         loanStatus
         createdAt
         repayments {
@@ -304,6 +427,36 @@ export const getAddress = /* GraphQL */ `
       district
       province
       city
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        address {
+          id
+          homeNumber
+          street
+          hamlet
+          village
+          lane
+          alley
+          district
+          province
+          city
+          createdAt
+          updatedAt
+        }
+        identityCardNo
+        issueDate
+        createdAt
+        customerImages
+        contracts {
+          nextToken
+        }
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -327,57 +480,20 @@ export const listAddresss = /* GraphQL */ `
         district
         province
         city
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listCustomerByCreatedAt = /* GraphQL */ `
-  query ListCustomerByCreatedAt(
-    $createdAt: AWSDateTime
-    $sortDirection: ModelSortDirection
-    $filter: ModelCustomerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCustomerByCreatedAt(
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        firstName
-        lastName
-        middleName
-        phoneNumbers
-        dateOfBirth
-        address {
+        customer {
           id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
           createdAt
+          customerImages
           updatedAt
         }
-        addressId
-        identityCardNo
-        issueDate
         createdAt
-        customerImages
-        contracts {
-          nextToken
-        }
         updatedAt
       }
       nextToken

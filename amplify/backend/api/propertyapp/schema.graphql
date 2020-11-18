@@ -1,4 +1,4 @@
-type Property @model @key(name: "byContract", fields: ["contractId", "itemName"]) {
+type Property @model {
   id: ID!
   loanType: String
   description: String
@@ -13,7 +13,6 @@ type Property @model @key(name: "byContract", fields: ["contractId", "itemName"]
   machineNumber: String
   plateNumber: String
   dateBorrow: String
-  contractId: ID
   cardNumber: String
   universityName: String
   gpa: Float
@@ -23,11 +22,12 @@ type Property @model @key(name: "byContract", fields: ["contractId", "itemName"]
   motherName: String
   motherPhone: String
   fatherPhone: String
+  contract: Contract @connection(name: "ContractProperties")
 }
 
-type Repayment @model @key(name: "byContract", fields: ["contractId"]) {
+type Repayment @model {
   id: ID!
-  contractId: ID
+  contract: Contract @connection(name: "ContractRepayments")
   fromDate: String
   toDate: String
   totalInterestAmount: Float
@@ -37,33 +37,32 @@ type Repayment @model @key(name: "byContract", fields: ["contractId"]) {
   note: String
 }
 
-type Customer @model @key(name: "listCustomerByCreatedAt", fields: ["createdAt"], queryField: "listCustomerByCreatedAt") {
+type Customer @model{
   id: ID!
   firstName: String!
   lastName: String!
   middleName: String
   phoneNumbers: [String]
   dateOfBirth: String
-  address: Address @connection(fields: ["addressId"])
-  addressId: ID!
+  address: Address @connection(name: "CustomerAddress")
   identityCardNo: String
   issueDate: String
   createdAt: AWSDateTime
   customerImages: [String]
-  contracts: [Contract] @connection(keyName: "byCustomer", fields: ["id"])
+  contracts: [Contract] @connection(name: "CustomerContracts")
 }
 
-type Contract @model @key(name: "byCustomer", fields: ["customerId"]) {
+type Contract @model {
   id: ID!
-  customerId: ID
+  customer: Customer @connection(name: "CustomerContracts")
   loanStatus: String
   createdAt: AWSDateTime
-  repayments: [Repayment] @connection(keyName: "byContract", fields: ["id"])
+  repayments: [Repayment] @connection(name: "ContractRepayments")
   dateBorrow: String
   datePay: String
   borrowPurpose: String
   note: String
-  properties: [Property] @connection(keyName: "byContract", fields: ["id"])
+  properties: [Property] @connection(name: "ContractProperties")
 }
 
 type PropertyConnectWithCustomer {
@@ -113,4 +112,5 @@ type Address @model {
   district: String
   province: String
   city: String
+  customer: Customer @connection(name: "CustomerAddress")
 }
