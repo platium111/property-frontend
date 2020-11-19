@@ -137,7 +137,7 @@ export default (props) => {
                           return (
                             <div>
                               <div>
-                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType}>
+                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType || 'xe'}>
                                   <Select.Option value="">--Lựa chọn--</Select.Option>
                                   <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
@@ -222,7 +222,7 @@ export default (props) => {
               {isSubmissionSuccess && (
                 <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
               )}
-              {/* <DebugValues {...props} /> */}
+              {<DebugValues {...props} />}
             </Form>
           </>
         );

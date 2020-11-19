@@ -44,30 +44,44 @@ type Customer @model{
   middleName: String
   phoneNumbers: [String]
   dateOfBirth: String
-  address: Address @connection(name: "CustomerAddress")
   identityCardNo: String
   issueDate: String
   createdAt: AWSDateTime
   customerImages: [String]
+  address: Address @connection(name: "CustomerAddress")
   contracts: [Contract] @connection(name: "CustomerContracts")
 }
 
 type Contract @model {
   id: ID!
-  customer: Customer @connection(name: "CustomerContracts")
   loanStatus: String
   createdAt: AWSDateTime
   repayments: [Repayment] @connection(name: "ContractRepayments")
   dateBorrow: String
   datePay: String
-  borrowPurpose: String
+  borrowPurpose: String 
   note: String
+  customer: Customer @connection(name: "CustomerContracts")
   properties: [Property] @connection(name: "ContractProperties")
 }
 
 type PropertyConnectWithCustomer {
   items: [Property]
   nextToken: String
+}
+
+type Address @model {
+  id: ID!
+  alley: String
+  city: String
+  district: String
+  hamlet: String
+  homeNumber: String
+  lane: String
+  province: String
+  street: String
+  village: String
+  customer: Customer @connection(name: "CustomerAddress")
 }
 
 """
@@ -101,16 +115,3 @@ type Mutation {
 """
 -------------------------
 """
-type Address @model {
-  id: ID!
-  homeNumber: String
-  street: String
-  hamlet: String
-  village: String
-  lane: String
-  alley: String
-  district: String
-  province: String
-  city: String
-  customer: Customer @connection(name: "CustomerAddress")
-}

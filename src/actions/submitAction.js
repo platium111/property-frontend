@@ -5,11 +5,13 @@ import {
   updateAddress,
   createProperty,
   updateProperty,
+  createContract,
   batchUpdateCustomerWithChildren,
 } from '../graphql/mutations';
 import { getCustomer } from '../graphql/queries';
 import { create, update, get } from '../services/generic/index';
 import { CUSTOMER_STATUS, LOAN_TYPE } from '../_constants';
+import _ from 'lodash';
 
 async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
   const {
@@ -25,185 +27,243 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
     lane,
     alley,
     city,
-    imageUrls,
-    userId,
-    year,
-    customerName,
-    itemName,
-    price,
-    color,
-    frameNumber,
-    machineNumber,
-    plateNumber,
     dateBorrow,
     datePay,
-    cardNumber,
+    borrowPurpose,
+    note,
     properties,
-    createdAt,
-    updatedAt,
-    addressId,
-    ...restValues
+    // customer data
+    firstName,
+    lastName,
+    middleName,
+    dateOfBirth,
+    identityCardNo,
+    issueDate,
   } = values;
 
-  const address = { homeNumber, street, hamlet, village, lane, alley, district, province, city, id: values.addressId };
+  console.log('all values', values)
   // testing new feauture batch mutation
-  const mockCustomer = { id: '999999999', firstName: 'clark' };
-  const mockAddress = { id: '88888888', homeNumber: '36 fran street' };
-  const responseTest = await create({ customer: mockCustomer, address: mockAddress }, batchUpdateCustomerWithChildren);
-  console.log('clarkResponse', responseTest);
-  // address
-  const addressActionResult =
-    actionType === CUSTOMER_STATUS.new ? await create(address, createAddress) : await update(address, updateAddress);
-  const customerAddressId =
-    actionType === CUSTOMER_STATUS.new ? addressActionResult?.data?.createAddress?.id : addressActionResult?.data?.updateAddress?.id;
+  // const mockCustomer = { id: '999999999', firstName: 'clark' };
+  // const mockAddress = { id: '88888888', homeNumber: '36 fran street' };
+  // const responseTest = await create({ customer: mockCustomer, address: mockAddress }, batchUpdateCustomerWithChildren);
+  // console.log('clarkResponse', responseTest);
 
   // customer -> customerAddressId
   const customerRespond =
     actionType === CUSTOMER_STATUS.new
       ? await create(
-          {
-            ...restValues,
-            phoneNumbers: [phoneNumber, otherPhoneNumber],
-            dateBorrow,
-            datePay,
-            addressId,
-            id,
-          },
+          _.omitBy(
+            {
+              firstName,
+              lastName,
+              middleName,
+              dateOfBirth,
+              identityCardNo, // check
+              issueDate, // check
+              phoneNumbers: [phoneNumber, otherPhoneNumber],
+              id,
+            },
+            _.isEmpty
+          ),
           createCustomer
         )
       : await update(
-          {
-            ...restValues,
-            phoneNumbers: [phoneNumber, otherPhoneNumber],
-            dateBorrow,
-            datePay,
-            id,
-            // createdAt
-            addressId: customerAddressId,
-          },
+          _.omitBy(
+            {
+              firstName,
+              lastName,
+              middleName,
+              dateOfBirth,
+              identityCardNo,
+              issueDate,
+              phoneNumbers: [phoneNumber, otherPhoneNumber],
+              dateBorrow,
+              datePay,
+              id,
+              // customerAddressId: customerAddressId,
+            },
+            _.isEmpty
+          ),
           updateCustomer
         );
-  // student card & property -> propertyCustomerId
-  await Promise.all(
-    properties.map(async (item) => {
-      const {
-        cardNumber,
-        universityName,
-        gpa,
-        graduationYear,
-        loanType,
-        imageUrls,
-        userId,
-        year,
-        customerName,
-        itemName,
-        price,
-        color,
-        frameNumber,
-        machineNumber,
-        plateNumber,
-        interest,
-        fatherName,
-        fatherPhone,
-        motherName,
-        motherPhone,
-        description,
-        id: propertyId,
-      } = item;
-      if (loanType === LOAN_TYPE.giayTo) {
-        // get result | studentCardRespond?.data?.createProperty?.id
-        actionType === CUSTOMER_STATUS.new
-          ? await create(
-              {
-                itemName,
-                cardNumber,
-                universityName,
-                gpa,
-                graduationYear,
-                fatherName,
-                fatherPhone,
-                motherName,
-                motherPhone,
-                interest,
-                loanType,
-                dateBorrow,
-                description,
-                price,
-                customerId: customerRespond.data.createCustomer.id,
-              },
-              createProperty
-            )
-          : await update(
-              {
-                id: propertyId,
-                itemName,
-                cardNumber,
-                universityName,
-                gpa,
-                graduationYear,
-                fatherName,
-                fatherPhone,
-                motherName,
-                motherPhone,
-                interest,
-                loanType,
-                dateBorrow,
-                description,
-                price,
-                customerId: customerRespond.data.updateCustomer.id,
-              },
-              updateProperty
-            );
-      } else if (loanType === LOAN_TYPE.xe) {
-        actionType === CUSTOMER_STATUS.new
-          ? await create(
-              {
-                loanType,
-                color,
-                year,
-                frameNumber,
-                machineNumber,
-                plateNumber,
-                itemName,
-                price,
-                dateBorrow,
-                description,
-                interest,
-                imageUrls,
-                userId,
-                customerName,
-                customerId: customerRespond.data.createCustomer.id,
-              },
-              createProperty
-            )
-          : await update(
-              {
-                id: propertyId,
-                loanType,
-                color,
-                year,
-                frameNumber,
-                machineNumber,
-                plateNumber,
-                itemName,
-                price,
-                dateBorrow,
-                description,
-                interest,
-                imageUrls,
-                userId,
-                customerName,
-                customerId: customerRespond.data.updateCustomer.id,
-              },
-              updateProperty
-            );
-      }
-    })
+  // address
+  const customerIdResponse = CUSTOMER_STATUS.new ? customerRespond?.data?.createCustomer?.id : customerRespond?.data?.updateCustomer?.id;
+  const address = _.omitBy(
+    {
+      homeNumber,
+      street,
+      hamlet,
+      village,
+      lane,
+      alley,
+      district,
+      province,
+      city,
+      id: values.addressId,
+      addressCustomerId: customerIdResponse,
+    },
+    _.isUndefined
   );
+
+  const addressActionResult =
+    actionType === CUSTOMER_STATUS.new ? await create(address, createAddress) : await update(address, updateAddress);
+  const customerAddressId =
+    actionType === CUSTOMER_STATUS.new ? addressActionResult?.data?.createAddress?.id : addressActionResult?.data?.updateAddress?.id;
+  // * need to update address Id to customer table
+  if (customerAddressId) {
+    await update(
+      _.omitBy(
+        {
+          id: customerIdResponse,
+          customerAddressId,
+        },
+        _.isEmpty
+      ),
+      updateCustomer
+    );
+  }
+  const test = await get(customerRespond?.data?.createCustomer?.id, getCustomer);
+  // contract
+  const LOAN_STATUS = {
+    DANG_VAY: 'DANG_VAY',
+    DA_TRA: 'DA_TRA',
+    QUA_HAN: 'QUA_HAN',
+  };
+
+  const contractResponse =
+    actionType === CUSTOMER_STATUS.new
+      ? await create(
+          _.omitBy(
+            { loanStatus: LOAN_STATUS.DANG_VAY, dateBorrow, datePay, borrowPurpose, note, contractCustomerId: customerIdResponse },
+            _.isEmpty
+          ),
+          createContract
+        )
+      : null;
+  const contractIdResponse =
+    actionType === CUSTOMER_STATUS.new ? contractResponse?.data?.createContract?.id : contractResponse?.data?.updateContract?.id;
+  // student card & property -> propertyCustomerId
+  if (contractIdResponse) {
+    await Promise.all(
+      properties.map(async (item) => {
+        const {
+          cardNumber,
+          universityName,
+          gpa,
+          graduationYear,
+          loanType,
+          imageUrls,
+          userId,
+          year,
+          customerName,
+          itemName,
+          price,
+          color,
+          frameNumber,
+          machineNumber,
+          plateNumber,
+          interest,
+          fatherName,
+          fatherPhone,
+          motherName,
+          motherPhone,
+          description,
+          id: propertyId,
+        } = item;
+        if (loanType === LOAN_TYPE.giayTo) {
+          // get result | studentCardRespond?.data?.createProperty?.id
+          actionType === CUSTOMER_STATUS.new
+            ? await create(
+                {
+                  itemName,
+                  cardNumber,
+                  universityName,
+                  gpa,
+                  graduationYear,
+                  fatherName,
+                  fatherPhone,
+                  motherName,
+                  motherPhone,
+                  interest,
+                  loanType,
+                  dateBorrow,
+                  description,
+                  price,
+                  propertyContractId: contractIdResponse,
+                },
+                createProperty
+              )
+            : await update(
+                {
+                  id: propertyId,
+                  itemName,
+                  cardNumber,
+                  universityName,
+                  gpa,
+                  graduationYear,
+                  fatherName,
+                  fatherPhone,
+                  motherName,
+                  motherPhone,
+                  interest,
+                  loanType,
+                  dateBorrow,
+                  description,
+                  price,
+                  propertyContractId: contractIdResponse,
+                },
+                updateProperty
+              );
+        } else if (loanType === LOAN_TYPE.xe) {
+          actionType === CUSTOMER_STATUS.new
+            ? await create(
+                {
+                  loanType,
+                  color,
+                  year,
+                  frameNumber,
+                  machineNumber,
+                  plateNumber,
+                  itemName,
+                  price,
+                  dateBorrow,
+                  description,
+                  interest,
+                  imageUrls,
+                  userId,
+                  customerName,
+                  propertyContractId: contractIdResponse,
+                },
+                createProperty
+              )
+            : await update(
+                {
+                  id: propertyId,
+                  loanType,
+                  color,
+                  year,
+                  frameNumber,
+                  machineNumber,
+                  plateNumber,
+                  itemName,
+                  price,
+                  dateBorrow,
+                  description,
+                  interest,
+                  imageUrls,
+                  userId,
+                  customerName,
+                  propertyContractId: contractIdResponse,
+                },
+                updateProperty
+              );
+        }
+      })
+    );
+  }
+
   // after submit done, need to setData for customer for displaying message
-  const customerIdRespond =
-    actionType === CUSTOMER_STATUS.new ? customerRespond.data.createCustomer.id : customerRespond.data.updateCustomer.id;
-  const result = await get(customerIdRespond, getCustomer);
+  const result = await get(customerIdResponse, getCustomer);
   if (result?.data?.getCustomer) {
     setCustomerSubmited(result?.data?.getCustomer);
   }
