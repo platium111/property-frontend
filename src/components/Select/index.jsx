@@ -4,7 +4,7 @@ import { Select, FormItem } from 'formik-antd';
 import useConditional from '../../_hooks/useConditional'
 
 
-export default ({ label, condition, compareType, ...restProps }) => {
+export default ({ label, condition, compareType, value, ...restProps }) => {
   // field has name, value, event
   const { name } = restProps
   const [field] = useField(restProps)
@@ -15,7 +15,7 @@ export default ({ label, condition, compareType, ...restProps }) => {
     isShow && (
       <>
         <FormItem label={label} name={name}>
-          <Select {...field} {...restProps} />
+          <Select {...field} value={value} {...restProps} />
         </FormItem>
       </>
     ) 

@@ -461,3 +461,12 @@ Focusing on youtube analytic and Cracking English everyday
    For `dynamodb`, we have UpdateItem, PutItem, UpdateItem...
    [ref_req] https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-reference-dynamodb.html#aws-appsync-resolver-mapping-template-reference-dynamodb-putitem
 3. .req.vtl and res.vtl are put in `stacks/CustomResources.json`, it will map with which table used.
+
+18/11/2020
+
+- one to one need to add A, then add B -> then update A
+- one to many doesn't need to care about A, only add B then add id of A to B
+
+20/11/2020
+
+- [fix_cannot_add_editgrid] because in formik, when we get props in render children not in default props. We can get properties from there and put in `items` in editgird

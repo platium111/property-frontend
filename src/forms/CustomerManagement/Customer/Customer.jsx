@@ -18,6 +18,14 @@ import moment from 'moment';
 import { cloneDeep } from 'lodash';
 const { Title } = Typography;
 
+const getSortedProperties = (propertiesFromProps) => {
+  return (
+    (propertiesFromProps &&
+      cloneDeep(CUSTOMER_STATUS.new ? propertiesFromProps : propertiesFromProps.items).sort((a, b) =>
+        moment(a.createdAt).isAfter(moment(b.createdAt))
+      )) || [{ loanType: 'xe' }]
+  );
+};
 export default (props) => {
   const {
     id,
@@ -34,7 +42,7 @@ export default (props) => {
     issueDate,
     status = CUSTOMER_STATUS.new,
     note,
-    properties: propertiesFromProps,
+    properties: propertiesFromProps = [{ loanType: 'xe' }],
   } = props;
 
   console.log('customerProps', props);
@@ -49,8 +57,7 @@ export default (props) => {
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  const sortedProperties = (propertiesFromProps &&
-    cloneDeep(propertiesFromProps.items).sort((a, b) => moment(a.createdAt).isAfter(moment(b.createdAt)))) || [{ loanType: '' }];
+  const sortedProperties = getSortedProperties(propertiesFromProps);
   console.log('sortedProperties', sortedProperties);
   return (
     <Formik
@@ -132,7 +139,8 @@ export default (props) => {
                   <FieldArray
                     name="properties"
                     render={(arrayHelpers) => (
-                      <RepeatingGroup arrayHelpers={arrayHelpers} items={sortedProperties}>
+                      // need to get latest values from formValues
+                      <RepeatingGroup arrayHelpers={arrayHelpers} items={formValues.properties}>
                         {({ item: customerItem = {}, index }) => {
                           return (
                             <div>
