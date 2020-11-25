@@ -8,7 +8,7 @@ import {
   createContract,
   batchUpdateCustomerWithChildren,
 } from '../graphql/mutations';
-import { getCustomer } from '../graphql/queries';
+import { getCustomizeCustomer } from '../graphql/customQuery';
 import { create, update, get } from '../services/generic/index';
 import { CUSTOMER_STATUS, LOAN_TYPE } from '../_constants';
 import _ from 'lodash';
@@ -41,7 +41,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
     issueDate,
   } = values;
 
-  console.log('all values', values)
+  console.log('all values', values);
   // testing new feauture batch mutation
   // const mockCustomer = { id: '999999999', firstName: 'clark' };
   // const mockAddress = { id: '88888888', homeNumber: '36 fran street' };
@@ -122,7 +122,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
       updateCustomer
     );
   }
-  const test = await get(customerRespond?.data?.createCustomer?.id, getCustomer);
+  const test = await get(customerRespond?.data?.createCustomer?.id, getCustomizeCustomer);
   // contract
   const LOAN_STATUS = {
     DANG_VAY: 'DANG_VAY',
@@ -263,7 +263,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
   }
 
   // after submit done, need to setData for customer for displaying message
-  const result = await get(customerIdResponse, getCustomer);
+  const result = await get(customerIdResponse, getCustomizeCustomer);
   if (result?.data?.getCustomer) {
     setCustomerSubmited(result?.data?.getCustomer);
   }

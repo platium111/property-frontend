@@ -40,11 +40,11 @@ export const propertiesForCustomer = /* GraphQL */ `
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         createdAt
         updatedAt
@@ -66,28 +66,28 @@ export const batchUpdateCustomerWithChildren = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       nextToken
     }
@@ -124,6 +124,16 @@ export const createProperty = /* GraphQL */ `
       fatherPhone
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -134,22 +144,12 @@ export const createProperty = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -187,6 +187,16 @@ export const updateProperty = /* GraphQL */ `
       fatherPhone
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -197,22 +207,12 @@ export const updateProperty = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -250,6 +250,16 @@ export const deleteProperty = /* GraphQL */ `
       fatherPhone
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -260,22 +270,12 @@ export const deleteProperty = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -291,6 +291,16 @@ export const createRepayment = /* GraphQL */ `
       id
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -301,22 +311,12 @@ export const createRepayment = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       fromDate
       toDate
@@ -339,6 +339,16 @@ export const updateRepayment = /* GraphQL */ `
       id
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -349,22 +359,12 @@ export const updateRepayment = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       fromDate
       toDate
@@ -387,6 +387,16 @@ export const deleteRepayment = /* GraphQL */ `
       id
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -397,22 +407,12 @@ export const deleteRepayment = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       fromDate
       toDate
@@ -438,17 +438,22 @@ export const createCustomer = /* GraphQL */ `
       middleName
       phoneNumbers
       dateOfBirth
+      identityCardNo
+      issueDate
+      createdAt
+      updatedAt
+      customerImages
       address {
         id
-        homeNumber
-        street
-        hamlet
-        village
-        lane
         alley
-        district
-        province
         city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
         customer {
           id
           firstName
@@ -459,30 +464,25 @@ export const createCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
         createdAt
         updatedAt
       }
-      identityCardNo
-      issueDate
-      createdAt
-      customerImages
       contracts {
         items {
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -498,17 +498,22 @@ export const updateCustomer = /* GraphQL */ `
       middleName
       phoneNumbers
       dateOfBirth
+      identityCardNo
+      issueDate
+      createdAt
+      updatedAt
+      customerImages
       address {
         id
-        homeNumber
-        street
-        hamlet
-        village
-        lane
         alley
-        district
-        province
         city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
         customer {
           id
           firstName
@@ -519,30 +524,25 @@ export const updateCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
         createdAt
         updatedAt
       }
-      identityCardNo
-      issueDate
-      createdAt
-      customerImages
       contracts {
         items {
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -558,17 +558,22 @@ export const deleteCustomer = /* GraphQL */ `
       middleName
       phoneNumbers
       dateOfBirth
+      identityCardNo
+      issueDate
+      createdAt
+      updatedAt
+      customerImages
       address {
         id
-        homeNumber
-        street
-        hamlet
-        village
-        lane
         alley
-        district
-        province
         city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
         customer {
           id
           firstName
@@ -579,30 +584,25 @@ export const deleteCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
         createdAt
         updatedAt
       }
-      identityCardNo
-      issueDate
-      createdAt
-      customerImages
       contracts {
         items {
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -613,38 +613,9 @@ export const createContract = /* GraphQL */ `
   ) {
     createContract(input: $input, condition: $condition) {
       id
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        phoneNumbers
-        dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        identityCardNo
-        issueDate
-        createdAt
-        customerImages
-        contracts {
-          nextToken
-        }
-        updatedAt
-      }
       loanStatus
       createdAt
+      updatedAt
       repayments {
         items {
           id
@@ -664,6 +635,36 @@ export const createContract = /* GraphQL */ `
       datePay
       borrowPurpose
       note
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        identityCardNo
+        issueDate
+        createdAt
+        updatedAt
+        customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
+        contracts {
+          nextToken
+        }
+      }
       properties {
         items {
           id
@@ -694,7 +695,6 @@ export const createContract = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -705,38 +705,9 @@ export const updateContract = /* GraphQL */ `
   ) {
     updateContract(input: $input, condition: $condition) {
       id
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        phoneNumbers
-        dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        identityCardNo
-        issueDate
-        createdAt
-        customerImages
-        contracts {
-          nextToken
-        }
-        updatedAt
-      }
       loanStatus
       createdAt
+      updatedAt
       repayments {
         items {
           id
@@ -756,6 +727,36 @@ export const updateContract = /* GraphQL */ `
       datePay
       borrowPurpose
       note
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        identityCardNo
+        issueDate
+        createdAt
+        updatedAt
+        customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
+        contracts {
+          nextToken
+        }
+      }
       properties {
         items {
           id
@@ -786,7 +787,6 @@ export const updateContract = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -797,38 +797,9 @@ export const deleteContract = /* GraphQL */ `
   ) {
     deleteContract(input: $input, condition: $condition) {
       id
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        phoneNumbers
-        dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        identityCardNo
-        issueDate
-        createdAt
-        customerImages
-        contracts {
-          nextToken
-        }
-        updatedAt
-      }
       loanStatus
       createdAt
+      updatedAt
       repayments {
         items {
           id
@@ -848,6 +819,36 @@ export const deleteContract = /* GraphQL */ `
       datePay
       borrowPurpose
       note
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        identityCardNo
+        issueDate
+        createdAt
+        updatedAt
+        customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
+        contracts {
+          nextToken
+        }
+      }
       properties {
         items {
           id
@@ -878,7 +879,6 @@ export const deleteContract = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -889,15 +889,15 @@ export const createAddress = /* GraphQL */ `
   ) {
     createAddress(input: $input, condition: $condition) {
       id
-      homeNumber
-      street
-      hamlet
-      village
-      lane
       alley
-      district
-      province
       city
+      district
+      hamlet
+      homeNumber
+      lane
+      province
+      street
+      village
       customer {
         id
         firstName
@@ -905,28 +905,28 @@ export const createAddress = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -940,15 +940,15 @@ export const updateAddress = /* GraphQL */ `
   ) {
     updateAddress(input: $input, condition: $condition) {
       id
-      homeNumber
-      street
-      hamlet
-      village
-      lane
       alley
-      district
-      province
       city
+      district
+      hamlet
+      homeNumber
+      lane
+      province
+      street
+      village
       customer {
         id
         firstName
@@ -956,28 +956,28 @@ export const updateAddress = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -991,15 +991,15 @@ export const deleteAddress = /* GraphQL */ `
   ) {
     deleteAddress(input: $input, condition: $condition) {
       id
-      homeNumber
-      street
-      hamlet
-      village
-      lane
       alley
-      district
-      province
       city
+      district
+      hamlet
+      homeNumber
+      lane
+      province
+      street
+      village
       customer {
         id
         firstName
@@ -1007,28 +1007,28 @@ export const deleteAddress = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt

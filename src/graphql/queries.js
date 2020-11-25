@@ -29,6 +29,16 @@ export const getProperty = /* GraphQL */ `
       fatherPhone
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -39,22 +49,12 @@ export const getProperty = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -96,11 +96,11 @@ export const listPropertys = /* GraphQL */ `
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         createdAt
         updatedAt
@@ -115,6 +115,16 @@ export const getRepayment = /* GraphQL */ `
       id
       contract {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -125,22 +135,12 @@ export const getRepayment = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       fromDate
       toDate
@@ -167,11 +167,11 @@ export const listRepayments = /* GraphQL */ `
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         fromDate
         toDate
@@ -196,17 +196,22 @@ export const getCustomer = /* GraphQL */ `
       middleName
       phoneNumbers
       dateOfBirth
+      identityCardNo
+      issueDate
+      createdAt
+      updatedAt
+      customerImages
       address {
         id
-        homeNumber
-        street
-        hamlet
-        village
-        lane
         alley
-        district
-        province
         city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
         customer {
           id
           firstName
@@ -217,30 +222,25 @@ export const getCustomer = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
         createdAt
         updatedAt
       }
-      identityCardNo
-      issueDate
-      createdAt
-      customerImages
       contracts {
         items {
           id
           loanStatus
           createdAt
+          updatedAt
           dateBorrow
           datePay
           borrowPurpose
           note
-          updatedAt
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -258,28 +258,28 @@ export const listCustomers = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       nextToken
     }
@@ -289,38 +289,9 @@ export const getContract = /* GraphQL */ `
   query GetContract($id: ID!) {
     getContract(id: $id) {
       id
-      customer {
-        id
-        firstName
-        lastName
-        middleName
-        phoneNumbers
-        dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
-        identityCardNo
-        issueDate
-        createdAt
-        customerImages
-        contracts {
-          nextToken
-        }
-        updatedAt
-      }
       loanStatus
       createdAt
+      updatedAt
       repayments {
         items {
           id
@@ -340,6 +311,36 @@ export const getContract = /* GraphQL */ `
       datePay
       borrowPurpose
       note
+      customer {
+        id
+        firstName
+        lastName
+        middleName
+        phoneNumbers
+        dateOfBirth
+        identityCardNo
+        issueDate
+        createdAt
+        updatedAt
+        customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
+        contracts {
+          nextToken
+        }
+      }
       properties {
         items {
           id
@@ -370,7 +371,6 @@ export const getContract = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -383,6 +383,16 @@ export const listContracts = /* GraphQL */ `
     listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        loanStatus
+        createdAt
+        updatedAt
+        repayments {
+          nextToken
+        }
+        dateBorrow
+        datePay
+        borrowPurpose
+        note
         customer {
           id
           firstName
@@ -393,22 +403,12 @@ export const listContracts = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
-        loanStatus
-        createdAt
-        repayments {
-          nextToken
-        }
-        dateBorrow
-        datePay
-        borrowPurpose
-        note
         properties {
           nextToken
         }
-        updatedAt
       }
       nextToken
     }
@@ -418,15 +418,15 @@ export const getAddress = /* GraphQL */ `
   query GetAddress($id: ID!) {
     getAddress(id: $id) {
       id
-      homeNumber
-      street
-      hamlet
-      village
-      lane
       alley
-      district
-      province
       city
+      district
+      hamlet
+      homeNumber
+      lane
+      province
+      street
+      village
       customer {
         id
         firstName
@@ -434,28 +434,28 @@ export const getAddress = /* GraphQL */ `
         middleName
         phoneNumbers
         dateOfBirth
-        address {
-          id
-          homeNumber
-          street
-          hamlet
-          village
-          lane
-          alley
-          district
-          province
-          city
-          createdAt
-          updatedAt
-        }
         identityCardNo
         issueDate
         createdAt
+        updatedAt
         customerImages
+        address {
+          id
+          alley
+          city
+          district
+          hamlet
+          homeNumber
+          lane
+          province
+          street
+          village
+          createdAt
+          updatedAt
+        }
         contracts {
           nextToken
         }
-        updatedAt
       }
       createdAt
       updatedAt
@@ -471,15 +471,15 @@ export const listAddresss = /* GraphQL */ `
     listAddresss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        homeNumber
-        street
-        hamlet
-        village
-        lane
         alley
-        district
-        province
         city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
         customer {
           id
           firstName
@@ -490,8 +490,8 @@ export const listAddresss = /* GraphQL */ `
           identityCardNo
           issueDate
           createdAt
-          customerImages
           updatedAt
+          customerImages
         }
         createdAt
         updatedAt

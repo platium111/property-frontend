@@ -44,41 +44,14 @@ export const listCustomersAndProperties = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        addressId
-        dateBorrow
-        borrowPurpose
-        datePay
         identityCardNo
         issueDate
-        note
         createdAt
-        customerImages
-        properties {
+        contracts {
           items {
             id
-            loanType
-            description
-            imageUrls
-            userId
-            year
-            customerName
-            itemName
-            price
-            color
-            frameNumber
-            machineNumber
-            plateNumber
-            dateBorrow
-            customerId
-            cardNumber
-            universityName
-            gpa
-            graduationYear
-            interest
-            fatherName
-            motherName
-            motherPhone
-            fatherPhone
+            loanStatus
+            createdAt
           }
         }
         updatedAt
@@ -87,7 +60,92 @@ export const listCustomersAndProperties = /* GraphQL */ `
     }
   }
 `;
-
+export const getCustomizeCustomer = /* GraphQL */ `
+  query GetCustomer($id: ID!) {
+    getCustomer(id: $id) {
+      id
+      firstName
+      lastName
+      middleName
+      phoneNumbers
+      dateOfBirth
+      identityCardNo
+      issueDate
+      createdAt
+      customerImages
+      address {
+        id
+        alley
+        city
+        district
+        hamlet
+        homeNumber
+        lane
+        province
+        street
+        village
+        customer {
+          id
+          firstName
+          lastName
+          middleName
+          phoneNumbers
+          dateOfBirth
+          identityCardNo
+          issueDate
+          createdAt
+          customerImages
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      contracts {
+        items {
+          id
+          loanStatus
+          createdAt
+          dateBorrow
+          datePay
+          borrowPurpose
+          note
+          updatedAt
+          properties {
+            items {
+              cardNumber
+              color
+              createdAt
+              customerName
+              dateBorrow
+              description
+              fatherPhone
+              fatherName
+              frameNumber
+              gpa
+              graduationYear
+              id
+              imageUrls
+              interest
+              itemName
+              loanType
+              machineNumber
+              motherName
+              motherPhone
+              plateNumber
+              price
+              universityName
+              updatedAt
+              userId
+              year
+            }
+          }
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
 export const searchListCustomer = `
   query searchListCustomers($searchQuery: String) {
     listCustomers(filter: { firstName: { beginsWith: $searchQuery } }) {
@@ -109,26 +167,30 @@ export const searchListCustomer = `
           lane
           alley
         }
-        properties {
+        contracts {
           items {
-            id
-            description
-            imageUrls
-            loanType
-            userId
-            year
-            customerName
-            itemName
-            price
-            color
-            frameNumber
-            machineNumber
-            plateNumber
-            dateBorrow
-            fatherName
-            motherName
-            motherPhone
-            fatherPhone
+            properties {
+              items {
+                id
+                description
+                imageUrls
+                loanType
+                userId
+                year
+                customerName
+                itemName
+                price
+                color
+                frameNumber
+                machineNumber
+                plateNumber
+                dateBorrow
+                fatherName
+                motherName
+                motherPhone
+                fatherPhone
+              }
+            }
           }
         }
         dateBorrow

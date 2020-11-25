@@ -57,7 +57,7 @@ const App = (props) => {
                 <Link to="/create-customer">{SITE.NAV_CREATE_NEW_CONTRACT}</Link>
               </Menu.Item>
               <Menu.Item key="4">
-                <Link to="/list-customer">{SITE.NAV_FIND_CONTRACT}</Link>
+                <Link to="/list-customer">{SITE.NAV_FIND_CUSTOMER}</Link>
               </Menu.Item>
               <Menu.Item key="5">
                 <Link to="/day-report">{SITE.NAV_DAY_REPORT}</Link>

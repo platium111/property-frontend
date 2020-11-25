@@ -7,7 +7,7 @@ type Property @model {
   year: String
   customerName: String
   itemName: String
-  price: String
+  price: Float
   color: String
   frameNumber: String
   machineNumber: String
@@ -37,7 +37,7 @@ type Repayment @model {
   note: String
 }
 
-type Customer @model{
+type Customer @model {
   id: ID!
   firstName: String!
   lastName: String!
@@ -46,7 +46,8 @@ type Customer @model{
   dateOfBirth: String
   identityCardNo: String
   issueDate: String
-  createdAt: AWSDateTime
+  createdAt: String
+  updatedAt: String
   customerImages: [String]
   address: Address @connection(name: "CustomerAddress")
   contracts: [Contract] @connection(name: "CustomerContracts")
@@ -55,11 +56,12 @@ type Customer @model{
 type Contract @model {
   id: ID!
   loanStatus: String
-  createdAt: AWSDateTime
+  createdAt: String
+  updatedAt: String
   repayments: [Repayment] @connection(name: "ContractRepayments")
   dateBorrow: String
   datePay: String
-  borrowPurpose: String 
+  borrowPurpose: String
   note: String
   customer: Customer @connection(name: "CustomerContracts")
   properties: [Property] @connection(name: "ContractProperties")
@@ -84,9 +86,6 @@ type Address @model {
   customer: Customer @connection(name: "CustomerAddress")
 }
 
-"""
-CUSTOMER BATCH MUTATION
-"""
 type CustomerResponse {
   items: [Customer]
   nextToken: String
@@ -111,7 +110,3 @@ type Mutation {
   propertiesForCustomer(contractId: ID!, limit: Int, nextToken: String): PropertyConnectWithCustomer
   batchUpdateCustomerWithChildren(input: CustomerInputData, nextToken: String): CustomerResponse
 }
-
-"""
--------------------------
-"""

@@ -26,24 +26,22 @@ export const searchCustomerAction = async (searchText, updateStateFn) => {
     const transformAddress = tranformDbData(address, 'address')
       ?.filter((item) => !!item)
       .join(', ');
-    const transformLoanTypeSummary =
-      properties.items &&
-      properties.items.reduce(
-        (totalObj, currentProperty) => {
-          if (currentProperty.loanType === LOAN_TYPE.xe) {
-            return {
-              ...totalObj,
-              [LOAN_TYPE.xe]: Number(totalObj[LOAN_TYPE.xe]) + 1,
-            };
-          } else {
-            return {
-              ...totalObj,
-              [LOAN_TYPE.giayTo]: Number(totalObj[LOAN_TYPE.giayTo]) + 1,
-            };
-          }
-        },
-        { [LOAN_TYPE.xe]: 0, [LOAN_TYPE.giayTo]: 0 }
-      );
+    const transformLoanTypeSummary = properties?.items?.reduce(
+      (totalObj, currentProperty) => {
+        if (currentProperty.loanType === LOAN_TYPE.xe) {
+          return {
+            ...totalObj,
+            [LOAN_TYPE.xe]: Number(totalObj[LOAN_TYPE.xe]) + 1,
+          };
+        } else {
+          return {
+            ...totalObj,
+            [LOAN_TYPE.giayTo]: Number(totalObj[LOAN_TYPE.giayTo]) + 1,
+          };
+        }
+      },
+      { [LOAN_TYPE.xe]: 0, [LOAN_TYPE.giayTo]: 0 }
+    );
     console.log('loantypesum', transformLoanTypeSummary);
     return {
       id,
@@ -51,7 +49,7 @@ export const searchCustomerAction = async (searchText, updateStateFn) => {
       phoneNumbers,
       dateOfBirth,
       address: transformAddress,
-      loanTypeSummary: `Xe : ${transformLoanTypeSummary.xe} | Giấy tờ: ${transformLoanTypeSummary.giayTo}`,
+      loanTypeSummary: `Xe : ${transformLoanTypeSummary?.xe} | Giấy tờ: ${transformLoanTypeSummary?.giayTo}`,
       dateBorrow,
       datePay,
       identityCardNo,
