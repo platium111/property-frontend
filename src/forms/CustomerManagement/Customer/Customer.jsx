@@ -42,9 +42,13 @@ export default (props) => {
     issueDate,
     status = CUSTOMER_STATUS.new,
     note,
-    properties: propertiesFromProps = [{ loanType: 'xe' }],
+    contracts: {
+      items: [firstContractItem, ...restItems],
+    },
+    // properties: propertiesFromProps = [{ loanType: 'xe' }],
   } = props;
 
+  const propertiesFromProps = firstContractItem?.properties?.items || [{ loanType: 'xe' }];
   console.log('customerProps', props);
 
   const [customerSubmited, setCustomerSubmited] = useState();
@@ -57,8 +61,8 @@ export default (props) => {
   }
   // transformation from prop values -> formik value
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  const sortedProperties = getSortedProperties(propertiesFromProps);
-  console.log('sortedProperties', sortedProperties);
+  // const sortedProperties = getSortedProperties(propertiesFromProps);
+  // console.log('sortedProperties', sortedProperties);
   return (
     <Formik
       enableReinitialize
@@ -71,7 +75,7 @@ export default (props) => {
         otherPhoneNumber,
         dateOfBirth,
         ...address,
-        properties: sortedProperties,
+        properties: propertiesFromProps,
         dateBorrow,
         borrowPurpose,
         datePay,
@@ -85,7 +89,7 @@ export default (props) => {
       {(props) => {
         const { values: formValues } = props;
 
-        const totalProperties = formValues?.properties?.reduce(
+        const totalProperties = [{ loanType: 'xe' }]?.reduce(
           (total, { price = 0, interest = 0 }) => {
             const calculateInterest = (price * interest) / 1000000;
             const priceItem = total.price + price;
@@ -95,6 +99,7 @@ export default (props) => {
           { price: 0, interest: 0 }
         );
 
+        console.log('formValues', formValues?.properties);
         return (
           <>
             <Title style={header}>{status === CUSTOMER_STATUS.new ? 'Thêm Hợp Đồng Mới' : 'Sửa thông tin hợp đồng'}</Title>
@@ -140,7 +145,7 @@ export default (props) => {
                     name="properties"
                     render={(arrayHelpers) => (
                       // need to get latest values from formValues
-                      <RepeatingGroup arrayHelpers={arrayHelpers} items={formValues.properties}>
+                      <RepeatingGroup arrayHelpers={arrayHelpers} items={propertiesFromProps}>
                         {({ item: customerItem = {}, index }) => {
                           return (
                             <div>
@@ -179,7 +184,7 @@ export default (props) => {
                                     value={customerItem.graduationYear}
                                     name={`properties[${index}].graduationYear`}
                                   />
-                                  <FieldInput label="Tên bố" value={customerItem.fatherNumber} name={`properties[${index}].fatherName`} />
+                                  <FieldInput label="Tên bố" value={customerItem.fatherName} name={`properties[${index}].fatherName`} />
                                   <FieldInput label="SĐT bố" value={customerItem.fatherPhone} name={`properties[${index}].fatherPhone`} />
                                   <FieldInput label="Tên mẹ" value={customerItem.motherName} name={`properties[${index}].motherName`} />
                                   <FieldInput label="SĐT mẹ" value={customerItem.motherPhone} name={`properties[${index}].motherPhone`} />

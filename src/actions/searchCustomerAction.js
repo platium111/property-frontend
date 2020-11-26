@@ -19,14 +19,17 @@ export const searchCustomerAction = async (searchText, updateStateFn) => {
       address,
       dateBorrow,
       datePay,
-      properties,
+      // TODO should get the latest contract by sorting to get `firstItem`
+      contracts: {
+        items: [firstItem, ...restItems],
+      },
       identityCardNo,
     } = customer;
 
     const transformAddress = tranformDbData(address, 'address')
       ?.filter((item) => !!item)
       .join(', ');
-    const transformLoanTypeSummary = properties?.items?.reduce(
+    const transformLoanTypeSummary = firstItem?.properties?.items?.reduce(
       (totalObj, currentProperty) => {
         if (currentProperty.loanType === LOAN_TYPE.xe) {
           return {

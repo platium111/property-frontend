@@ -52,7 +52,42 @@ export const listCustomersAndProperties = /* GraphQL */ `
             id
             loanStatus
             createdAt
+            dateBorrow
+            datePay
+            borrowPurpose
+            note
+            updatedAt
+            properties {
+              items {
+                cardNumber
+                color
+                createdAt
+                customerName
+                dateBorrow
+                description
+                fatherPhone
+                fatherName
+                frameNumber
+                gpa
+                graduationYear
+                id
+                imageUrls
+                interest
+                itemName
+                loanType
+                machineNumber
+                motherName
+                motherPhone
+                plateNumber
+                price
+                universityName
+                updatedAt
+                userId
+                year
+              }
+            }
           }
+          nextToken
         }
         updatedAt
       }
