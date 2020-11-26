@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormikContext } from 'formik';
+import { useFormikContext, useField } from 'formik';
 import { FormItem } from 'formik-antd';
 import { DatePicker } from 'antd';
 import useConditional from '../../_hooks/useConditional';
@@ -8,8 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { GLOBAL_DATE_FORMAT } from '../../_constants';
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
-export default ({ label, condition, compareType, placeholder = label, defaultValue, value, ...props }) => {
-  const { name } = props;
+export default ({ label, condition, compareType, placeholder = label, defaultValue, name }) => {
+  const [field] = useField({ name });
   const { values, setFieldValue } = useFormikContext();
   const { result: isShow } = useConditional({ values, name, condition, compareType });
 
@@ -17,10 +17,9 @@ export default ({ label, condition, compareType, placeholder = label, defaultVal
     isShow && (
       <FormItem label={label} name={name}>
         <DatePicker
-          {...props}
           name={name}
           placeholder={placeholder}
-          value={value && moment(value, GLOBAL_DATE_FORMAT)}
+          value={field.value ? moment(field.value, GLOBAL_DATE_FORMAT) : null}
           // defaultValue={defaultValue && moment(defaultValue, dateFormatList[0])}
           format={dateFormatList}
           onChange={(_, dateString = moment(new Date(), GLOBAL_DATE_FORMAT)) => {

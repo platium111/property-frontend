@@ -26,6 +26,7 @@ const getSortedProperties = (propertiesFromProps) => {
       )) || [{ loanType: 'xe' }]
   );
 };
+
 export default (props) => {
   const {
     id,
@@ -35,22 +36,20 @@ export default (props) => {
     phoneNumbers,
     dateOfBirth,
     address,
-    dateBorrow,
-    borrowPurpose,
-    datePay,
     identityCardNo,
     issueDate,
     status = CUSTOMER_STATUS.new,
-    note,
-    contracts: {
-      items: [firstContractItem, ...restItems],
-    },
-    // properties: propertiesFromProps = [{ loanType: 'xe' }],
+    contracts,
   } = props;
 
+  // props usage
+  const firstContractItem = contracts?.items?.[0];
+  const { borrowPurpose, datePay, dateBorrow, note } = firstContractItem || {};
   const propertiesFromProps = firstContractItem?.properties?.items || [{ loanType: 'xe' }];
+  const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
   console.log('customerProps', props);
 
+  // state
   const [customerSubmited, setCustomerSubmited] = useState();
   const isSubmissionSuccess = !!customerSubmited;
 
@@ -60,9 +59,6 @@ export default (props) => {
     await submitAction({ values: { ...values, id: id || '', addressId: address?.id }, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
-  const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  // const sortedProperties = getSortedProperties(propertiesFromProps);
-  // console.log('sortedProperties', sortedProperties);
   return (
     <Formik
       enableReinitialize
@@ -87,7 +83,7 @@ export default (props) => {
       onSubmit={handleSubmit}
     >
       {(props) => {
-        const { values: formValues } = props;
+        // const { values } = props;
 
         const totalProperties = [{ loanType: 'xe' }]?.reduce(
           (total, { price = 0, interest = 0 }) => {
@@ -99,7 +95,6 @@ export default (props) => {
           { price: 0, interest: 0 }
         );
 
-        console.log('formValues', formValues?.properties);
         return (
           <>
             <Title style={header}>{status === CUSTOMER_STATUS.new ? 'Thêm Hợp Đồng Mới' : 'Sửa thông tin hợp đồng'}</Title>
@@ -107,6 +102,7 @@ export default (props) => {
               {/* EXP: should use FormItem from formik-antd with `name` otherwise errror children object {} */}
               <Row>
                 <Col sm={24} md={12}>
+                  {/* GENERAL INFORMATION */}
                   <Divider orientation="left">Thông tin cơ bản</Divider>
                   <FieldInput label="Tên" name="firstName" />
                   <FieldInput label="Họ" name="lastName" />
@@ -121,7 +117,7 @@ export default (props) => {
                     condition={{ x: '{{identityCardNo}}', y: '', notEqual: true }}
                     compareType="string"
                   />
-
+                  {/* ADDRESS */}
                   <Divider orientation="left">Địa chỉ</Divider>
                   <FieldInput label="Số nhà" name="homeNumber" />
                   <FieldInput label="Đường" name="street" />
@@ -139,7 +135,9 @@ export default (props) => {
                     {cityData && cityData.map((city) => <Select.Option value={city}>{city}</Select.Option>)}
                   </FieldSelect>
                 </Col>
+
                 <Col sm={24} md={12}>
+                  {/* PROPERTIES INFORMATION */}
                   <Divider orientation="left">Thông tin tài sản</Divider>
                   <FieldArray
                     name="properties"
@@ -150,7 +148,7 @@ export default (props) => {
                           return (
                             <div>
                               <div>
-                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType || 'xe'}>
+                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`}>
                                   <Select.Option value="">--Lựa chọn--</Select.Option>
                                   <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
