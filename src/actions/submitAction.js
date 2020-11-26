@@ -7,6 +7,7 @@ import {
   updateProperty,
   createContract,
   batchUpdateCustomerWithChildren,
+  updateContract,
 } from '../graphql/mutations';
 import { getCustomizeCustomer } from '../graphql/customQuery';
 import { create, update, get } from '../services/generic/index';
@@ -39,6 +40,8 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
     dateOfBirth,
     identityCardNo,
     issueDate,
+    // contract
+    contractId
   } = values;
 
   console.log('all values', values);
@@ -77,17 +80,14 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
               identityCardNo,
               issueDate,
               phoneNumbers: [phoneNumber, otherPhoneNumber],
-              dateBorrow,
-              datePay,
               id,
-              // customerAddressId: customerAddressId,
             },
             _.isEmpty
           ),
           updateCustomer
         );
   // address
-  const customerIdResponse = CUSTOMER_STATUS.new ? customerRespond?.data?.createCustomer?.id : customerRespond?.data?.updateCustomer?.id;
+  const customerIdResponse = actionType === CUSTOMER_STATUS.new ? customerRespond?.data?.createCustomer?.id : customerRespond?.data?.updateCustomer?.id;
   const address = _.omitBy(
     {
       homeNumber,
@@ -110,7 +110,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
   const customerAddressId =
     actionType === CUSTOMER_STATUS.new ? addressActionResult?.data?.createAddress?.id : addressActionResult?.data?.updateAddress?.id;
   // * need to update address Id to customer table
-  if (customerAddressId) {
+  if (actionType === CUSTOMER_STATUS.new && customerAddressId) {
     await update(
       _.omitBy(
         {
@@ -122,7 +122,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
       updateCustomer
     );
   }
-  const test = await get(customerRespond?.data?.createCustomer?.id, getCustomizeCustomer);
+  const test = await get(customerIdResponse, getCustomizeCustomer);
   // contract
   const LOAN_STATUS = {
     DANG_VAY: 'DANG_VAY',
@@ -130,6 +130,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
     QUA_HAN: 'QUA_HAN',
   };
 
+  // todo: loanStatus
   const contractResponse =
     actionType === CUSTOMER_STATUS.new
       ? await create(
@@ -139,7 +140,9 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
           ),
           createContract
         )
-      : null;
+      : await update(
+        _.omitBy({loanStatus: LOAN_STATUS.DANG_VAY, dateBorrow, datePay, borrowPurpose, note, id: contractId }, _.isEmpty), updateContract
+      );
   const contractIdResponse =
     actionType === CUSTOMER_STATUS.new ? contractResponse?.data?.createContract?.id : contractResponse?.data?.updateContract?.id;
   // student card & property -> propertyCustomerId
@@ -193,6 +196,7 @@ async function createOrUpdateCustomer(values, actionType, setCustomerSubmited) {
                 },
                 createProperty
               )
+              // todo: if users delete properties -> what happened?
             : await update(
                 {
                   id: propertyId,

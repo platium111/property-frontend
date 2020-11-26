@@ -470,3 +470,9 @@ Focusing on youtube analytic and Cracking English everyday
 20/11/2020
 
 - [fix_cannot_add_editgrid] because in formik, when we get props in render children not in default props. We can get properties from there and put in `items` in editgird
+
+27/11/2020
+
+- refactor update, create for customer and children
+- Fixing addressId, contractId...
+- Have mapping using HandlerBar

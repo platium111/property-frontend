@@ -16,6 +16,8 @@ import { provinceData, cityData, LOAN_TYPE, CUSTOMER_STATUS } from '../../../_co
 import { submitAction } from '../../../actions';
 import moment from 'moment';
 import { cloneDeep } from 'lodash';
+import { customerFormToDb } from '../../../_utils/mappings';
+
 const { Title } = Typography;
 
 const getSortedProperties = (propertiesFromProps) => {
@@ -43,12 +45,13 @@ export default (props) => {
   } = props;
 
   // props usage
+  const { id: addressId, ...addressWithoutId } = address || {};
   const firstContractItem = contracts?.items?.[0];
-  const { borrowPurpose, datePay, dateBorrow, note } = firstContractItem || {};
+  const { borrowPurpose, datePay, dateBorrow, note, id: contractId } = firstContractItem || {};
   const propertiesFromProps = firstContractItem?.properties?.items || [{ loanType: 'xe' }];
   const [phoneNumber, otherPhoneNumber] = phoneNumbers || [];
-  console.log('customerProps', props);
 
+  console.log('customerProps', props);
   // state
   const [customerSubmited, setCustomerSubmited] = useState();
   const isSubmissionSuccess = !!customerSubmited;
@@ -56,7 +59,8 @@ export default (props) => {
   async function handleSubmit(values, { setSubmitting }) {
     // ! don't understand why id is set to addressID -> explicit pass id in
     console.log('handleSubmit', values);
-    await submitAction({ values: { ...values, id: id || '', addressId: address?.id }, setSubmitting, status, setCustomerSubmited });
+    console.log('result mapping', customerFormToDb(values));
+    await submitAction({ values: { ...values }, setSubmitting, status, setCustomerSubmited });
   }
   // transformation from prop values -> formik value
   return (
@@ -70,7 +74,9 @@ export default (props) => {
         phoneNumber,
         otherPhoneNumber,
         dateOfBirth,
-        ...address,
+        addressId,
+        contractId,
+        ...addressWithoutId,
         properties: propertiesFromProps,
         dateBorrow,
         borrowPurpose,
@@ -82,9 +88,7 @@ export default (props) => {
       validationSchema={validation}
       onSubmit={handleSubmit}
     >
-      {(props) => {
-        // const { values } = props;
-
+      {(formikProps) => {
         const totalProperties = [{ loanType: 'xe' }]?.reduce(
           (total, { price = 0, interest = 0 }) => {
             const calculateInterest = (price * interest) / 1000000;
@@ -148,7 +152,7 @@ export default (props) => {
                           return (
                             <div>
                               <div>
-                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`}>
+                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType || 'xe'}>
                                   <Select.Option value="">--Lựa chọn--</Select.Option>
                                   <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
@@ -233,7 +237,7 @@ export default (props) => {
               {isSubmissionSuccess && (
                 <Result status="success" title="Cập nhập thành công khách hàng mới" subTitle={`Mã khách hàng ${customerSubmited.id}`} />
               )}
-              {<DebugValues {...props} />}
+              {<DebugValues {...formikProps} />}
             </Form>
           </>
         );

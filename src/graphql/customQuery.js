@@ -119,19 +119,6 @@ export const getCustomizeCustomer = /* GraphQL */ `
         province
         street
         village
-        customer {
-          id
-          firstName
-          lastName
-          middleName
-          phoneNumbers
-          dateOfBirth
-          identityCardNo
-          issueDate
-          createdAt
-          customerImages
-          updatedAt
-        }
         createdAt
         updatedAt
       }
