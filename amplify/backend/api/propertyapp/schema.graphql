@@ -50,7 +50,7 @@ type Customer @model {
   updatedAt: String
   customerImages: [String]
   address: Address @connection(name: "CustomerAddress")
-  contracts: [Contract] @connection(name: "CustomerContracts")
+  contracts: [Contract] @connection(name: "CustomerContracts", sortField: "createdAt")
 }
 
 type Contract @model {

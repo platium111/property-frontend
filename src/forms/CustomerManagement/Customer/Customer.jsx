@@ -21,6 +21,7 @@ import { customerFormToDb } from '../../../_utils/mappings';
 const { Title } = Typography;
 
 const getSortedProperties = (propertiesFromProps) => {
+  // ! lack status
   return (
     (propertiesFromProps &&
       cloneDeep(CUSTOMER_STATUS.new ? propertiesFromProps : propertiesFromProps.items).sort((a, b) =>
@@ -147,12 +148,18 @@ export default (props) => {
                     name="properties"
                     render={(arrayHelpers) => (
                       // need to get latest values from formValues
-                      <RepeatingGroup arrayHelpers={arrayHelpers} items={propertiesFromProps}>
+                      // formikProps has latest value, so when add a new row, it will render new components
+                      <RepeatingGroup arrayHelpers={arrayHelpers} items={formikProps?.values?.properties}>
                         {({ item: customerItem = {}, index }) => {
                           return (
                             <div>
                               <div>
-                                <FieldSelect label="Loại vay" name={`properties[${index}].loanType`} value={customerItem.loanType || 'xe'}>
+                                <FieldSelect
+                                  label="Loại vay"
+                                  name={`properties[${index}].loanType`}
+                                  value={customerItem.loanType || 'xe'}
+                                  defaultValue="xe"
+                                >
                                   <Select.Option value="">--Lựa chọn--</Select.Option>
                                   <Select.Option value={LOAN_TYPE.xe}>Xe</Select.Option>
                                   <Select.Option value={LOAN_TYPE.giayTo}>Giấy tờ</Select.Option>
@@ -199,7 +206,7 @@ export default (props) => {
                                   name={`properties[${index}].interest`}
                                   isCurrency={true}
                                 />
-                                <FieldArea label="Mô tả" value={customerItem.description} name={`properties[${index}].description`} />
+                                <FieldArea label="Mô tả" name={`properties[${index}].description`} />
                               </div>
                               <div>
                                 <p>Tinh toan khuyen cao</p>

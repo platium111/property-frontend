@@ -32,6 +32,7 @@ export default function (props) {
   const [foundCustomers, setFoundCustomers] = useState([]);
   const [displayDetailItem, setDisplayDetailItem] = useState(false);
   const [displayType, setDisplayType] = useState();
+  const [customerSelected, setCustomerSelected] = useState();
 
   // TODO after update, if not change search query, data looks the same but actually updated in aws
   useEffect(() => {
@@ -56,10 +57,15 @@ export default function (props) {
           setDisplayDetailItem(false);
         }}
       />
-      <CustomerTable searchText={searchText} displayType={displayType} setDisplayType={setDisplayType} />
-      {/* Display list or detail cards */}
-      {displayDetailItem && <EditCustomer />}
-      {displayType === 'repayment' && <EnhancedRepaymentTable />}
+      <CustomerTable
+        searchText={searchText}
+        displayType={displayType}
+        setDisplayType={setDisplayType}
+        setCustomerSelected={setCustomerSelected}
+      />
+
+      {customerSelected && displayType === 'edit' && <EditCustomer {...customerSelected} />}
+      {displayType === 'repayment' && <EnhancedRepaymentTable customerId={customerSelected.id} name="repayments" />}
     </div>
   );
 }

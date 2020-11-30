@@ -55,4 +55,6 @@ const RepaymentTable = (props) => {
   );
 };
 
-export const EnhancedRepaymentTable = withFormik({ mapPropsToValues: () => ({ name: '' }) })(RepaymentTable);
+export const EnhancedRepaymentTable = withFormik({ mapPropsToValues: (props) => ({ name: props?.name, customerId: props?.customerId }) })(
+  RepaymentTable
+);

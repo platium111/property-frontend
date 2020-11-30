@@ -15,8 +15,8 @@ import { CUSTOMER_STATUS } from '../../_constants';
 
 const { Title } = Typography;
 
-export default function CustomerTable({ searchText, setDisplayType, displayType }) {
-  const [customerSelected, setCustomerSelected] = useState();
+export default function CustomerTable({ searchText, setDisplayType, displayType, setCustomerSelected }) {
+  // const [customerSelected, setCustomerSelected] = useState();
   const [dataTable, setDataTable] = useState([]);
   const data = React.useMemo(() => dataTable, [dataTable]);
   const columns = React.useMemo(() => columnsTable, []);
@@ -38,6 +38,7 @@ export default function CustomerTable({ searchText, setDisplayType, displayType 
           }
 
           function onRepayment() {
+            setCustomerSelected({ ...originalData });
             setDisplayType && setDisplayType('repayment');
           }
 
@@ -114,8 +115,12 @@ export default function CustomerTable({ searchText, setDisplayType, displayType 
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                  {row.cells.map((cell, index) => {
+                    return (
+                      <td key={index} {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </td>
+                    );
                   })}
                 </tr>
               );
@@ -123,7 +128,6 @@ export default function CustomerTable({ searchText, setDisplayType, displayType 
           </tbody>
         </table>
       </StyledTable>
-      {customerSelected && displayType === 'edit' && <Customer {...customerSelected} />}
     </div>
   );
 }

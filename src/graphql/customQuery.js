@@ -215,12 +215,8 @@ export const searchListCustomer = `
             }
           }
         }
-        dateBorrow
-        borrowPurpose
-        datePay
         identityCardNo
         issueDate
-        note
         customerImages
       }
     }

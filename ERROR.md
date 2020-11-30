@@ -469,10 +469,15 @@ Focusing on youtube analytic and Cracking English everyday
 
 20/11/2020
 
-- [fix_cannot_add_editgrid] because in formik, when we get props in render children not in default props. We can get properties from there and put in `items` in editgird
+- [fix_cannot_add_editgrid] formikProps?.values?.properties, get from formikProps is the latest data which has a new data, so will render new components
 
 27/11/2020
 
 - refactor update, create for customer and children
 - Fixing addressId, contractId...
 - Have mapping using HandlerBar
+
+30/11/2020
+
+- [fix_area_update_value] because we get value from props, overriding in useFieldValue, just remove it
+- [fix_searchContract] remove unnecessary properties returned
