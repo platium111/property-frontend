@@ -481,3 +481,6 @@ Focusing on youtube analytic and Cracking English everyday
 
 - [fix_area_update_value] because we get value from props, overriding in useFieldValue, just remove it
 - [fix_searchContract] remove unnecessary properties returned
+
+3/1/2020
+- [fix_add_new_repeatinggroup_defaultvalue] pass props with value as `defaultValues` for repeating group -> set this value in the new row

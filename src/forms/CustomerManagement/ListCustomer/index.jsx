@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { ApolloContext } from 'react-apollo';
 import { CustomerTable } from '../../../components/CustomerTable';
 import EditCustomer from '../Customer';
-import { EnhancedRepaymentTable } from '../../RepaymentTable';
+import { RepaymentTable } from '../../RepaymentForms';
 
 const { Search } = Input;
 
@@ -65,7 +65,7 @@ export default function (props) {
       />
 
       {customerSelected && displayType === 'edit' && <EditCustomer {...customerSelected} />}
-      {displayType === 'repayment' && <EnhancedRepaymentTable customerId={customerSelected.id} name="repayments" />}
+      {displayType === 'repayment' && <RepaymentTable customerId={customerSelected.id} name="repayments" />}
     </div>
   );
 }

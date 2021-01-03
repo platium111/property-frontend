@@ -45,11 +45,11 @@ export const REPEATING_GROUP_CONSTANT = {
 };
 
 export default function (props) {
-  const { children, headingTitle = 'Thêm Đồ', arrayHelpers, items = [] } = props;
+  const { children, headingTitle = 'Thêm Đồ', arrayHelpers, items = [], defaultValues } = props;
   const [activeRows, setActiveRows] = useState(['0']);
 
   function handleAdd() {
-    arrayHelpers.push({});
+    arrayHelpers.push(defaultValues);
     setActiveRows([...activeRows, items.length.toString()]);
   }
 

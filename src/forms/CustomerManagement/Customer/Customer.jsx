@@ -149,7 +149,11 @@ export default (props) => {
                     render={(arrayHelpers) => (
                       // need to get latest values from formValues
                       // formikProps has latest value, so when add a new row, it will render new components
-                      <RepeatingGroup arrayHelpers={arrayHelpers} items={formikProps?.values?.properties}>
+                      <RepeatingGroup
+                        arrayHelpers={arrayHelpers}
+                        items={formikProps?.values?.properties}
+                        defaultValues={{ loanType: 'xe' }}
+                      >
                         {({ item: customerItem = {}, index }) => {
                           return (
                             <div>

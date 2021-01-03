@@ -1,8 +1,9 @@
 import React from 'react';
 import { Table, Tag, Space, Typography } from 'antd';
-import { FieldCheckbox } from '../../components';
+import { FieldButton } from '../../../components';
+import { FieldCheckbox } from '../../../components';
 import { withFormik } from 'formik';
-
+import Repayment from '../Repayment'
 const { Title } = Typography;
 const { Column, ColumnGroup } = Table;
 
@@ -27,6 +28,8 @@ const RepaymentTable = (props) => {
   return (
     <div>
       <Title>Trả lãi</Title>
+      <FieldButton value="Thêm" type='primary'/>
+      <Repayment />
       <Table dataSource={data}>
         <ColumnGroup title="Ngày">
           <Column title="Từ ngày" dataIndex="fromDate" key="fromDate" />
